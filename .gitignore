@@ -1,5 +1,5 @@
-src/sw/yocto/*.patch
-src/sw/yocto/*-rootfs/*
-src/sw/yocto/*-images/*
-src/sw/yocto/downloads/*
-src/sw/yocto/sstate_cache/*
+a5e065b-mod-devkit-exp-es/src/sw/yocto/*.patch
+a5e065b-mod-devkit-exp-es/src/sw/yocto/*-rootfs/*
+a5e065b-mod-devkit-exp-es/src/sw/yocto/*-images/*
+a5e065b-mod-devkit-exp-es/src/sw/yocto/downloads/*
+a5e065b-mod-devkit-exp-es/src/sw/yocto/sstate_cache/*
