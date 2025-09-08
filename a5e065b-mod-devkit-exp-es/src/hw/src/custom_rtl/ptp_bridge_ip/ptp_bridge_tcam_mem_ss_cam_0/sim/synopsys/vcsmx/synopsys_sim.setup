@@ -1,0 +1,8 @@
+
+WORK > DEFAULT
+DEFAULT:                          ./libraries/work/                     
+work:                             ./libraries/work/                     
+altera_common_sv_packages:        ./libraries/altera_common_sv_packages/
+mem_ss_cam_300:                   ./libraries/mem_ss_cam_300/           
+tcam:                             ./libraries/tcam/                     
+OTHERS=_device_synopsys_sim.setup                                       
