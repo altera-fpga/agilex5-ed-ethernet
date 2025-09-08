@@ -1,0 +1,5 @@
+src/sw/yocto/*.patch
+src/sw/yocto/*-rootfs/*
+src/sw/yocto/*-images/*
+src/sw/yocto/downloads/*
+src/sw/yocto/sstate_cache/*
