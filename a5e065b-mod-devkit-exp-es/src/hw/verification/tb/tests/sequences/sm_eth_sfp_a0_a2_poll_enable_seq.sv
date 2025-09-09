@@ -1,0 +1,93 @@
+//########################################################################
+//# Copyright (C) 2025 Altera Corporation.
+//# SPDX-License-Identifier: MIT
+//#########################################################################
+
+`ifndef SM_ETH_SFP_A0_A2_POLL_ENABLE_SEQ__SV
+  `define SM_ETH_SFP_A0_A2_POLL_ENABLE_SEQ__SV
+
+class sm_eth_sfp_a0_a2_poll_enable_seq extends sm_eth_sfp_basic_seq;
+  rand bit [`SVT_AXI_MAX_DATA_WIDTH-1:0] addr;
+  `uvm_object_utils(sm_eth_sfp_a0_a2_poll_enable_seq)
+
+  // ----------------------------------------------------------------------
+  // ----------------------------------------------------------------------
+  function new(name = "sm_eth_sfp_a0_a2_poll_enable_seq");
+    super.new(name);
+  endfunction: new
+
+  // ----------------------------------------------------------------------
+  // ----------------------------------------------------------------------
+  task body();
+    bit [`SVT_AXI_MAX_DATA_WIDTH-1:0] rd_data [];
+    bit [`SVT_AXI_MAX_DATA_WIDTH-1:0] wr_data[];
+    bit [`SVT_AXI_WSTRB_WIDTH-1:0] 	  wstrb [];
+
+    init_sfp();
+    #40us;
+
+    wr_data = new[1];
+    wstrb   = new[1];
+
+    wr_data[0] = 64'h0000_0000_0000_0020; // A0 update
+
+    wstrb[0]   = 8'h01;
+    axi_master_write(.address(`SM_ETH_SFP_SYSTEM_OFFSET + 'h20),
+                     .burst_sz(svt_axi_transaction::BURST_SIZE_64BIT),
+                     .data(wr_data), .burst_length(1), .wstrb(wstrb));
+	
+
+    while (rd_data[0][36] != 1) begin
+      axi_master_read(.address(`SM_ETH_SFP_SYSTEM_OFFSET + 'h28),
+                    .burst_sz(svt_axi_transaction::BURST_SIZE_64BIT),
+                    .data(rd_data), .burst_length(1));
+      foreach (rd_data[r])
+      `uvm_info(get_full_name(),
+                $sformatf("data read from ReadData register CSR is rdata[%0d] %0h", r, rd_data[r]),
+                UVM_LOW)
+    end	
+	
+    wr_data[0] = 64'h0000_0000_0000_0010; // A2 update
+    wstrb[0]   = 8'h01;
+    axi_master_write(.address(`SM_ETH_SFP_SYSTEM_OFFSET + 'h20),
+                     .burst_sz(svt_axi_transaction::BURST_SIZE_64BIT),
+                     .data(wr_data), .burst_length(1), .wstrb(wstrb));
+	
+
+    while (rd_data[0][38] != 1) begin
+      axi_master_read(.address(`SM_ETH_SFP_SYSTEM_OFFSET + 'h28),
+                    .burst_sz(svt_axi_transaction::BURST_SIZE_64BIT),
+                    .data(rd_data), .burst_length(1));
+      foreach (rd_data[r])
+      `uvm_info(get_full_name(),
+                $sformatf("data read from A2 space ReadData register CSR is rdata[%0d] %0h", r, rd_data[r]),
+                UVM_LOW)
+    end	
+
+    //A0 shadow register
+    for (int i=0;i< 16; i++) begin
+	  axi_master_read(.address(`SM_ETH_SFP_SYSTEM_OFFSET + 'h800 + (i*8)),
+                    .burst_sz(svt_axi_transaction::BURST_SIZE_64BIT),
+                    .data(rd_data), .burst_length(1));
+      foreach (rd_data[r])
+      `uvm_info(get_full_name(),
+                $sformatf("data read from A0 Shadow register is rdata[%0d] %0h", r, rd_data[r]),
+                UVM_LOW)
+    end
+
+    //A2 shadow register
+    for (int i=0;i< 16; i++) begin
+	  axi_master_read(.address(`SM_ETH_SFP_SYSTEM_OFFSET + 'h100 + (i*8)),
+                    .burst_sz(svt_axi_transaction::BURST_SIZE_64BIT),
+                    .data(rd_data), .burst_length(1));
+      foreach (rd_data[r])
+      `uvm_info(get_full_name(),
+                $sformatf("data read from A2 Shadow register is rdata[%0d] %0h", r, rd_data[r]),
+                UVM_LOW)
+    end
+    #4us; // final stop signal delay
+
+  endtask: body
+endclass: sm_eth_sfp_a0_a2_poll_enable_seq
+
+`endif
