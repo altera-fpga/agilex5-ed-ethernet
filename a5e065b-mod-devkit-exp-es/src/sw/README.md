@@ -88,16 +88,3 @@ Follow the steps below to build UBoot
       $ make -j32
       u-boot.itb will be created, you can replace the u-boot.itb present on the target with this file.
 
-### Building extra package
-	
-	Packetgenerator application
-		- git clone https://github.com/altera-innersource/applications.fpga.hps.packetgenerator.git
-		- cd applications.fpga.hps.packetgenerator
-		- git checkout <Release Tag>
-		- aarch64-linux-gnu-gcc *.c -o packetgenerator
-
-	PacketSwicth application
-		- git clone https://github.com/altera-innersource/applications.fpga.hps.ptpbridge.git -b SM_PTPBridge
-		- cd applications.fpga.hps.ptpbridge
-		- git checkout <Release Tag>
-		- aarch64-linux-gnu-gcc *.c -o ptpbridge
