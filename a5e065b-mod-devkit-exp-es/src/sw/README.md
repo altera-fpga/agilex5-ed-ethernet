@@ -16,14 +16,14 @@ Directory Structure used in this example design:
     |--- artifacts
     	|--- u-boot-spl-dtb.hex
     |--- yocto
-        |--- meta-agilex5-sed
-        |--- meta-clang
-      	|--- meta-intel-fpga
-      	|--- meta-intel-fpga-refdes
-      	|--- meta-openembedded
-      	|--- poky
-      	|--- agilex5_modular-ETH_1P10G-build.sh
-      	|--- build.sh
+		|--- meta-agilex5-sed
+		|--- meta-clang
+		|--- meta-intel-fpga
+		|--- meta-intel-fpga-refdes
+		|--- meta-openembedded
+		|--- poky
+		|--- agilex5_modular-ETH_1P10G-build.sh
+		|--- build.sh
  ```
 ## Getting Started
 ### Configuring the Board
