@@ -1,7 +1,7 @@
 SUMMARY = "Packet Generator configurator for Linux on ARM"
 DESCRIPTION = "Packet Generator configurator executable for Linux to control pktgen module"
-LICENSE = "GPL-3.0-only"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=1ebbd3e34237af26da5dc08a4e440464"
+LICENSE = "BSD-3-Clause"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=75972b94773a31d336d43ccffe962ff3"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
  
