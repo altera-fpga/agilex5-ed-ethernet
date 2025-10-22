@@ -4135,7 +4135,7 @@ https://fpgasoftware.intel.com/eula.-->
             <ipxact:parameter parameterId="logicalView" type="string">
               <ipxact:name>logicalView</ipxact:name>
               <ipxact:displayName>Logical view</ipxact:displayName>
-              <ipxact:value>/nfs/site/disks/swuser_work_ayerramr/msgdma/mdk_resource_red/src/hw/src/ip/subsys_msgdma/fifo_user_rst_rx.ip</ipxact:value>
+	      <ipxact:value>../ip/subsys_msgdma/fifo_user_rst_rx.ip</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter parameterId="moduleAssignmentDefinition" type="string">
               <ipxact:name>moduleAssignmentDefinition</ipxact:name>
@@ -4492,7 +4492,7 @@ https://fpgasoftware.intel.com/eula.-->
             <ipxact:parameter parameterId="logicalView" type="string">
               <ipxact:name>logicalView</ipxact:name>
               <ipxact:displayName>Logical view</ipxact:displayName>
-              <ipxact:value>/nfs/site/disks/swuser_work_ayerramr/msgdma/mdk_resource_red/src/hw/src/ip/subsys_msgdma/rst_user_bdg.ip</ipxact:value>
+	      <ipxact:value>../ip/subsys_msgdma/rst_user_bdg.ip</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter parameterId="moduleAssignmentDefinition" type="string">
               <ipxact:name>moduleAssignmentDefinition</ipxact:name>
