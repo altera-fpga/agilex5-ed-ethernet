@@ -73,7 +73,7 @@ fi
 ETH_SW_VERSION_STRING=""
 if [[ -n "${SOLUTION}" ]]; then
 	if [[ "$SOLUTION" == "ETH_1P10G" ]]; then
-		eth_sed_sw_version="-altera-eth-sed-release-R1.1"
+		eth_sed_sw_version="-altera-eth-sed-Q25.3-R1.1"
 		ETH_SW_VERSION_STRING=${eth_sed_sw_version}
 	fi
 fi
@@ -86,7 +86,7 @@ fi
 #------------------------------------------------------------------------------------------#
 # Set default U-Boot Version
 #------------------------------------------------------------------------------------------#
-export UBOOT_VER=v2024.04
+export UBOOT_VER=v2025.07
 export UBOOT_REL=
 echo "UBOOT_VERSION        = $UBOOT_VER$UBOOT_REL"
 UBOOT_SOCFPGA_BRANCH=socfpga_$UBOOT_VER$UBOOT_REL
@@ -123,7 +123,7 @@ echo "UBOOT_CONFIG         = $UB_CONFIG"
 #------------------------------------------------------------------------------------------#
 # Set Arm-Trusted-Firmware version
 #------------------------------------------------------------------------------------------#
-export ATF_VER=v2.11.0
+export ATF_VER=v2.13.0
 echo "ATF_VERSION          = $ATF_VER"
 ATF_BRANCH=socfpga_$ATF_VER
 echo "ATF_BRANCH           = $ATF_BRANCH"
