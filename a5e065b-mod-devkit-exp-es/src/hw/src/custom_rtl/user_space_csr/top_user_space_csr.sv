@@ -138,25 +138,16 @@ user_csr_space user_csr_space(
    .CONTROL_REG_p0_i_rst_n_i      (1'b1),
    .CONTROL_REG_p0_i_rst_n        (o_rst_n[0]),         //out
    // CONTROL_REG.p1_i_rst_n
-   //.we_CONTROL_REG_p1_i_rst_n     (~sync_ack_i_rst_n[1]), 
-   //.CONTROL_REG_p1_i_rst_n_i      (1'b1),
-   //.CONTROL_REG_p1_i_rst_n        (o_rst_n[1]),       //out
    // CONTROL_REG.p0_i_tx_rst_n
    .we_CONTROL_REG_p0_i_tx_rst_n   (~sync_ack_i_tx_rst_n[0]),
    .CONTROL_REG_p0_i_tx_rst_n_i    (1'b1),
    .CONTROL_REG_p0_i_tx_rst_n      (o_tx_rst_n[0]),     //out
-   // CONTROL_REG.p1_i_tx_rst_n
-   //.we_CONTROL_REG_p1_i_tx_rst_n   (~sync_ack_i_tx_rst_n[1]),
-   //.CONTROL_REG_p1_i_tx_rst_n_i    (1'b1),
-   //.CONTROL_REG_p1_i_tx_rst_n      (o_tx_rst_n[1]),    //out
+
    // CONTROL_REG.p0_i_rx_rst_n
    .we_CONTROL_REG_p0_i_rx_rst_n   (~sync_ack_i_rx_rst_n[0]), 
    .CONTROL_REG_p0_i_rx_rst_n_i    (1'b1),
    .CONTROL_REG_p0_i_rx_rst_n      (o_rx_rst_n[0]),      //out
-   // CONTROL_REG.p1_i_rx_rst_n
-   //.we_CONTROL_REG_p1_i_rx_rst_n   (~sync_ack_i_rx_rst_n[0]),
-   //.CONTROL_REG_p1_i_rx_rst_n_i    (1'b1),
-   //.CONTROL_REG_p1_i_rx_rst_n      (o_rx_rst_n[1]),  //out
+
    // ERROR_REG.fp_i_rst_n 
    .we_ERROR_REG_fp_i_rst_n        (),
    .ERROR_REG_fp_i_rst_n_i         (),

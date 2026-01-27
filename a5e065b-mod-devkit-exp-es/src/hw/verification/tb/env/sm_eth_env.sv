@@ -44,6 +44,9 @@ class sm_eth_env extends uvm_env;
   // SFP Slave agent instance
   sfp_slave_env         i2c_slv_env; 
 
+  // SFP Scoreboard instance
+  //sfp_scoreboard        sfp_sb;
+
   sm_eth_ehip_port_monitor ehip_port_mon;
 
   /** Report catcher */
@@ -100,6 +103,9 @@ class sm_eth_env extends uvm_env;
 
     /** Construct I2C Slave component*/
     i2c_slv_env = sfp_slave_env::type_id::create("i2c_slv_env", this);
+
+    /** Construct Scoreboard component*/
+   // sfp_sb = sfp_scoreboard::type_id::create("sfp_sb", this);
     
     ehip_port_mon = sm_eth_ehip_port_monitor::type_id::create("ehip_port_mon", this);
     
@@ -125,6 +131,13 @@ class sm_eth_env extends uvm_env;
    axi_system_env.slave[0].monitor.item_observed_port.connect(sm_sub.axi_port);
    ehip_port_mon.port_p0_n.connect(sm_sub.item_p0_n);
    ehip_port_mon.port_p0_e.connect(sm_sub.item_p0_e);
+
+   //i2c_slv_env.sfp_agent_a0.monitor.ap_seqitem_port_sb.connect(sfp_sb.sfp_item_collected_export_a0);
+   //i2c_slv_env.sfp_agent_a2.monitor.ap_seqitem_port_sb.connect(sfp_sb.sfp_item_collected_export_a2);
+   //axi_system_env.master[0].monitor.item_observed_port.connect(sfp_sb.axi4_item_collected_export);
+
+   //sfp_sb.sfp_sb_mem_a0 = i2c_slv_env.sfp_a0;
+   //sfp_sb.sfp_sb_mem_a2 = i2c_slv_env.sfp_a2;
 
     `uvm_info("connect_phase", "Exiting...", UVM_LOW)
   endfunction

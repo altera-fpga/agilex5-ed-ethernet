@@ -16,14 +16,14 @@ https://fpgasoftware.intel.com/eula.-->
   <ipxact:vendor>Altera</ipxact:vendor>
   <ipxact:library>agilex_hps</ipxact:library>
   <ipxact:name>intel_agilex_5_soc_inst</ipxact:name>
-  <ipxact:version>7.0.0</ipxact:version>
+  <ipxact:version>11.1.0</ipxact:version>
   <ipxact:busInterfaces>
     <ipxact:busInterface>
       <ipxact:name>h2f_reset</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -62,10 +62,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>hps2fpga_axi_clock</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -99,10 +99,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>hps2fpga_axi_reset</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -131,10 +131,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>hps2fpga</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="axi4" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="axi4" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -431,6 +431,11 @@ https://fpgasoftware.intel.com/eula.-->
           <ipxact:displayName>Associated reset</ipxact:displayName>
           <ipxact:value>hps2fpga_axi_reset</ipxact:value>
         </ipxact:parameter>
+        <ipxact:parameter parameterId="optionalAssociatedReset" type="bit">
+          <ipxact:name>optionalAssociatedReset</ipxact:name>
+          <ipxact:displayName>Optional associated reset</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
         <ipxact:parameter parameterId="trustzoneAware" type="bit">
           <ipxact:name>trustzoneAware</ipxact:name>
           <ipxact:displayName>TrustZone-aware</ipxact:displayName>
@@ -540,10 +545,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>emac2_app_rst</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -582,10 +587,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>h2f_warm_reset_handshake</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -627,10 +632,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>hps_io</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -888,10 +893,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>fpga2hps_interrupt_irq1</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="interrupt" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="interrupt" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="interrupt" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="interrupt" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -935,10 +940,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>fpga2hps_interrupt_irq0</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="interrupt" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="interrupt" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="interrupt" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="interrupt" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -982,10 +987,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>f2sdram_axi_clock</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1019,10 +1024,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>f2sdram_axi_reset</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1051,10 +1056,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>f2sdram</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="axi4" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="axi4" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1423,6 +1428,11 @@ https://fpgasoftware.intel.com/eula.-->
           <ipxact:displayName>Associated reset</ipxact:displayName>
           <ipxact:value>f2sdram_axi_reset</ipxact:value>
         </ipxact:parameter>
+        <ipxact:parameter parameterId="optionalAssociatedReset" type="bit">
+          <ipxact:name>optionalAssociatedReset</ipxact:name>
+          <ipxact:displayName>Optional associated reset</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
         <ipxact:parameter parameterId="trustzoneAware" type="bit">
           <ipxact:name>trustzoneAware</ipxact:name>
           <ipxact:displayName>TrustZone-aware</ipxact:displayName>
@@ -1572,10 +1582,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>io96b0_to_hps</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -4897,7 +4907,7 @@ https://fpgasoftware.intel.com/eula.-->
       <ipxact:vendor>Altera</ipxact:vendor>
       <ipxact:library>agilex_hps</ipxact:library>
       <ipxact:name>intel_agilex_5_soc</ipxact:name>
-      <ipxact:version>7.0.0</ipxact:version>
+      <ipxact:version>11.1.0</ipxact:version>
     </altera:entity_info>
     <altera:altera_module_parameters>
       <ipxact:parameters>
@@ -5334,7 +5344,7 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="NOC_clk_phy_div" type="int">
           <ipxact:name>NOC_clk_phy_div</ipxact:name>
           <ipxact:displayName>Soft PHY Clock Divider</ipxact:displayName>
-          <ipxact:value>4</ipxact:value>
+          <ipxact:value>1</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="NOC_clk_cs_div" type="int">
           <ipxact:name>NOC_clk_cs_div</ipxact:name>
@@ -5354,17 +5364,17 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="Periph_clk_emac0_sel" type="int">
           <ipxact:name>Periph_clk_emac0_sel</ipxact:name>
           <ipxact:displayName>EMAC0 Clock Frequency Select</ipxact:displayName>
-          <ipxact:value>50</ipxact:value>
+          <ipxact:value>250</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="Periph_clk_emac1_sel" type="int">
           <ipxact:name>Periph_clk_emac1_sel</ipxact:name>
           <ipxact:displayName>EMAC1 Clock Frequency Select</ipxact:displayName>
-          <ipxact:value>50</ipxact:value>
+          <ipxact:value>250</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="Periph_clk_emac2_sel" type="int">
           <ipxact:name>Periph_clk_emac2_sel</ipxact:name>
           <ipxact:displayName>EMAC2 Clock Frequency Select</ipxact:displayName>
-          <ipxact:value>50</ipxact:value>
+          <ipxact:value>250</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="Periph_clk_override" type="bit">
           <ipxact:name>Periph_clk_override</ipxact:name>
@@ -5373,12 +5383,12 @@ https://fpgasoftware.intel.com/eula.-->
         </ipxact:parameter>
         <ipxact:parameter parameterId="Periph_emaca_src_override" type="int">
           <ipxact:name>Periph_emaca_src_override</ipxact:name>
-          <ipxact:displayName>EMAC 50MHz Clock Source Select</ipxact:displayName>
+          <ipxact:displayName>EMAC 250MHz Clock Source Select</ipxact:displayName>
           <ipxact:value>7</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="Periph_emacb_src_override" type="int">
           <ipxact:name>Periph_emacb_src_override</ipxact:name>
-          <ipxact:displayName>EMAC 250MHz Clock Source Select</ipxact:displayName>
+          <ipxact:displayName>EMAC 50MHz Clock Source Select</ipxact:displayName>
           <ipxact:value>7</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="Periph_emac_ptp_src_override" type="int">
@@ -5475,6 +5485,11 @@ https://fpgasoftware.intel.com/eula.-->
           <ipxact:name>Pwr_boot_core_sel</ipxact:name>
           <ipxact:displayName>Boot Core Selection</ipxact:displayName>
           <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="Pwr_override_cache_size" type="bit">
+          <ipxact:name>Pwr_override_cache_size</ipxact:name>
+          <ipxact:displayName>Override Default MPU L3 Cache Size</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="Pwr_mpu_l3_cache_size" type="int">
           <ipxact:name>Pwr_mpu_l3_cache_size</ipxact:name>
@@ -6556,6 +6571,136 @@ https://fpgasoftware.intel.com/eula.-->
           <ipxact:displayName>EMIF Topology</ipxact:displayName>
           <ipxact:value>1</ipxact:value>
         </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_h2f_connectivity" type="int">
+          <ipxact:name>ED_h2f_connectivity</ipxact:name>
+          <ipxact:displayName>Enable</ipxact:displayName>
+          <ipxact:value>1</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_h2f_data_width" type="int">
+          <ipxact:name>ED_h2f_data_width</ipxact:name>
+          <ipxact:displayName>Data Width</ipxact:displayName>
+          <ipxact:value>128</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_h2f_addr_width" type="int">
+          <ipxact:name>ED_h2f_addr_width</ipxact:name>
+          <ipxact:displayName>Address Width</ipxact:displayName>
+          <ipxact:value>26</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_lwh2f_connectivity" type="int">
+          <ipxact:name>ED_lwh2f_connectivity</ipxact:name>
+          <ipxact:displayName>Enable</ipxact:displayName>
+          <ipxact:value>1</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_lwh2f_data_width" type="int">
+          <ipxact:name>ED_lwh2f_data_width</ipxact:name>
+          <ipxact:displayName>Data Width</ipxact:displayName>
+          <ipxact:value>32</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_lwh2f_addr_width" type="int">
+          <ipxact:name>ED_lwh2f_addr_width</ipxact:name>
+          <ipxact:displayName>Address Width</ipxact:displayName>
+          <ipxact:value>26</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_f2sdram_connectivity" type="int">
+          <ipxact:name>ED_f2sdram_connectivity</ipxact:name>
+          <ipxact:displayName>Enable</ipxact:displayName>
+          <ipxact:value>1</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_f2sdram_data_width" type="int">
+          <ipxact:name>ED_f2sdram_data_width</ipxact:name>
+          <ipxact:displayName>Data Width</ipxact:displayName>
+          <ipxact:value>256</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_f2sdram_addr_width" type="int">
+          <ipxact:name>ED_f2sdram_addr_width</ipxact:name>
+          <ipxact:displayName>Address Width</ipxact:displayName>
+          <ipxact:value>40</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_f2h_connectivity" type="int">
+          <ipxact:name>ED_f2h_connectivity</ipxact:name>
+          <ipxact:displayName>Enable</ipxact:displayName>
+          <ipxact:value>1</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_f2h_data_width" type="int">
+          <ipxact:name>ED_f2h_data_width</ipxact:name>
+          <ipxact:displayName>Data Width</ipxact:displayName>
+          <ipxact:value>256</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_f2h_addr_width" type="int">
+          <ipxact:name>ED_f2h_addr_width</ipxact:name>
+          <ipxact:displayName>Address Width</ipxact:displayName>
+          <ipxact:value>38</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_h2f_packet_size" type="int">
+          <ipxact:name>ED_h2f_packet_size</ipxact:name>
+          <ipxact:displayName>H2F Packet Size</ipxact:displayName>
+          <ipxact:value>1</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_h2f_traffic_pattern" type="int">
+          <ipxact:name>ED_h2f_traffic_pattern</ipxact:name>
+          <ipxact:displayName>H2F Traffic</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_lwh2f_packet_size" type="int">
+          <ipxact:name>ED_lwh2f_packet_size</ipxact:name>
+          <ipxact:displayName>LWH2F Packet Size</ipxact:displayName>
+          <ipxact:value>1</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_lwh2f_traffic_pattern" type="int">
+          <ipxact:name>ED_lwh2f_traffic_pattern</ipxact:name>
+          <ipxact:displayName>LWH2F Traffic</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_f2sdram_packet_size" type="int">
+          <ipxact:name>ED_f2sdram_packet_size</ipxact:name>
+          <ipxact:displayName>F2SDRAM Packet Size</ipxact:displayName>
+          <ipxact:value>1</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_f2sdram_traffic_pattern" type="int">
+          <ipxact:name>ED_f2sdram_traffic_pattern</ipxact:name>
+          <ipxact:displayName>F2SDRAM Traffic</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_f2h_packet_size" type="int">
+          <ipxact:name>ED_f2h_packet_size</ipxact:name>
+          <ipxact:displayName>F2H Packet Size</ipxact:displayName>
+          <ipxact:value>1</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_f2h_traffic_pattern" type="int">
+          <ipxact:name>ED_f2h_traffic_pattern</ipxact:name>
+          <ipxact:displayName>F2H Traffic</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_en_synth_gen" type="bit">
+          <ipxact:name>ED_en_synth_gen</ipxact:name>
+          <ipxact:displayName>Generate Synthesis Files</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_en_sim_gen" type="bit">
+          <ipxact:name>ED_en_sim_gen</ipxact:name>
+          <ipxact:displayName>Generate Simulation Files</ipxact:displayName>
+          <ipxact:value>true</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_en_questa" type="bit">
+          <ipxact:name>ED_en_questa</ipxact:name>
+          <ipxact:displayName>Generate Questa Run Script</ipxact:displayName>
+          <ipxact:value>true</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_en_vcsmx" type="bit">
+          <ipxact:name>ED_en_vcsmx</ipxact:name>
+          <ipxact:displayName>Generate Three-Step VCS Run Script</ipxact:displayName>
+          <ipxact:value>true</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_en_riviera" type="bit">
+          <ipxact:name>ED_en_riviera</ipxact:name>
+          <ipxact:displayName>Generate Riviera Pro Run Script</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ED_en_xcelium" type="bit">
+          <ipxact:name>ED_en_xcelium</ipxact:name>
+          <ipxact:displayName>Generate Xcelium Run Script</ipxact:displayName>
+          <ipxact:value>true</ipxact:value>
+        </ipxact:parameter>
         <ipxact:parameter parameterId="AUTO_DEVICE_SPEEDGRADE" type="string">
           <ipxact:name>AUTO_DEVICE_SPEEDGRADE</ipxact:name>
           <ipxact:displayName>Auto DEVICE_SPEEDGRADE</ipxact:displayName>
@@ -7075,6 +7220,10 @@ https://fpgasoftware.intel.com/eula.-->
                     &lt;entry&gt;
                         &lt;key&gt;associatedReset&lt;/key&gt;
                         &lt;value&gt;hps2fpga_axi_reset&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
+                        &lt;key&gt;optionalAssociatedReset&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
                     &lt;/entry&gt;
                     &lt;entry&gt;
                         &lt;key&gt;trustzoneAware&lt;/key&gt;
@@ -8087,6 +8236,10 @@ https://fpgasoftware.intel.com/eula.-->
                         &lt;value&gt;f2sdram_axi_reset&lt;/value&gt;
                     &lt;/entry&gt;
                     &lt;entry&gt;
+                        &lt;key&gt;optionalAssociatedReset&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
                         &lt;key&gt;trustzoneAware&lt;/key&gt;
                         &lt;value&gt;true&lt;/value&gt;
                     &lt;/entry&gt;
@@ -8826,7 +8979,6 @@ https://fpgasoftware.intel.com/eula.-->
       </ipxact:parameters>
     </altera:altera_system_parameters>
     <altera:altera_interface_boundary>
-      <altera:interface_mapping altera:name="emac0_app_rst" altera:internal="intel_agilex_5_soc_inst.emac0_app_rst"></altera:interface_mapping>
       <altera:interface_mapping altera:name="emac2_app_rst" altera:internal="intel_agilex_5_soc_inst.emac2_app_rst" altera:type="reset" altera:dir="start">
         <altera:port_mapping altera:name="emac2_app_rst_reset_n" altera:internal="emac2_app_rst_reset_n"></altera:port_mapping>
       </altera:interface_mapping>

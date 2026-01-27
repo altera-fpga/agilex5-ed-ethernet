@@ -102,5 +102,5 @@ assign ehip_if.p0_egress_eop   = `SM_ETH_EHIP_PORT0.o_rx_endofpacket;
 assign ehip_if.p0_egress_error = `SM_ETH_EHIP_PORT0.o_rx_error;
 // ----------------------------------------------------------------------------------------------------------------
 
-initial
-  force `SM_ETH_QSYS_TOP.reset_reset_n = sm_eth_reset_if.resetn;
+// initial
+//   force `SM_ETH_QSYS_TOP.reset_reset_n = sm_eth_reset_if.resetn;

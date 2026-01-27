@@ -324,9 +324,9 @@ https://fpgasoftware.intel.com/eula.-->
           <ipxact:value>&lt;systemInfosDefinition&gt;
     &lt;connPtSystemInfos&gt;
         &lt;entry&gt;
-            &lt;key&gt;axi4lite_pktcli_0_m0&lt;/key&gt;
+            &lt;key&gt;axi4lite_packetsw_m0&lt;/key&gt;
             &lt;value&gt;
-                &lt;connectionPointName&gt;axi4lite_pktcli_0_m0&lt;/connectionPointName&gt;
+                &lt;connectionPointName&gt;axi4lite_packetsw_m0&lt;/connectionPointName&gt;
                 &lt;suppliedSystemInfos&gt;
                     &lt;entry&gt;
                         &lt;key&gt;ADDRESS_MAP&lt;/key&gt;
@@ -339,9 +339,9 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;/value&gt;
         &lt;/entry&gt;
         &lt;entry&gt;
-            &lt;key&gt;axi4lite_ptpbridge_m0&lt;/key&gt;
+            &lt;key&gt;axi4lite_pktcli_0_m0&lt;/key&gt;
             &lt;value&gt;
-                &lt;connectionPointName&gt;axi4lite_ptpbridge_m0&lt;/connectionPointName&gt;
+                &lt;connectionPointName&gt;axi4lite_pktcli_0_m0&lt;/connectionPointName&gt;
                 &lt;suppliedSystemInfos&gt;
                     &lt;entry&gt;
                         &lt;key&gt;ADDRESS_MAP&lt;/key&gt;
@@ -1264,7 +1264,7 @@ https://fpgasoftware.intel.com/eula.-->
     &lt;originalModuleInfo&gt;
         &lt;className&gt;mm_ccb&lt;/className&gt;
         &lt;version&gt;19.3.0&lt;/version&gt;
-        &lt;displayName&gt;Avalon Memory Mapped Clock Crossing Bridge Intel FPGA IP&lt;/displayName&gt;
+        &lt;displayName&gt;Avalon Memory Mapped Clock Crossing Bridge IP&lt;/displayName&gt;
     &lt;/originalModuleInfo&gt;
     &lt;systemInfoParameterDescriptors&gt;
         &lt;descriptors&gt;
@@ -1313,6 +1313,18 @@ https://fpgasoftware.intel.com/eula.-->
         &lt;/connPtSystemInfos&gt;
     &lt;/systemInfos&gt;
 &lt;/componentDefinition&gt;</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter parameterId="cpuHashInfo" type="string">
+              <ipxact:name>cpuHashInfo</ipxact:name>
+              <ipxact:displayName>CPU Hash Info</ipxact:displayName>
+              <ipxact:value>&lt;cpuHashInfoDefinition&gt;
+    &lt;cpuHashInfoMap&gt;
+        &lt;entry&gt;
+            &lt;key&gt;cdc_fifo_125_100.m0&lt;/key&gt;
+            &lt;value&gt;1:&lt;/value&gt;
+        &lt;/entry&gt;
+    &lt;/cpuHashInfoMap&gt;
+&lt;/cpuHashInfoDefinition&gt;</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter parameterId="cpuInfo" type="string">
               <ipxact:name>cpuInfo</ipxact:name>
@@ -2047,30 +2059,35 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;fileSetFixedName&gt;qsys_top_mm_ccb_0&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;QUARTUS_SYNTH&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;qsys_top_mm_ccb_0&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;qsys_top_mm_ccb_0&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VERILOG&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;qsys_top_mm_ccb_0&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;qsys_top_mm_ccb_0&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;qsys_top_mm_ccb_0&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;qsys_top_mm_ccb_0&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;qsys_top_mm_ccb_0&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;qsys_top_mm_ccb_0&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
     &lt;/fileSets&gt;
 &lt;/generationInfoDefinition&gt;</ipxact:value>
@@ -2195,6 +2212,7 @@ https://fpgasoftware.intel.com/eula.-->
             </ipxact:parameter>
           </ipxact:parameters>
         </altera:altera_module_parameters>
+        <altera:altera_ecc_parameter_mappings altera:parentModule=""></altera:altera_ecc_parameter_mappings>
       </altera:module>
       <altera:module altera:enabled="true" altera:auto_export="false">
         <altera:entity_info>
@@ -2297,7 +2315,7 @@ https://fpgasoftware.intel.com/eula.-->
     &lt;originalModuleInfo&gt;
         &lt;className&gt;altera_clock_bridge&lt;/className&gt;
         &lt;version&gt;19.2.0&lt;/version&gt;
-        &lt;displayName&gt;Clock Bridge Intel FPGA IP&lt;/displayName&gt;
+        &lt;displayName&gt;Clock Bridge IP&lt;/displayName&gt;
     &lt;/originalModuleInfo&gt;
     &lt;systemInfoParameterDescriptors&gt;
         &lt;descriptors&gt;
@@ -2341,6 +2359,13 @@ https://fpgasoftware.intel.com/eula.-->
         &lt;/connPtSystemInfos&gt;
     &lt;/systemInfos&gt;
 &lt;/componentDefinition&gt;</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter parameterId="cpuHashInfo" type="string">
+              <ipxact:name>cpuHashInfo</ipxact:name>
+              <ipxact:displayName>CPU Hash Info</ipxact:displayName>
+              <ipxact:value>&lt;cpuHashInfoDefinition&gt;
+    &lt;cpuHashInfoMap/&gt;
+&lt;/cpuHashInfoDefinition&gt;</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter parameterId="cpuInfo" type="string">
               <ipxact:name>cpuInfo</ipxact:name>
@@ -2442,30 +2467,35 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;fileSetFixedName&gt;clk_100&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;QUARTUS_SYNTH&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_100&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_100&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VERILOG&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_100&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_100&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_100&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_100&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_100&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_100&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
     &lt;/fileSets&gt;
 &lt;/generationInfoDefinition&gt;</ipxact:value>
@@ -2509,6 +2539,7 @@ https://fpgasoftware.intel.com/eula.-->
             </ipxact:parameter>
           </ipxact:parameters>
         </altera:altera_module_parameters>
+        <altera:altera_ecc_parameter_mappings altera:parentModule=""></altera:altera_ecc_parameter_mappings>
       </altera:module>
       <altera:module altera:enabled="true" altera:auto_export="false">
         <altera:entity_info>
@@ -2611,7 +2642,7 @@ https://fpgasoftware.intel.com/eula.-->
     &lt;originalModuleInfo&gt;
         &lt;className&gt;altera_clock_bridge&lt;/className&gt;
         &lt;version&gt;19.2.0&lt;/version&gt;
-        &lt;displayName&gt;Clock Bridge Intel FPGA IP&lt;/displayName&gt;
+        &lt;displayName&gt;Clock Bridge IP&lt;/displayName&gt;
     &lt;/originalModuleInfo&gt;
     &lt;systemInfoParameterDescriptors&gt;
         &lt;descriptors&gt;
@@ -2655,6 +2686,13 @@ https://fpgasoftware.intel.com/eula.-->
         &lt;/connPtSystemInfos&gt;
     &lt;/systemInfos&gt;
 &lt;/componentDefinition&gt;</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter parameterId="cpuHashInfo" type="string">
+              <ipxact:name>cpuHashInfo</ipxact:name>
+              <ipxact:displayName>CPU Hash Info</ipxact:displayName>
+              <ipxact:value>&lt;cpuHashInfoDefinition&gt;
+    &lt;cpuHashInfoMap/&gt;
+&lt;/cpuHashInfoDefinition&gt;</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter parameterId="cpuInfo" type="string">
               <ipxact:name>cpuInfo</ipxact:name>
@@ -2756,30 +2794,35 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;fileSetFixedName&gt;clk_bdg_100&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;QUARTUS_SYNTH&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_bdg_100&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_bdg_100&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VERILOG&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_bdg_100&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_bdg_100&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_bdg_100&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_bdg_100&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_bdg_100&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_bdg_100&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
     &lt;/fileSets&gt;
 &lt;/generationInfoDefinition&gt;</ipxact:value>
@@ -2823,6 +2866,7 @@ https://fpgasoftware.intel.com/eula.-->
             </ipxact:parameter>
           </ipxact:parameters>
         </altera:altera_module_parameters>
+        <altera:altera_ecc_parameter_mappings altera:parentModule=""></altera:altera_ecc_parameter_mappings>
       </altera:module>
       <altera:module altera:enabled="true" altera:auto_export="false">
         <altera:entity_info>
@@ -2925,7 +2969,7 @@ https://fpgasoftware.intel.com/eula.-->
     &lt;originalModuleInfo&gt;
         &lt;className&gt;altera_clock_bridge&lt;/className&gt;
         &lt;version&gt;19.2.0&lt;/version&gt;
-        &lt;displayName&gt;Clock Bridge Intel FPGA IP&lt;/displayName&gt;
+        &lt;displayName&gt;Clock Bridge IP&lt;/displayName&gt;
     &lt;/originalModuleInfo&gt;
     &lt;systemInfoParameterDescriptors&gt;
         &lt;descriptors&gt;
@@ -2969,6 +3013,13 @@ https://fpgasoftware.intel.com/eula.-->
         &lt;/connPtSystemInfos&gt;
     &lt;/systemInfos&gt;
 &lt;/componentDefinition&gt;</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter parameterId="cpuHashInfo" type="string">
+              <ipxact:name>cpuHashInfo</ipxact:name>
+              <ipxact:displayName>CPU Hash Info</ipxact:displayName>
+              <ipxact:value>&lt;cpuHashInfoDefinition&gt;
+    &lt;cpuHashInfoMap/&gt;
+&lt;/cpuHashInfoDefinition&gt;</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter parameterId="cpuInfo" type="string">
               <ipxact:name>cpuInfo</ipxact:name>
@@ -3070,30 +3121,35 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;fileSetFixedName&gt;clk_bdg_125&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;QUARTUS_SYNTH&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_bdg_125&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_bdg_125&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VERILOG&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_bdg_125&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_bdg_125&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_bdg_125&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_bdg_125&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_bdg_125&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_bdg_125&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
     &lt;/fileSets&gt;
 &lt;/generationInfoDefinition&gt;</ipxact:value>
@@ -3137,6 +3193,7 @@ https://fpgasoftware.intel.com/eula.-->
             </ipxact:parameter>
           </ipxact:parameters>
         </altera:altera_module_parameters>
+        <altera:altera_ecc_parameter_mappings altera:parentModule=""></altera:altera_ecc_parameter_mappings>
       </altera:module>
       <altera:module altera:enabled="true" altera:auto_export="false">
         <altera:entity_info>
@@ -3239,7 +3296,7 @@ https://fpgasoftware.intel.com/eula.-->
     &lt;originalModuleInfo&gt;
         &lt;className&gt;altera_clock_bridge&lt;/className&gt;
         &lt;version&gt;19.2.0&lt;/version&gt;
-        &lt;displayName&gt;Clock Bridge Intel FPGA IP&lt;/displayName&gt;
+        &lt;displayName&gt;Clock Bridge IP&lt;/displayName&gt;
     &lt;/originalModuleInfo&gt;
     &lt;systemInfoParameterDescriptors&gt;
         &lt;descriptors&gt;
@@ -3283,6 +3340,13 @@ https://fpgasoftware.intel.com/eula.-->
         &lt;/connPtSystemInfos&gt;
     &lt;/systemInfos&gt;
 &lt;/componentDefinition&gt;</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter parameterId="cpuHashInfo" type="string">
+              <ipxact:name>cpuHashInfo</ipxact:name>
+              <ipxact:displayName>CPU Hash Info</ipxact:displayName>
+              <ipxact:value>&lt;cpuHashInfoDefinition&gt;
+    &lt;cpuHashInfoMap/&gt;
+&lt;/cpuHashInfoDefinition&gt;</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter parameterId="cpuInfo" type="string">
               <ipxact:name>cpuInfo</ipxact:name>
@@ -3384,30 +3448,35 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;fileSetFixedName&gt;clk_bdg_161&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;QUARTUS_SYNTH&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_bdg_161&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_bdg_161&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VERILOG&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_bdg_161&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_bdg_161&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_bdg_161&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_bdg_161&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;clk_bdg_161&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;clk_bdg_161&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
     &lt;/fileSets&gt;
 &lt;/generationInfoDefinition&gt;</ipxact:value>
@@ -3451,6 +3520,7 @@ https://fpgasoftware.intel.com/eula.-->
             </ipxact:parameter>
           </ipxact:parameters>
         </altera:altera_module_parameters>
+        <altera:altera_ecc_parameter_mappings altera:parentModule=""></altera:altera_ecc_parameter_mappings>
       </altera:module>
       <altera:module altera:enabled="true" altera:auto_export="false">
         <altera:entity_info>
@@ -3661,6 +3731,10 @@ https://fpgasoftware.intel.com/eula.-->
                         &lt;entry&gt;
                             &lt;key&gt;associatedReset&lt;/key&gt;
                             &lt;value&gt;reset&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
+                            &lt;key&gt;optionalAssociatedReset&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
                         &lt;/entry&gt;
                         &lt;entry&gt;
                             &lt;key&gt;trustzoneAware&lt;/key&gt;
@@ -3967,6 +4041,10 @@ https://fpgasoftware.intel.com/eula.-->
                             &lt;value&gt;reset&lt;/value&gt;
                         &lt;/entry&gt;
                         &lt;entry&gt;
+                            &lt;key&gt;optionalAssociatedReset&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
                             &lt;key&gt;trustzoneAware&lt;/key&gt;
                             &lt;value&gt;true&lt;/value&gt;
                         &lt;/entry&gt;
@@ -4230,6 +4308,10 @@ https://fpgasoftware.intel.com/eula.-->
                         &lt;entry&gt;
                             &lt;key&gt;associatedReset&lt;/key&gt;
                             &lt;value&gt;reset&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
+                            &lt;key&gt;optionalAssociatedReset&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
                         &lt;/entry&gt;
                         &lt;entry&gt;
                             &lt;key&gt;trustzoneAware&lt;/key&gt;
@@ -4534,6 +4616,10 @@ https://fpgasoftware.intel.com/eula.-->
                         &lt;entry&gt;
                             &lt;key&gt;associatedReset&lt;/key&gt;
                             &lt;value&gt;reset&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
+                            &lt;key&gt;optionalAssociatedReset&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
                         &lt;/entry&gt;
                         &lt;entry&gt;
                             &lt;key&gt;trustzoneAware&lt;/key&gt;
@@ -5558,6 +5644,10 @@ https://fpgasoftware.intel.com/eula.-->
                             &lt;value&gt;reset&lt;/value&gt;
                         &lt;/entry&gt;
                         &lt;entry&gt;
+                            &lt;key&gt;optionalAssociatedReset&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
                             &lt;key&gt;trustzoneAware&lt;/key&gt;
                             &lt;value&gt;true&lt;/value&gt;
                         &lt;/entry&gt;
@@ -6006,6 +6096,10 @@ https://fpgasoftware.intel.com/eula.-->
                             &lt;value&gt;reset&lt;/value&gt;
                         &lt;/entry&gt;
                         &lt;entry&gt;
+                            &lt;key&gt;optionalAssociatedReset&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
                             &lt;key&gt;trustzoneAware&lt;/key&gt;
                             &lt;value&gt;true&lt;/value&gt;
                         &lt;/entry&gt;
@@ -6263,9 +6357,11 @@ https://fpgasoftware.intel.com/eula.-->
                         &lt;/entry&gt;
                         &lt;entry&gt;
                             &lt;key&gt;associatedClock&lt;/key&gt;
+                            &lt;value&gt;clk&lt;/value&gt;
                         &lt;/entry&gt;
                         &lt;entry&gt;
                             &lt;key&gt;associatedReset&lt;/key&gt;
+                            &lt;value&gt;reset&lt;/value&gt;
                         &lt;/entry&gt;
                         &lt;entry&gt;
                             &lt;key&gt;bitsPerSymbol&lt;/key&gt;
@@ -6567,9 +6663,11 @@ https://fpgasoftware.intel.com/eula.-->
                         &lt;/entry&gt;
                         &lt;entry&gt;
                             &lt;key&gt;associatedClock&lt;/key&gt;
+                            &lt;value&gt;clk&lt;/value&gt;
                         &lt;/entry&gt;
                         &lt;entry&gt;
                             &lt;key&gt;associatedReset&lt;/key&gt;
+                            &lt;value&gt;reset&lt;/value&gt;
                         &lt;/entry&gt;
                         &lt;entry&gt;
                             &lt;key&gt;bitsPerSymbol&lt;/key&gt;
@@ -7067,6 +7165,13 @@ https://fpgasoftware.intel.com/eula.-->
     &lt;/systemInfos&gt;
 &lt;/componentDefinition&gt;</ipxact:value>
             </ipxact:parameter>
+            <ipxact:parameter parameterId="cpuHashInfo" type="string">
+              <ipxact:name>cpuHashInfo</ipxact:name>
+              <ipxact:displayName>CPU Hash Info</ipxact:displayName>
+              <ipxact:value>&lt;cpuHashInfoDefinition&gt;
+    &lt;cpuHashInfoMap/&gt;
+&lt;/cpuHashInfoDefinition&gt;</ipxact:value>
+            </ipxact:parameter>
             <ipxact:parameter parameterId="cpuInfo" type="string">
               <ipxact:name>cpuInfo</ipxact:name>
               <ipxact:displayName>Cpu Info</ipxact:displayName>
@@ -7088,30 +7193,35 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;fileSetFixedName&gt;csr_bridges&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;QUARTUS_SYNTH&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;csr_bridges&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;csr_bridges&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VERILOG&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;csr_bridges&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;csr_bridges&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;csr_bridges&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;csr_bridges&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;csr_bridges&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;csr_bridges&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
     &lt;/fileSets&gt;
 &lt;/generationInfoDefinition&gt;</ipxact:value>
@@ -7155,6 +7265,7 @@ https://fpgasoftware.intel.com/eula.-->
             </ipxact:parameter>
           </ipxact:parameters>
         </altera:altera_module_parameters>
+        <altera:altera_ecc_parameter_mappings altera:parentModule=""></altera:altera_ecc_parameter_mappings>
       </altera:module>
       <altera:module altera:enabled="true" altera:auto_export="false">
         <altera:entity_info>
@@ -7384,8 +7495,8 @@ https://fpgasoftware.intel.com/eula.-->
     &lt;/boundary&gt;
     &lt;originalModuleInfo&gt;
         &lt;className&gt;altera_iopll&lt;/className&gt;
-        &lt;version&gt;20.0.0&lt;/version&gt;
-        &lt;displayName&gt;IOPLL FPGA IP&lt;/displayName&gt;
+        &lt;version&gt;21.0.0&lt;/version&gt;
+        &lt;displayName&gt;IOPLL IP&lt;/displayName&gt;
     &lt;/originalModuleInfo&gt;
     &lt;systemInfoParameterDescriptors&gt;
         &lt;descriptors&gt;
@@ -7455,6 +7566,13 @@ https://fpgasoftware.intel.com/eula.-->
         &lt;/connPtSystemInfos&gt;
     &lt;/systemInfos&gt;
 &lt;/componentDefinition&gt;</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter parameterId="cpuHashInfo" type="string">
+              <ipxact:name>cpuHashInfo</ipxact:name>
+              <ipxact:displayName>CPU Hash Info</ipxact:displayName>
+              <ipxact:value>&lt;cpuHashInfoDefinition&gt;
+    &lt;cpuHashInfoMap/&gt;
+&lt;/cpuHashInfoDefinition&gt;</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter parameterId="cpuInfo" type="string">
               <ipxact:name>cpuInfo</ipxact:name>
@@ -7684,30 +7802,35 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;fileSetFixedName&gt;iopll&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;QUARTUS_SYNTH&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;iopll&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;iopll&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VERILOG&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;iopll&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;iopll&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;iopll&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;iopll&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;iopll&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;iopll&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
     &lt;/fileSets&gt;
 &lt;/generationInfoDefinition&gt;</ipxact:value>
@@ -7764,6 +7887,7 @@ https://fpgasoftware.intel.com/eula.-->
             </ipxact:parameter>
           </ipxact:parameters>
         </altera:altera_module_parameters>
+        <altera:altera_ecc_parameter_mappings altera:parentModule=""></altera:altera_ecc_parameter_mappings>
       </altera:module>
       <altera:module altera:enabled="true" altera:auto_export="false">
         <altera:entity_info>
@@ -7894,7 +8018,7 @@ https://fpgasoftware.intel.com/eula.-->
     &lt;originalModuleInfo&gt;
         &lt;className&gt;altera_reset_bridge&lt;/className&gt;
         &lt;version&gt;19.2.0&lt;/version&gt;
-        &lt;displayName&gt;Reset Bridge Intel FPGA IP&lt;/displayName&gt;
+        &lt;displayName&gt;Reset Bridge IP&lt;/displayName&gt;
     &lt;/originalModuleInfo&gt;
     &lt;systemInfoParameterDescriptors&gt;
         &lt;descriptors&gt;
@@ -7925,6 +8049,13 @@ https://fpgasoftware.intel.com/eula.-->
         &lt;/connPtSystemInfos&gt;
     &lt;/systemInfos&gt;
 &lt;/componentDefinition&gt;</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter parameterId="cpuHashInfo" type="string">
+              <ipxact:name>cpuHashInfo</ipxact:name>
+              <ipxact:displayName>CPU Hash Info</ipxact:displayName>
+              <ipxact:value>&lt;cpuHashInfoDefinition&gt;
+    &lt;cpuHashInfoMap/&gt;
+&lt;/cpuHashInfoDefinition&gt;</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter parameterId="cpuInfo" type="string">
               <ipxact:name>cpuInfo</ipxact:name>
@@ -8054,30 +8185,35 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;fileSetFixedName&gt;rst_bdg_100&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;QUARTUS_SYNTH&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;rst_bdg_100&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;rst_bdg_100&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VERILOG&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;rst_bdg_100&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;rst_bdg_100&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;rst_bdg_100&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;rst_bdg_100&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;rst_bdg_100&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;rst_bdg_100&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
     &lt;/fileSets&gt;
 &lt;/generationInfoDefinition&gt;</ipxact:value>
@@ -8121,6 +8257,7 @@ https://fpgasoftware.intel.com/eula.-->
             </ipxact:parameter>
           </ipxact:parameters>
         </altera:altera_module_parameters>
+        <altera:altera_ecc_parameter_mappings altera:parentModule=""></altera:altera_ecc_parameter_mappings>
       </altera:module>
       <altera:module altera:enabled="true" altera:auto_export="false">
         <altera:entity_info>
@@ -8251,7 +8388,7 @@ https://fpgasoftware.intel.com/eula.-->
     &lt;originalModuleInfo&gt;
         &lt;className&gt;altera_reset_bridge&lt;/className&gt;
         &lt;version&gt;19.2.0&lt;/version&gt;
-        &lt;displayName&gt;Reset Bridge Intel FPGA IP&lt;/displayName&gt;
+        &lt;displayName&gt;Reset Bridge IP&lt;/displayName&gt;
     &lt;/originalModuleInfo&gt;
     &lt;systemInfoParameterDescriptors&gt;
         &lt;descriptors&gt;
@@ -8282,6 +8419,13 @@ https://fpgasoftware.intel.com/eula.-->
         &lt;/connPtSystemInfos&gt;
     &lt;/systemInfos&gt;
 &lt;/componentDefinition&gt;</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter parameterId="cpuHashInfo" type="string">
+              <ipxact:name>cpuHashInfo</ipxact:name>
+              <ipxact:displayName>CPU Hash Info</ipxact:displayName>
+              <ipxact:value>&lt;cpuHashInfoDefinition&gt;
+    &lt;cpuHashInfoMap/&gt;
+&lt;/cpuHashInfoDefinition&gt;</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter parameterId="cpuInfo" type="string">
               <ipxact:name>cpuInfo</ipxact:name>
@@ -8411,30 +8555,35 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;fileSetFixedName&gt;rst_bdg_125&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;QUARTUS_SYNTH&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;rst_bdg_125&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;rst_bdg_125&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VERILOG&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;rst_bdg_125&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;rst_bdg_125&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;rst_bdg_125&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;rst_bdg_125&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;rst_bdg_125&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;rst_bdg_125&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
     &lt;/fileSets&gt;
 &lt;/generationInfoDefinition&gt;</ipxact:value>
@@ -8478,6 +8627,7 @@ https://fpgasoftware.intel.com/eula.-->
             </ipxact:parameter>
           </ipxact:parameters>
         </altera:altera_module_parameters>
+        <altera:altera_ecc_parameter_mappings altera:parentModule=""></altera:altera_ecc_parameter_mappings>
       </altera:module>
       <altera:module altera:enabled="true" altera:auto_export="false">
         <altera:entity_info>
@@ -8608,7 +8758,7 @@ https://fpgasoftware.intel.com/eula.-->
     &lt;originalModuleInfo&gt;
         &lt;className&gt;altera_reset_bridge&lt;/className&gt;
         &lt;version&gt;19.2.0&lt;/version&gt;
-        &lt;displayName&gt;Reset Bridge Intel FPGA IP&lt;/displayName&gt;
+        &lt;displayName&gt;Reset Bridge IP&lt;/displayName&gt;
     &lt;/originalModuleInfo&gt;
     &lt;systemInfoParameterDescriptors&gt;
         &lt;descriptors&gt;
@@ -8639,6 +8789,13 @@ https://fpgasoftware.intel.com/eula.-->
         &lt;/connPtSystemInfos&gt;
     &lt;/systemInfos&gt;
 &lt;/componentDefinition&gt;</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter parameterId="cpuHashInfo" type="string">
+              <ipxact:name>cpuHashInfo</ipxact:name>
+              <ipxact:displayName>CPU Hash Info</ipxact:displayName>
+              <ipxact:value>&lt;cpuHashInfoDefinition&gt;
+    &lt;cpuHashInfoMap/&gt;
+&lt;/cpuHashInfoDefinition&gt;</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter parameterId="cpuInfo" type="string">
               <ipxact:name>cpuInfo</ipxact:name>
@@ -8768,30 +8925,35 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;fileSetFixedName&gt;rst_in&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;QUARTUS_SYNTH&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;rst_in&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;rst_in&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VERILOG&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;rst_in&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;rst_in&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;rst_in&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;rst_in&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;rst_in&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;rst_in&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
     &lt;/fileSets&gt;
 &lt;/generationInfoDefinition&gt;</ipxact:value>
@@ -8835,6 +8997,7 @@ https://fpgasoftware.intel.com/eula.-->
             </ipxact:parameter>
           </ipxact:parameters>
         </altera:altera_module_parameters>
+        <altera:altera_ecc_parameter_mappings altera:parentModule=""></altera:altera_ecc_parameter_mappings>
       </altera:module>
       <altera:module altera:enabled="true" altera:auto_export="false">
         <altera:entity_info>
@@ -9290,6 +9453,10 @@ https://fpgasoftware.intel.com/eula.-->
                         &lt;entry&gt;
                             &lt;key&gt;associatedReset&lt;/key&gt;
                             &lt;value&gt;hps2fpga_rst&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
+                            &lt;key&gt;optionalAssociatedReset&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
                         &lt;/entry&gt;
                         &lt;entry&gt;
                             &lt;key&gt;trustzoneAware&lt;/key&gt;
@@ -9930,7 +10097,7 @@ https://fpgasoftware.intel.com/eula.-->
                         &lt;name&gt;emif_hps_emif_mem_0_mem_dq&lt;/name&gt;
                         &lt;role&gt;mem_dq&lt;/role&gt;
                         &lt;direction&gt;Bidir&lt;/direction&gt;
-                        &lt;width&gt;32&lt;/width&gt;
+                        &lt;width&gt;40&lt;/width&gt;
                         &lt;lowerBound&gt;0&lt;/lowerBound&gt;
                         &lt;vhdlType&gt;STD_LOGIC_VECTOR&lt;/vhdlType&gt;
                         &lt;terminationValue&gt;0&lt;/terminationValue&gt;
@@ -9939,7 +10106,7 @@ https://fpgasoftware.intel.com/eula.-->
                         &lt;name&gt;emif_hps_emif_mem_0_mem_dqs_t&lt;/name&gt;
                         &lt;role&gt;mem_dqs_t&lt;/role&gt;
                         &lt;direction&gt;Bidir&lt;/direction&gt;
-                        &lt;width&gt;4&lt;/width&gt;
+                        &lt;width&gt;5&lt;/width&gt;
                         &lt;lowerBound&gt;0&lt;/lowerBound&gt;
                         &lt;vhdlType&gt;STD_LOGIC_VECTOR&lt;/vhdlType&gt;
                         &lt;terminationValue&gt;0&lt;/terminationValue&gt;
@@ -9948,7 +10115,7 @@ https://fpgasoftware.intel.com/eula.-->
                         &lt;name&gt;emif_hps_emif_mem_0_mem_dqs_c&lt;/name&gt;
                         &lt;role&gt;mem_dqs_c&lt;/role&gt;
                         &lt;direction&gt;Bidir&lt;/direction&gt;
-                        &lt;width&gt;4&lt;/width&gt;
+                        &lt;width&gt;5&lt;/width&gt;
                         &lt;lowerBound&gt;0&lt;/lowerBound&gt;
                         &lt;vhdlType&gt;STD_LOGIC_VECTOR&lt;/vhdlType&gt;
                         &lt;terminationValue&gt;0&lt;/terminationValue&gt;
@@ -10604,6 +10771,10 @@ https://fpgasoftware.intel.com/eula.-->
                             &lt;value&gt;f2sdram_adapter_rst&lt;/value&gt;
                         &lt;/entry&gt;
                         &lt;entry&gt;
+                            &lt;key&gt;optionalAssociatedReset&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
                             &lt;key&gt;trustzoneAware&lt;/key&gt;
                             &lt;value&gt;true&lt;/value&gt;
                         &lt;/entry&gt;
@@ -11035,6 +11206,18 @@ https://fpgasoftware.intel.com/eula.-->
     &lt;/systemInfos&gt;
 &lt;/componentDefinition&gt;</ipxact:value>
             </ipxact:parameter>
+            <ipxact:parameter parameterId="cpuHashInfo" type="string">
+              <ipxact:name>cpuHashInfo</ipxact:name>
+              <ipxact:displayName>CPU Hash Info</ipxact:displayName>
+              <ipxact:value>&lt;cpuHashInfoDefinition&gt;
+    &lt;cpuHashInfoMap&gt;
+        &lt;entry&gt;
+            &lt;key&gt;subsys_hps.hps2fpga&lt;/key&gt;
+            &lt;value&gt;1:&lt;/value&gt;
+        &lt;/entry&gt;
+    &lt;/cpuHashInfoMap&gt;
+&lt;/cpuHashInfoDefinition&gt;</ipxact:value>
+            </ipxact:parameter>
             <ipxact:parameter parameterId="cpuInfo" type="string">
               <ipxact:name>cpuInfo</ipxact:name>
               <ipxact:displayName>Cpu Info</ipxact:displayName>
@@ -11056,30 +11239,35 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;fileSetFixedName&gt;hps_subsys&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;QUARTUS_SYNTH&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;hps_subsys&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;hps_subsys&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VERILOG&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;hps_subsys&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;hps_subsys&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;hps_subsys&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;hps_subsys&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;hps_subsys&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;hps_subsys&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
     &lt;/fileSets&gt;
 &lt;/generationInfoDefinition&gt;</ipxact:value>
@@ -11123,6 +11311,7 @@ https://fpgasoftware.intel.com/eula.-->
             </ipxact:parameter>
           </ipxact:parameters>
         </altera:altera_module_parameters>
+        <altera:altera_ecc_parameter_mappings altera:parentModule=""></altera:altera_ecc_parameter_mappings>
       </altera:module>
       <altera:module altera:enabled="true" altera:auto_export="false">
         <altera:entity_info>
@@ -11405,6 +11594,10 @@ https://fpgasoftware.intel.com/eula.-->
                             &lt;key&gt;associatedReset&lt;/key&gt;
                             &lt;value&gt;hssi_rst_tx&lt;/value&gt;
                         &lt;/entry&gt;
+                        &lt;entry&gt;
+                            &lt;key&gt;optionalAssociatedReset&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
                     &lt;/parameterValueMap&gt;
                 &lt;/parameters&gt;
             &lt;/interface&gt;
@@ -11471,6 +11664,10 @@ https://fpgasoftware.intel.com/eula.-->
                         &lt;entry&gt;
                             &lt;key&gt;associatedReset&lt;/key&gt;
                             &lt;value&gt;hssi_rst_rx&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
+                            &lt;key&gt;optionalAssociatedReset&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
                         &lt;/entry&gt;
                     &lt;/parameterValueMap&gt;
                 &lt;/parameters&gt;
@@ -14083,6 +14280,38 @@ https://fpgasoftware.intel.com/eula.-->
     &lt;/systemInfos&gt;
 &lt;/componentDefinition&gt;</ipxact:value>
             </ipxact:parameter>
+            <ipxact:parameter parameterId="cpuHashInfo" type="string">
+              <ipxact:name>cpuHashInfo</ipxact:name>
+              <ipxact:displayName>CPU Hash Info</ipxact:displayName>
+              <ipxact:value>&lt;cpuHashInfoDefinition&gt;
+    &lt;cpuHashInfoMap&gt;
+        &lt;entry&gt;
+            &lt;key&gt;subsys_msgdma.msgdma_prefetcher_rx_descriptor_write_master&lt;/key&gt;
+            &lt;value&gt;1:&lt;/value&gt;
+        &lt;/entry&gt;
+        &lt;entry&gt;
+            &lt;key&gt;subsys_msgdma.msgdma_prefetcher_tx_descriptor_read_master&lt;/key&gt;
+            &lt;value&gt;1:&lt;/value&gt;
+        &lt;/entry&gt;
+        &lt;entry&gt;
+            &lt;key&gt;subsys_msgdma.msgdma_prefetcher_tx_descriptor_write_master&lt;/key&gt;
+            &lt;value&gt;1:&lt;/value&gt;
+        &lt;/entry&gt;
+        &lt;entry&gt;
+            &lt;key&gt;subsys_msgdma.msgdma_write_master_rx_data_write_master&lt;/key&gt;
+            &lt;value&gt;1:&lt;/value&gt;
+        &lt;/entry&gt;
+        &lt;entry&gt;
+            &lt;key&gt;subsys_msgdma.msgdma_prefetcher_rx_descriptor_read_master&lt;/key&gt;
+            &lt;value&gt;1:&lt;/value&gt;
+        &lt;/entry&gt;
+        &lt;entry&gt;
+            &lt;key&gt;subsys_msgdma.msgdma_read_master_tx_data_read_master&lt;/key&gt;
+            &lt;value&gt;1:&lt;/value&gt;
+        &lt;/entry&gt;
+    &lt;/cpuHashInfoMap&gt;
+&lt;/cpuHashInfoDefinition&gt;</ipxact:value>
+            </ipxact:parameter>
             <ipxact:parameter parameterId="cpuInfo" type="string">
               <ipxact:name>cpuInfo</ipxact:name>
               <ipxact:displayName>Cpu Info</ipxact:displayName>
@@ -14104,30 +14333,35 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;fileSetFixedName&gt;subsys_msgdma&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;QUARTUS_SYNTH&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;subsys_msgdma&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;subsys_msgdma&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VERILOG&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;subsys_msgdma&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;subsys_msgdma&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;subsys_msgdma&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;subsys_msgdma&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;subsys_msgdma&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;subsys_msgdma&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
     &lt;/fileSets&gt;
 &lt;/generationInfoDefinition&gt;</ipxact:value>
@@ -14171,6 +14405,7 @@ https://fpgasoftware.intel.com/eula.-->
             </ipxact:parameter>
           </ipxact:parameters>
         </altera:altera_module_parameters>
+        <altera:altera_ecc_parameter_mappings altera:parentModule=""></altera:altera_ecc_parameter_mappings>
       </altera:module>
       <altera:module altera:enabled="true" altera:auto_export="false">
         <altera:entity_info>
@@ -14230,7 +14465,7 @@ https://fpgasoftware.intel.com/eula.-->
     &lt;originalModuleInfo&gt;
         &lt;className&gt;intel_user_rst_clkgate&lt;/className&gt;
         &lt;version&gt;1.0.1&lt;/version&gt;
-        &lt;displayName&gt;Agilex Reset Release IP&lt;/displayName&gt;
+        &lt;displayName&gt;Reset Release IP&lt;/displayName&gt;
     &lt;/originalModuleInfo&gt;
     &lt;systemInfoParameterDescriptors&gt;
         &lt;descriptors&gt;
@@ -14246,6 +14481,13 @@ https://fpgasoftware.intel.com/eula.-->
         &lt;connPtSystemInfos/&gt;
     &lt;/systemInfos&gt;
 &lt;/componentDefinition&gt;</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter parameterId="cpuHashInfo" type="string">
+              <ipxact:name>cpuHashInfo</ipxact:name>
+              <ipxact:displayName>CPU Hash Info</ipxact:displayName>
+              <ipxact:value>&lt;cpuHashInfoDefinition&gt;
+    &lt;cpuHashInfoMap/&gt;
+&lt;/cpuHashInfoDefinition&gt;</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter parameterId="cpuInfo" type="string">
               <ipxact:name>cpuInfo</ipxact:name>
@@ -14304,30 +14546,35 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;fileSetFixedName&gt;user_rst_clkgate_0&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;QUARTUS_SYNTH&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;user_rst_clkgate_0&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;user_rst_clkgate_0&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VERILOG&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;user_rst_clkgate_0&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;user_rst_clkgate_0&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;user_rst_clkgate_0&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;user_rst_clkgate_0&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
             &lt;fileSetName&gt;user_rst_clkgate_0&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;user_rst_clkgate_0&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
+            &lt;fileSetFileChangeDefs/&gt;
         &lt;/fileSet&gt;
     &lt;/fileSets&gt;
 &lt;/generationInfoDefinition&gt;</ipxact:value>
@@ -14371,10 +14618,11 @@ https://fpgasoftware.intel.com/eula.-->
             </ipxact:parameter>
           </ipxact:parameters>
         </altera:altera_module_parameters>
+        <altera:altera_ecc_parameter_mappings altera:parentModule=""></altera:altera_ecc_parameter_mappings>
       </altera:module>
     </altera:modules>
     <altera:connections>
-      <altera:connection altera:kind="avalon" altera:version="25.1" altera:start="subsys_hps.hps2fpga" altera:end="csr_bridges_0.axi4lite_pktcli_0_s0">
+      <altera:connection altera:kind="avalon" altera:version="25.3" altera:start="subsys_hps.hps2fpga" altera:end="csr_bridges_0.axi4lite_pktcli_0_s0">
         <altera:connection_parameter altera:parameter_name="arbitrationPriority" altera:parameter_value="1"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="baseAddress" altera:parameter_value="0x10000000"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="defaultConnection" altera:parameter_value="false"></altera:connection_parameter>
@@ -14395,7 +14643,7 @@ https://fpgasoftware.intel.com/eula.-->
         <altera:connection_parameter altera:parameter_name="qsys_mm.syncResets" altera:parameter_value="TRUE"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="qsys_mm.widthAdapterImplementation" altera:parameter_value="GENERIC_CONVERTER"></altera:connection_parameter>
       </altera:connection>
-      <altera:connection altera:kind="avalon" altera:version="25.1" altera:start="subsys_hps.hps2fpga" altera:end="csr_bridges_0.axi4lite_ptpbridge_s0">
+      <altera:connection altera:kind="avalon" altera:version="25.3" altera:start="subsys_hps.hps2fpga" altera:end="csr_bridges_0.axi4lite_ptpbridge_s0">
         <altera:connection_parameter altera:parameter_name="arbitrationPriority" altera:parameter_value="1"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="baseAddress" altera:parameter_value="0x10010000"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="defaultConnection" altera:parameter_value="false"></altera:connection_parameter>
@@ -14416,7 +14664,7 @@ https://fpgasoftware.intel.com/eula.-->
         <altera:connection_parameter altera:parameter_name="qsys_mm.syncResets" altera:parameter_value="TRUE"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="qsys_mm.widthAdapterImplementation" altera:parameter_value="GENERIC_CONVERTER"></altera:connection_parameter>
       </altera:connection>
-      <altera:connection altera:kind="avalon" altera:version="25.1" altera:start="subsys_hps.hps2fpga" altera:end="csr_bridges_0.qhip_port_0_s0">
+      <altera:connection altera:kind="avalon" altera:version="25.3" altera:start="subsys_hps.hps2fpga" altera:end="csr_bridges_0.qhip_port_0_s0">
         <altera:connection_parameter altera:parameter_name="arbitrationPriority" altera:parameter_value="1"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="baseAddress" altera:parameter_value="0x00300000"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="defaultConnection" altera:parameter_value="false"></altera:connection_parameter>
@@ -14437,7 +14685,7 @@ https://fpgasoftware.intel.com/eula.-->
         <altera:connection_parameter altera:parameter_name="qsys_mm.syncResets" altera:parameter_value="TRUE"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="qsys_mm.widthAdapterImplementation" altera:parameter_value="GENERIC_CONVERTER"></altera:connection_parameter>
       </altera:connection>
-      <altera:connection altera:kind="avalon" altera:version="25.1" altera:start="subsys_hps.hps2fpga" altera:end="csr_bridges_0.qsfp_cntlr_axi_bdg_s0">
+      <altera:connection altera:kind="avalon" altera:version="25.3" altera:start="subsys_hps.hps2fpga" altera:end="csr_bridges_0.qsfp_cntlr_axi_bdg_s0">
         <altera:connection_parameter altera:parameter_name="arbitrationPriority" altera:parameter_value="1"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="baseAddress" altera:parameter_value="0x04040000"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="defaultConnection" altera:parameter_value="false"></altera:connection_parameter>
@@ -14458,7 +14706,7 @@ https://fpgasoftware.intel.com/eula.-->
         <altera:connection_parameter altera:parameter_name="qsys_mm.syncResets" altera:parameter_value="TRUE"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="qsys_mm.widthAdapterImplementation" altera:parameter_value="GENERIC_CONVERTER"></altera:connection_parameter>
       </altera:connection>
-      <altera:connection altera:kind="avalon" altera:version="25.1" altera:start="subsys_hps.hps2fpga" altera:end="cdc_fifo_125_100.s0">
+      <altera:connection altera:kind="avalon" altera:version="25.3" altera:start="subsys_hps.hps2fpga" altera:end="cdc_fifo_125_100.s0">
         <altera:connection_parameter altera:parameter_name="arbitrationPriority" altera:parameter_value="1"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="baseAddress" altera:parameter_value="0x05000000"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="defaultConnection" altera:parameter_value="false"></altera:connection_parameter>
@@ -14479,7 +14727,7 @@ https://fpgasoftware.intel.com/eula.-->
         <altera:connection_parameter altera:parameter_name="qsys_mm.syncResets" altera:parameter_value="TRUE"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="qsys_mm.widthAdapterImplementation" altera:parameter_value="GENERIC_CONVERTER"></altera:connection_parameter>
       </altera:connection>
-      <altera:connection altera:kind="avalon" altera:version="25.1" altera:start="subsys_hps.hps2fpga" altera:end="csr_bridges_0.user_space_csr_s0">
+      <altera:connection altera:kind="avalon" altera:version="25.3" altera:start="subsys_hps.hps2fpga" altera:end="csr_bridges_0.user_space_csr_s0">
         <altera:connection_parameter altera:parameter_name="arbitrationPriority" altera:parameter_value="1"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="baseAddress" altera:parameter_value="0x00200000"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="defaultConnection" altera:parameter_value="false"></altera:connection_parameter>
@@ -14500,7 +14748,7 @@ https://fpgasoftware.intel.com/eula.-->
         <altera:connection_parameter altera:parameter_name="qsys_mm.syncResets" altera:parameter_value="TRUE"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="qsys_mm.widthAdapterImplementation" altera:parameter_value="GENERIC_CONVERTER"></altera:connection_parameter>
       </altera:connection>
-      <altera:connection altera:kind="avalon" altera:version="25.1" altera:start="cdc_fifo_125_100.m0" altera:end="subsys_msgdma.csr">
+      <altera:connection altera:kind="avalon" altera:version="25.3" altera:start="cdc_fifo_125_100.m0" altera:end="subsys_msgdma.csr">
         <altera:connection_parameter altera:parameter_name="arbitrationPriority" altera:parameter_value="1"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="baseAddress" altera:parameter_value="0x0000"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="defaultConnection" altera:parameter_value="false"></altera:connection_parameter>
@@ -14521,7 +14769,7 @@ https://fpgasoftware.intel.com/eula.-->
         <altera:connection_parameter altera:parameter_name="qsys_mm.syncResets" altera:parameter_value="TRUE"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="qsys_mm.widthAdapterImplementation" altera:parameter_value="GENERIC_CONVERTER"></altera:connection_parameter>
       </altera:connection>
-      <altera:connection altera:kind="avalon" altera:version="25.1" altera:start="subsys_msgdma.msgdma_prefetcher_rx_descriptor_read_master" altera:end="subsys_hps.f2sdram_adapter_axi4_sub">
+      <altera:connection altera:kind="avalon" altera:version="25.3" altera:start="subsys_msgdma.msgdma_prefetcher_rx_descriptor_read_master" altera:end="subsys_hps.f2sdram_adapter_axi4_sub">
         <altera:connection_parameter altera:parameter_name="arbitrationPriority" altera:parameter_value="1"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="baseAddress" altera:parameter_value="0x0000"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="defaultConnection" altera:parameter_value="false"></altera:connection_parameter>
@@ -14542,7 +14790,7 @@ https://fpgasoftware.intel.com/eula.-->
         <altera:connection_parameter altera:parameter_name="qsys_mm.syncResets" altera:parameter_value="TRUE"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="qsys_mm.widthAdapterImplementation" altera:parameter_value="GENERIC_CONVERTER"></altera:connection_parameter>
       </altera:connection>
-      <altera:connection altera:kind="avalon" altera:version="25.1" altera:start="subsys_msgdma.msgdma_prefetcher_rx_descriptor_write_master" altera:end="subsys_hps.f2sdram_adapter_axi4_sub">
+      <altera:connection altera:kind="avalon" altera:version="25.3" altera:start="subsys_msgdma.msgdma_prefetcher_rx_descriptor_write_master" altera:end="subsys_hps.f2sdram_adapter_axi4_sub">
         <altera:connection_parameter altera:parameter_name="arbitrationPriority" altera:parameter_value="1"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="baseAddress" altera:parameter_value="0x0000"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="defaultConnection" altera:parameter_value="false"></altera:connection_parameter>
@@ -14563,7 +14811,7 @@ https://fpgasoftware.intel.com/eula.-->
         <altera:connection_parameter altera:parameter_name="qsys_mm.syncResets" altera:parameter_value="TRUE"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="qsys_mm.widthAdapterImplementation" altera:parameter_value="GENERIC_CONVERTER"></altera:connection_parameter>
       </altera:connection>
-      <altera:connection altera:kind="avalon" altera:version="25.1" altera:start="subsys_msgdma.msgdma_prefetcher_tx_descriptor_read_master" altera:end="subsys_hps.f2sdram_adapter_axi4_sub">
+      <altera:connection altera:kind="avalon" altera:version="25.3" altera:start="subsys_msgdma.msgdma_prefetcher_tx_descriptor_read_master" altera:end="subsys_hps.f2sdram_adapter_axi4_sub">
         <altera:connection_parameter altera:parameter_name="arbitrationPriority" altera:parameter_value="1"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="baseAddress" altera:parameter_value="0x0000"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="defaultConnection" altera:parameter_value="false"></altera:connection_parameter>
@@ -14584,7 +14832,7 @@ https://fpgasoftware.intel.com/eula.-->
         <altera:connection_parameter altera:parameter_name="qsys_mm.syncResets" altera:parameter_value="TRUE"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="qsys_mm.widthAdapterImplementation" altera:parameter_value="GENERIC_CONVERTER"></altera:connection_parameter>
       </altera:connection>
-      <altera:connection altera:kind="avalon" altera:version="25.1" altera:start="subsys_msgdma.msgdma_prefetcher_tx_descriptor_write_master" altera:end="subsys_hps.f2sdram_adapter_axi4_sub">
+      <altera:connection altera:kind="avalon" altera:version="25.3" altera:start="subsys_msgdma.msgdma_prefetcher_tx_descriptor_write_master" altera:end="subsys_hps.f2sdram_adapter_axi4_sub">
         <altera:connection_parameter altera:parameter_name="arbitrationPriority" altera:parameter_value="1"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="baseAddress" altera:parameter_value="0x0000"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="defaultConnection" altera:parameter_value="false"></altera:connection_parameter>
@@ -14605,7 +14853,7 @@ https://fpgasoftware.intel.com/eula.-->
         <altera:connection_parameter altera:parameter_name="qsys_mm.syncResets" altera:parameter_value="TRUE"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="qsys_mm.widthAdapterImplementation" altera:parameter_value="GENERIC_CONVERTER"></altera:connection_parameter>
       </altera:connection>
-      <altera:connection altera:kind="avalon" altera:version="25.1" altera:start="subsys_msgdma.msgdma_read_master_tx_data_read_master" altera:end="subsys_hps.f2sdram_adapter_axi4_sub">
+      <altera:connection altera:kind="avalon" altera:version="25.3" altera:start="subsys_msgdma.msgdma_read_master_tx_data_read_master" altera:end="subsys_hps.f2sdram_adapter_axi4_sub">
         <altera:connection_parameter altera:parameter_name="arbitrationPriority" altera:parameter_value="1"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="baseAddress" altera:parameter_value="0x0000"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="defaultConnection" altera:parameter_value="false"></altera:connection_parameter>
@@ -14626,7 +14874,7 @@ https://fpgasoftware.intel.com/eula.-->
         <altera:connection_parameter altera:parameter_name="qsys_mm.syncResets" altera:parameter_value="TRUE"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="qsys_mm.widthAdapterImplementation" altera:parameter_value="GENERIC_CONVERTER"></altera:connection_parameter>
       </altera:connection>
-      <altera:connection altera:kind="avalon" altera:version="25.1" altera:start="subsys_msgdma.msgdma_write_master_rx_data_write_master" altera:end="subsys_hps.f2sdram_adapter_axi4_sub">
+      <altera:connection altera:kind="avalon" altera:version="25.3" altera:start="subsys_msgdma.msgdma_write_master_rx_data_write_master" altera:end="subsys_hps.f2sdram_adapter_axi4_sub">
         <altera:connection_parameter altera:parameter_name="arbitrationPriority" altera:parameter_value="1"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="baseAddress" altera:parameter_value="0x0000"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="defaultConnection" altera:parameter_value="false"></altera:connection_parameter>
@@ -14647,42 +14895,43 @@ https://fpgasoftware.intel.com/eula.-->
         <altera:connection_parameter altera:parameter_name="qsys_mm.syncResets" altera:parameter_value="TRUE"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="qsys_mm.widthAdapterImplementation" altera:parameter_value="GENERIC_CONVERTER"></altera:connection_parameter>
       </altera:connection>
-      <altera:connection altera:kind="clock" altera:version="25.1" altera:start="clk_100.out_clk" altera:end="rst_in.clk"></altera:connection>
-      <altera:connection altera:kind="clock" altera:version="25.1" altera:start="clk_bdg_161_0.out_clk" altera:end="subsys_msgdma.hssi_clk"></altera:connection>
-      <altera:connection altera:kind="clock" altera:version="25.1" altera:start="clk_100.out_clk" altera:end="iopll_0.refclk"></altera:connection>
-      <altera:connection altera:kind="clock" altera:version="25.1" altera:start="iopll_0.outclk0" altera:end="subsys_msgdma.dma_clk_in"></altera:connection>
-      <altera:connection altera:kind="clock" altera:version="25.1" altera:start="iopll_0.outclk0" altera:end="subsys_hps.f2sdram_adapter_clk"></altera:connection>
-      <altera:connection altera:kind="clock" altera:version="25.1" altera:start="iopll_0.outclk0" altera:end="subsys_hps.f2sdram_clk"></altera:connection>
-      <altera:connection altera:kind="clock" altera:version="25.1" altera:start="iopll_0.outclk0" altera:end="clk_bdg_100.in_clk"></altera:connection>
-      <altera:connection altera:kind="clock" altera:version="25.1" altera:start="iopll_0.outclk0" altera:end="cdc_fifo_125_100.m0_clk"></altera:connection>
-      <altera:connection altera:kind="clock" altera:version="25.1" altera:start="iopll_0.outclk1" altera:end="csr_bridges_0.clk"></altera:connection>
-      <altera:connection altera:kind="clock" altera:version="25.1" altera:start="iopll_0.outclk1" altera:end="subsys_hps.hps2fpga_clk"></altera:connection>
-      <altera:connection altera:kind="clock" altera:version="25.1" altera:start="iopll_0.outclk1" altera:end="clk_bdg_125.in_clk"></altera:connection>
-      <altera:connection altera:kind="clock" altera:version="25.1" altera:start="iopll_0.outclk1" altera:end="cdc_fifo_125_100.s0_clk"></altera:connection>
-      <altera:connection altera:kind="interrupt" altera:version="25.1" altera:start="subsys_hps.f2h_irq0_in" altera:end="subsys_msgdma.msgdma_prefetcher_rx_csr_irq">
+      <altera:connection altera:kind="clock" altera:version="25.3" altera:start="clk_100.out_clk" altera:end="rst_in.clk"></altera:connection>
+      <altera:connection altera:kind="clock" altera:version="25.3" altera:start="clk_bdg_161_0.out_clk" altera:end="subsys_msgdma.hssi_clk"></altera:connection>
+      <altera:connection altera:kind="clock" altera:version="25.3" altera:start="clk_100.out_clk" altera:end="iopll_0.refclk"></altera:connection>
+      <altera:connection altera:kind="clock" altera:version="25.3" altera:start="iopll_0.outclk0" altera:end="subsys_msgdma.dma_clk_in"></altera:connection>
+      <altera:connection altera:kind="clock" altera:version="25.3" altera:start="iopll_0.outclk0" altera:end="subsys_hps.f2sdram_adapter_clk"></altera:connection>
+      <altera:connection altera:kind="clock" altera:version="25.3" altera:start="iopll_0.outclk0" altera:end="subsys_hps.f2sdram_clk"></altera:connection>
+      <altera:connection altera:kind="clock" altera:version="25.3" altera:start="iopll_0.outclk0" altera:end="clk_bdg_100.in_clk"></altera:connection>
+      <altera:connection altera:kind="clock" altera:version="25.3" altera:start="iopll_0.outclk0" altera:end="cdc_fifo_125_100.m0_clk"></altera:connection>
+      <altera:connection altera:kind="clock" altera:version="25.3" altera:start="iopll_0.outclk1" altera:end="csr_bridges_0.clk"></altera:connection>
+      <altera:connection altera:kind="clock" altera:version="25.3" altera:start="iopll_0.outclk1" altera:end="subsys_hps.hps2fpga_clk"></altera:connection>
+      <altera:connection altera:kind="clock" altera:version="25.3" altera:start="iopll_0.outclk1" altera:end="clk_bdg_125.in_clk"></altera:connection>
+      <altera:connection altera:kind="clock" altera:version="25.3" altera:start="iopll_0.outclk1" altera:end="cdc_fifo_125_100.s0_clk"></altera:connection>
+      <altera:connection altera:kind="interrupt" altera:version="25.3" altera:start="subsys_hps.f2h_irq0_in" altera:end="subsys_msgdma.msgdma_prefetcher_rx_csr_irq">
         <altera:connection_parameter altera:parameter_name="irqNumber" altera:parameter_value="3"></altera:connection_parameter>
       </altera:connection>
-      <altera:connection altera:kind="interrupt" altera:version="25.1" altera:start="subsys_hps.f2h_irq0_in" altera:end="subsys_msgdma.msgdma_prefetcher_tx_csr_irq">
+      <altera:connection altera:kind="interrupt" altera:version="25.3" altera:start="subsys_hps.f2h_irq0_in" altera:end="subsys_msgdma.msgdma_prefetcher_tx_csr_irq">
         <altera:connection_parameter altera:parameter_name="irqNumber" altera:parameter_value="2"></altera:connection_parameter>
       </altera:connection>
-      <altera:connection altera:kind="reset" altera:version="25.1" altera:start="rst_bdg_100.out_reset" altera:end="subsys_msgdma.dma_rst_in"></altera:connection>
-      <altera:connection altera:kind="reset" altera:version="25.1" altera:start="rst_bdg_100.out_reset" altera:end="subsys_hps.f2sdram_adapter_rst"></altera:connection>
-      <altera:connection altera:kind="reset" altera:version="25.1" altera:start="rst_bdg_100.out_reset" altera:end="subsys_hps.f2sdram_rst"></altera:connection>
-      <altera:connection altera:kind="reset" altera:version="25.1" altera:start="rst_bdg_125.out_reset" altera:end="subsys_hps.hps2fpga_rst"></altera:connection>
-      <altera:connection altera:kind="reset" altera:version="25.1" altera:start="rst_bdg_100.out_reset" altera:end="cdc_fifo_125_100.m0_reset"></altera:connection>
-      <altera:connection altera:kind="reset" altera:version="25.1" altera:start="rst_in.out_reset" altera:end="iopll_0.reset"></altera:connection>
-      <altera:connection altera:kind="reset" altera:version="25.1" altera:start="rst_bdg_125.out_reset" altera:end="csr_bridges_0.reset"></altera:connection>
-      <altera:connection altera:kind="reset" altera:version="25.1" altera:start="rst_bdg_125.out_reset" altera:end="cdc_fifo_125_100.s0_reset"></altera:connection>
+      <altera:connection altera:kind="reset" altera:version="25.3" altera:start="rst_bdg_100.out_reset" altera:end="subsys_msgdma.dma_rst_in"></altera:connection>
+      <altera:connection altera:kind="reset" altera:version="25.3" altera:start="rst_bdg_100.out_reset" altera:end="subsys_hps.f2sdram_adapter_rst"></altera:connection>
+      <altera:connection altera:kind="reset" altera:version="25.3" altera:start="rst_bdg_100.out_reset" altera:end="subsys_hps.f2sdram_rst"></altera:connection>
+      <altera:connection altera:kind="reset" altera:version="25.3" altera:start="rst_bdg_125.out_reset" altera:end="subsys_hps.hps2fpga_rst"></altera:connection>
+      <altera:connection altera:kind="reset" altera:version="25.3" altera:start="rst_bdg_100.out_reset" altera:end="cdc_fifo_125_100.m0_reset"></altera:connection>
+      <altera:connection altera:kind="reset" altera:version="25.3" altera:start="rst_in.out_reset" altera:end="iopll_0.reset"></altera:connection>
+      <altera:connection altera:kind="reset" altera:version="25.3" altera:start="rst_bdg_125.out_reset" altera:end="csr_bridges_0.reset"></altera:connection>
+      <altera:connection altera:kind="reset" altera:version="25.3" altera:start="rst_bdg_125.out_reset" altera:end="cdc_fifo_125_100.s0_reset"></altera:connection>
     </altera:connections>
     <altera:interconnect_requirements></altera:interconnect_requirements>
     <altera:wire_level_connections></altera:wire_level_connections>
     <altera:hdl_parameters></altera:hdl_parameters>
     <altera:hdl_parameter_mappings></altera:hdl_parameter_mappings>
     <altera:preserved_ports_for_debug></altera:preserved_ports_for_debug>
+    <altera:altera_group_hierarchy_contents></altera:altera_group_hierarchy_contents>
     <altera:altera_interface_boundary>
       <altera:interface_mapping altera:name="avst_tx_ptp" altera:internal="subsys_msgdma.avst_axist_bridge_0_avst_tx_ptp" altera:type="conduit" altera:dir="end"></altera:interface_mapping>
+      <altera:interface_mapping altera:name="axi4lite_packetsw_m0" altera:internal="csr_bridges_0.axi4lite_ptpbridge_m0" altera:type="axi4lite" altera:dir="start"></altera:interface_mapping>
       <altera:interface_mapping altera:name="axi4lite_pktcli_0_m0" altera:internal="csr_bridges_0.axi4lite_pktcli_0_m0" altera:type="axi4lite" altera:dir="start"></altera:interface_mapping>
-      <altera:interface_mapping altera:name="axi4lite_ptpbridge_m0" altera:internal="csr_bridges_0.axi4lite_ptpbridge_m0" altera:type="axi4lite" altera:dir="start"></altera:interface_mapping>
       <altera:interface_mapping altera:name="axi_rx_st" altera:internal="subsys_msgdma.avst_axist_bridge_0_axist_rx_if" altera:type="axi4stream" altera:dir="end"></altera:interface_mapping>
       <altera:interface_mapping altera:name="axi_tx_st" altera:internal="subsys_msgdma.avst_axist_bridge_0_axit_tx_if" altera:type="axi4stream" altera:dir="start"></altera:interface_mapping>
       <altera:interface_mapping altera:name="clk_100" altera:internal="clk_100.in_clk" altera:type="clock" altera:dir="end"></altera:interface_mapping>
@@ -14730,11 +14979,11 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:busInterfaces>
           <ipxact:busInterface>
             <ipxact:name>subsys_msgdma.csr</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>cdc_fifo_125_100.m0</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
             <ipxact:master>
               <ipxact:addressSpaceRef addressSpaceRef="cdc_fifo_125_100.m0">
                 <ipxact:baseAddress>0x0000</ipxact:baseAddress>
@@ -14743,60 +14992,60 @@ https://fpgasoftware.intel.com/eula.-->
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>csr_bridges_0.axi4lite_pktcli_0_m0</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="axi4lite" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="axi4lite" version="25.3"></ipxact:busType>
             <ipxact:master></ipxact:master>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>csr_bridges_0.axi4lite_ptpbridge_m0</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="axi4lite" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="axi4lite" version="25.3"></ipxact:busType>
             <ipxact:master></ipxact:master>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>csr_bridges_0.qhip_port_0_m0</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
             <ipxact:master></ipxact:master>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>csr_bridges_0.qsfp_cntlr_axi_bdg_m0</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.3"></ipxact:busType>
             <ipxact:master></ipxact:master>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>csr_bridges_0.user_space_csr_m0</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
             <ipxact:master></ipxact:master>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>csr_bridges_0.axi4lite_pktcli_0_s0</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="axi4lite" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="axi4lite" version="25.3"></ipxact:busType>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>csr_bridges_0.axi4lite_ptpbridge_s0</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="axi4lite" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="axi4lite" version="25.3"></ipxact:busType>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>csr_bridges_0.qhip_port_0_s0</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>csr_bridges_0.qsfp_cntlr_axi_bdg_s0</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.3"></ipxact:busType>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>cdc_fifo_125_100.s0</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>subsys_msgdma.csr</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>csr_bridges_0.user_space_csr_s0</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>subsys_hps.hps2fpga</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.3"></ipxact:busType>
             <ipxact:master>
               <ipxact:addressSpaceRef addressSpaceRef="subsys_hps.hps2fpga">
                 <ipxact:baseAddress>0x0000_0000_1000_0000</ipxact:baseAddress>
@@ -14805,11 +15054,11 @@ https://fpgasoftware.intel.com/eula.-->
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>subsys_hps.f2sdram_adapter_axi4_sub</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.3"></ipxact:busType>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>subsys_msgdma.msgdma_prefetcher_rx_descriptor_read_master</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
             <ipxact:master>
               <ipxact:addressSpaceRef addressSpaceRef="subsys_msgdma.msgdma_prefetcher_rx_descriptor_read_master">
                 <ipxact:baseAddress>0x0000_0000_0000_0000</ipxact:baseAddress>
@@ -14818,11 +15067,11 @@ https://fpgasoftware.intel.com/eula.-->
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>subsys_hps.f2sdram_adapter_axi4_sub</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.3"></ipxact:busType>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>subsys_msgdma.msgdma_prefetcher_rx_descriptor_write_master</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
             <ipxact:master>
               <ipxact:addressSpaceRef addressSpaceRef="subsys_msgdma.msgdma_prefetcher_rx_descriptor_write_master">
                 <ipxact:baseAddress>0x0000_0000_0000_0000</ipxact:baseAddress>
@@ -14831,11 +15080,11 @@ https://fpgasoftware.intel.com/eula.-->
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>subsys_hps.f2sdram_adapter_axi4_sub</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.3"></ipxact:busType>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>subsys_msgdma.msgdma_write_master_rx_data_write_master</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
             <ipxact:master>
               <ipxact:addressSpaceRef addressSpaceRef="subsys_msgdma.msgdma_write_master_rx_data_write_master">
                 <ipxact:baseAddress>0x0000_0000_0000_0000</ipxact:baseAddress>
@@ -14844,11 +15093,11 @@ https://fpgasoftware.intel.com/eula.-->
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>subsys_hps.f2sdram_adapter_axi4_sub</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.3"></ipxact:busType>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>subsys_msgdma.msgdma_prefetcher_tx_descriptor_read_master</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
             <ipxact:master>
               <ipxact:addressSpaceRef addressSpaceRef="subsys_msgdma.msgdma_prefetcher_tx_descriptor_read_master">
                 <ipxact:baseAddress>0x0000_0000_0000_0000</ipxact:baseAddress>
@@ -14857,11 +15106,11 @@ https://fpgasoftware.intel.com/eula.-->
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>subsys_hps.f2sdram_adapter_axi4_sub</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.3"></ipxact:busType>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>subsys_msgdma.msgdma_prefetcher_tx_descriptor_write_master</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
             <ipxact:master>
               <ipxact:addressSpaceRef addressSpaceRef="subsys_msgdma.msgdma_prefetcher_tx_descriptor_write_master">
                 <ipxact:baseAddress>0x0000_0000_0000_0000</ipxact:baseAddress>
@@ -14870,11 +15119,11 @@ https://fpgasoftware.intel.com/eula.-->
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>subsys_hps.f2sdram_adapter_axi4_sub</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="axi4" version="25.3"></ipxact:busType>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>subsys_msgdma.msgdma_read_master_tx_data_read_master</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
             <ipxact:master>
               <ipxact:addressSpaceRef addressSpaceRef="subsys_msgdma.msgdma_read_master_tx_data_read_master">
                 <ipxact:baseAddress>0x0000_0000_0000_0000</ipxact:baseAddress>
