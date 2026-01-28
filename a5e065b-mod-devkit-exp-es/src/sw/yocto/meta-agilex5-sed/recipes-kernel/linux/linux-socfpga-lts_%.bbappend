@@ -1,5 +1,6 @@
 KERNEL_REPO = "git://github.com/altera-fpga/linux-socfpga.git"
-SRCREV = "SED-1x10GE-a5e065b-mdk-Q25.1-Rel-1.1"
+SRCREV = "${AUTOREV}"
+#SRCREV = "SED-1x10GE-a5e065b-mdk-Q25.1-Rel-1.1"
 LINUX_VERSION = "6.12.19"
 KBRANCH = "socfpga-6.12.19-lts-ethernet-sed"
 LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
