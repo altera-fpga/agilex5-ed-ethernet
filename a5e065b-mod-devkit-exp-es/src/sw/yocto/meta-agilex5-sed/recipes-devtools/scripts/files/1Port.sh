@@ -2,11 +2,18 @@
 echo -e "Programming the Basic IP address..."
 echo "8" > /proc/irq/24/smp_affinity && echo "8" > /proc/irq/23/smp_affinity
 
-echo -e "Clearing old packetswitch rules Port - 0..."
+echo -e "Clearing old PacketSwitch rules Port - 0..."
 packetswitch --port 0 --flush-all-keys
-echo -e "Clearing old TC rules Port - 0..."
-tc filter del dev eth1 egress
-tc qdisc del dev eth1 clsact
+
+FILTERS=$(tc filter show dev eth1 egress 2>/dev/null)
+if [[ -z "$FILTERS" ]]; then
+	 echo -e "No Filters attached to eth1. Continuing..."
+else
+	 echo -e "Clearing old TC rules Port - 0..."
+	 tc filter del dev eth1 egress
+	 tc qdisc del dev eth1 clsact
+fi
+
 
 echo -e "Flushing old IPv4 and IPv6 addresses and routes"
 ip addres flush eth1 && ip route flush dev eth1
@@ -39,18 +46,18 @@ fi
 
 ip addr | grep ether
 
-echo -e "Programming the PacketSwitch Port - 0..."
-echo -e "Programming the PacketSwitch Generic rule..."
+echo -e "Programming the Packet Switch Port - 0..."
+echo -e "Programming the Packet Switch Generic rule..."
 packetswitch --port 0 --set-key --key-index 0 --dest-mac "eth1"  --result 0x0
-echo -e "Programming the PacketSwitch - Low priority rules..."
+echo -e "Programming the Packet Switch - Low priority rules..."
 packetswitch --port 0 --set-key --key-index 1 --ethtype 0x0806 --result 0x0
 packetswitch --port 0 --set-key --key-index 2 --ethtype 0x0800 --protocol 0x01 --result 0x0
-echo -e "Programming the PacketSwitch - IPERF 540X to DMA0..."
+echo -e "Programming the Packet Switch - IPERF 540X to DMA0..."
 packetswitch --port 0 --set-key --key-index 3 --ethtype 0x0800 --dest-port 5401 --result 0x0
 packetswitch --port 0 --set-key --key-index 4 --ethtype 0x0800 --dest-port 5402 --result 0x0
 packetswitch --port 0 --set-key --key-index 5 --ethtype 0x0800 --src-port 5401 --result 0x0
 packetswitch --port 0 --set-key --key-index 6 --ethtype 0x0800 --src-port 5402 --result 0x0
-echo -e "Programming the PacketSwitch - PTP Packets to DMA0..."
+echo -e "Programming the Packet Switch - PTP Packets to DMA0..."
 packetswitch --port 0 --set-key --key-index 15 --dest-mac "01:80:C2:00:00:0E" --result 0x0
 packetswitch --port 0 --set-key --key-index 16 --dest-mac "01:1B:19:00:00:00" --result 0x0
 packetswitch --port 0 --set-key --key-index 17 --ethtype 0x88F7 --result 0x0
@@ -60,11 +67,11 @@ if [ -z "$DEVKIT" ]; then
 	echo -e "Devkit value not set. Some packetgenerator confguration may not be set. Please rerun after setting the shell variable <DEVKIT> to 1 or 2."
 else
 	if [ "$DEVKIT" == 1 ]; then
-		echo -e "Programming the PacketSwitch - Port 0 User packets to User port..."
+		echo -e "Programming the Packet Switch - Port 0 User packets to User port..."
 		packetgenerator --device /dev/uio0 --dest-mac "12:34:56:78:0A:2" --src-mac "12:34:56:78:0A:1"
 		packetswitch --set-key --port 0 --key-index 19 --dest-mac "12:34:56:78:0A:1" --result 0x8
 	elif [ "$DEVKIT" == 2 ]; then
-		echo -e "Programming the PacketSwitch - Port 0 User packets to User port..."
+		echo -e "Programming the Packet Switch - Port 0 User packets to User port..."
 		packetgenerator --device /dev/uio0 --dest-mac "12:34:56:78:0A:1" --src-mac "12:34:56:78:0A:2"
 		packetswitch --set-key --port 0 --key-index 19 --dest-mac "12:34:56:78:0A:2" --result 0x8
 	else
@@ -72,7 +79,7 @@ else
 	fi
 fi
 echo -e "Programming the Packet Generator - Port 0"
-packetgenerator --device /dev/uio0 --traffic false --dyn-pkt-mode true --fixed-gap true --pkt-len-mode 0x01 --num-idle-cycles 22 --packet-checker true --num-packets 0xFFFFFFFF --one-shot false --tx-pkt-size 1024 --tx-max-pkt-size 1024
+packetgenerator --device /dev/uio0 --traffic false --fixed-gap true --pkt-len-mode 0x01 --num-idle-cycles 22 --packet-checker true --num-packets 0xFFFFFFFF --one-shot false --tx-pkt-size 1024 --tx-max-pkt-size 1024
 
 echo -e "Programming the IPV6 rules - Port 0"
 echo -e "Setting IPv6 local addresses"
