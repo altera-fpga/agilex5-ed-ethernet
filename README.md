@@ -48,7 +48,6 @@ Building the design is easy with the scripts provided in the repo. Clone the rep
 	
 	$ git clone https://github.com/altera-fpga/agilex5-ed-ethernet.git
 	$ cd agilex5-ed-ethernet
-	$ git checkout SED-1x10GE-a5e065b-mdk-Q25.3-Rel-1.1
 
 
 Follow the below procedure to build the HW and the Software artifacts. 
