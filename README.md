@@ -12,7 +12,7 @@ The primary components in the design are
 - Packet Generator
 - Ethernet MAC IP
 
-![Intel® Agilex™ 5 EthernetvSystem Example Design block diagram](e10g_sed_functional_bd.png)
+![](e10g_sed_functional_bd.png)
 
 
 Important features of the design include
@@ -20,7 +20,7 @@ Important features of the design include
 - Programmable packet routing functionality handled within the Packet Switch module
 - DMA engines to efficiently transfer data between the HPS and Ethernet MAC
 
-For more information, refer to the [insert link here].
+For more information, refer to the [altera github doc](https://altera-fpga.github.io/rel-25.3/embedded-designs/agilex-5/e-series/modular/ethernet/agx5e-ethernet-10g/ug-agx5e-ethernet-10g/).
 
 
 ## Repository Structure
@@ -37,9 +37,9 @@ Directory Structure used in this example design:
 
 ## Project Details
 
-- **Family**: Intel® Agilex™ 5
-- **Quartus Version**: 25.1
-- **Development Kit**: [Agilex™ 5 FPGA E-Series 065B Modular Development Kit](https://www.intel.com/content/www/us/en/products/details/fpga/development-kits/agilex/a5e065b-modular.html)
+- **Family**: Agilex™ 5
+- **Quartus Version**: 25.3
+- **Development Kit**: [Agilex™ 5 FPGA E-Series 065B Modular Development Kit](https://www.altera.com/products/devkit/a1jui000006mvpfmau/agilex-5-fpga-and-soc-e-series-modular-development-kit-es)
 - **Device Part**: A5ED065BB32AE6SR0
 
 ## Getting Started
@@ -48,7 +48,6 @@ Building the design is easy with the scripts provided in the repo. Clone the rep
 	
 	$ git clone https://github.com/altera-fpga/agilex5-ed-ethernet.git
 	$ cd agilex5-ed-ethernet
-	$ git checkout SED-1x10GE-a5e065b-mdk-Q25.1-Rel-1.1
 
 
 Follow the below procedure to build the HW and the Software artifacts. 

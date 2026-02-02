@@ -13,6 +13,7 @@ class sfp_slave_monitor extends uvm_monitor;
   virtual sfp_slave_interface vif;
 
   uvm_analysis_port #(sfp_slave_seq_item) ap_seqitem_port;
+  uvm_analysis_port #(sfp_slave_seq_item) ap_seqitem_port_sb;
 
   function new (string name, uvm_component parent = null);
       super.new(name, parent);
@@ -21,6 +22,7 @@ class sfp_slave_monitor extends uvm_monitor;
   function void build_phase(uvm_phase phase);
       super.build_phase(phase);
       ap_seqitem_port = new("ap_seqitem_port", this);
+      ap_seqitem_port_sb = new("ap_seqitem_port_sb", this);
       if(!uvm_config_db#(virtual sfp_slave_interface)::get(this, "", "vif", vif))
          `uvm_fatal("NOVIF",{"virtual interface must be set for: ",get_full_name(),".vif"});
   endfunction: build_phase
@@ -36,15 +38,17 @@ class sfp_slave_monitor extends uvm_monitor;
         _req_item = create_req_item();
         //Send data object through the analysis port
         ap_seqitem_port.write(_req_item);
+	#5;
+        ap_seqitem_port_sb.write(_req_item);
         @( this.vif.clk);
-        wait(this.vif.waitrequest == 1'b0);
+        /*wait(this.vif.waitrequest == 1'b0);
         if (this.vif.read == 1) begin  //Read operation
            $cast(_read_item, _req_item.clone());
              //read_from_mem_array();
            _read_item.sfp_slv_pkt_type = SFP_SLV_READ;
            _read_item.readdata = this.vif.readdata; 
            ap_seqitem_port.write(_read_item);//Complete Read packet  
-        end
+        end*/
         end     
        end         //End of forever loop
   endtask :run_phase

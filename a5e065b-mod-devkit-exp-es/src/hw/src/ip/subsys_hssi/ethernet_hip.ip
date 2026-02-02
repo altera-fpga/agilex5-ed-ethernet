@@ -13,17 +13,17 @@ Intel and sold by Intel or its authorized distributors.  Please
 refer to the applicable agreement for further details, at
 https://fpgasoftware.intel.com/eula.-->
 <ipxact:component xmlns:altera="http://www.altera.com/XMLSchema/IPXact2014/extensions" xmlns:ipxact="http://www.accellera.org/XMLSchema/IPXACT/1685-2014">
-  <ipxact:vendor>Intel Corporation</ipxact:vendor>
+  <ipxact:vendor>Altera Corporation</ipxact:vendor>
   <ipxact:library>ethernet_hip</ipxact:library>
   <ipxact:name>intel_eth_gts_0</ipxact:name>
-  <ipxact:version>8.0.0</ipxact:version>
+  <ipxact:version>10.0.0</ipxact:version>
   <ipxact:busInterfaces>
     <ipxact:busInterface>
       <ipxact:name>o_clk_pll</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -67,10 +67,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>i_reconfig_clk</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -104,10 +104,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>i_reconfig_reset</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -136,10 +136,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>i_syspll_lock</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -173,10 +173,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>serial</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -234,10 +234,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>i_clk_ref_p</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -271,10 +271,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>i_clk_sys</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -307,48 +307,11 @@ https://fpgasoftware.intel.com/eula.-->
       </ipxact:parameters>
     </ipxact:busInterface>
     <ipxact:busInterface>
-      <ipxact:name>refclk_bus_out</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
-      <ipxact:abstractionTypes>
-        <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
-          <ipxact:portMaps>
-            <ipxact:portMap>
-              <ipxact:logicalPort>
-                <ipxact:name>refclk_bus_out</ipxact:name>
-              </ipxact:logicalPort>
-              <ipxact:physicalPort>
-                <ipxact:name>o_refclk_bus_out</ipxact:name>
-              </ipxact:physicalPort>
-            </ipxact:portMap>
-          </ipxact:portMaps>
-        </ipxact:abstractionType>
-      </ipxact:abstractionTypes>
-      <ipxact:slave></ipxact:slave>
-      <ipxact:parameters>
-        <ipxact:parameter parameterId="associatedClock" type="string">
-          <ipxact:name>associatedClock</ipxact:name>
-          <ipxact:displayName>associatedClock</ipxact:displayName>
-          <ipxact:value></ipxact:value>
-        </ipxact:parameter>
-        <ipxact:parameter parameterId="associatedReset" type="string">
-          <ipxact:name>associatedReset</ipxact:name>
-          <ipxact:displayName>associatedReset</ipxact:displayName>
-          <ipxact:value></ipxact:value>
-        </ipxact:parameter>
-        <ipxact:parameter parameterId="prSafe" type="bit">
-          <ipxact:name>prSafe</ipxact:name>
-          <ipxact:displayName>Partial Reconfiguration Safe</ipxact:displayName>
-          <ipxact:value>false</ipxact:value>
-        </ipxact:parameter>
-      </ipxact:parameters>
-    </ipxact:busInterface>
-    <ipxact:busInterface>
       <ipxact:name>src_rs_req</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -382,10 +345,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>src_rs_grant</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -419,10 +382,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>i_pma_cu_clk</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -456,10 +419,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>reconfig_eth_slave</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -823,10 +786,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>i_rst_n</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -855,10 +818,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>i_tx_rst_n</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -887,10 +850,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>i_rx_rst_n</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -919,10 +882,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>clock_status_ports</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -980,10 +943,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>i_tx_clk</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1017,10 +980,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>i_rx_clk</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1054,10 +1017,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>clk_tx_div</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1101,10 +1064,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>clk_rec_div64</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1148,10 +1111,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>clk_rec_div</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1195,10 +1158,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>reset_status_ports</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1248,10 +1211,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>status_ports_1</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1285,10 +1248,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>status_ports</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1362,10 +1325,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>tx_streaming</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="avalon_streaming" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="avalon_streaming" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon_streaming" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon_streaming" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1502,10 +1465,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>tx_ports</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1539,10 +1502,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>rx_streaming</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="avalon_streaming" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="avalon_streaming" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon_streaming" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon_streaming" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1671,10 +1634,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>rx_ports</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1716,10 +1679,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>pfc_ports</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1761,10 +1724,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>sfc_ports</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="conduit" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1806,10 +1769,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>i_clk_pll</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -16365,18 +16328,6 @@ https://fpgasoftware.intel.com/eula.-->
         </ipxact:wire>
       </ipxact:port>
       <ipxact:port>
-        <ipxact:name>o_refclk_bus_out</ipxact:name>
-        <ipxact:wire>
-          <ipxact:direction>out</ipxact:direction>
-          <ipxact:wireTypeDefs>
-            <ipxact:wireTypeDef>
-              <ipxact:typeName>STD_LOGIC</ipxact:typeName>
-              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
-            </ipxact:wireTypeDef>
-          </ipxact:wireTypeDefs>
-        </ipxact:wire>
-      </ipxact:port>
-      <ipxact:port>
         <ipxact:name>o_src_rs_req</ipxact:name>
         <ipxact:wire>
           <ipxact:direction>out</ipxact:direction>
@@ -17100,10 +17051,10 @@ https://fpgasoftware.intel.com/eula.-->
   </ipxact:model>
   <ipxact:vendorExtensions>
     <altera:entity_info>
-      <ipxact:vendor>Intel Corporation</ipxact:vendor>
+      <ipxact:vendor>Altera Corporation</ipxact:vendor>
       <ipxact:library>ethernet_hip</ipxact:library>
       <ipxact:name>intel_eth_gts</ipxact:name>
-      <ipxact:version>8.0.0</ipxact:version>
+      <ipxact:version>10.0.0</ipxact:version>
     </altera:entity_info>
     <altera:altera_module_parameters>
       <ipxact:parameters>
@@ -17267,6 +17218,11 @@ https://fpgasoftware.intel.com/eula.-->
           <ipxact:displayName>Enable auto-negotiation and link training</ipxact:displayName>
           <ipxact:value>0</ipxact:value>
         </ipxact:parameter>
+        <ipxact:parameter parameterId="HVIO_PLL_ENABLE" type="int">
+          <ipxact:name>HVIO_PLL_ENABLE</ipxact:name>
+          <ipxact:displayName>Use HVIO PLL</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
         <ipxact:parameter parameterId="ENABLE_ADME_GUI" type="int">
           <ipxact:name>ENABLE_ADME_GUI</ipxact:name>
           <ipxact:displayName>Enable debug endpoint for transceiver toolkit</ipxact:displayName>
@@ -17305,6 +17261,16 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="enable_cdr_clkout" type="int">
           <ipxact:name>enable_cdr_clkout</ipxact:name>
           <ipxact:displayName>Enable dedicated CDR clock output</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="P0_hide_ptp_atoms" type="string">
+          <ipxact:name>P0_hide_ptp_atoms</ipxact:name>
+          <ipxact:displayName>P0_hide_ptp_atoms</ipxact:displayName>
+          <ipxact:value>FALSE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="refclk_recovery_en" type="int">
+          <ipxact:name>refclk_recovery_en</ipxact:name>
+          <ipxact:displayName>Enable Clkrx recovery logic</ipxact:displayName>
           <ipxact:value>0</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="P0_ETH_MODE_GUI" type="string">
@@ -17376,6 +17342,41 @@ https://fpgasoftware.intel.com/eula.-->
           <ipxact:name>P6_RSFEC_TYPE_GUI</ipxact:name>
           <ipxact:displayName>FEC mode</ipxact:displayName>
           <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="P1_hide_ptp_atoms" type="string">
+          <ipxact:name>P1_hide_ptp_atoms</ipxact:name>
+          <ipxact:displayName>MRIP HIDE PTP</ipxact:displayName>
+          <ipxact:value>TRUE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="P2_hide_ptp_atoms" type="string">
+          <ipxact:name>P2_hide_ptp_atoms</ipxact:name>
+          <ipxact:displayName>MRIP HIDE PTP</ipxact:displayName>
+          <ipxact:value>TRUE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="P3_hide_ptp_atoms" type="string">
+          <ipxact:name>P3_hide_ptp_atoms</ipxact:name>
+          <ipxact:displayName>MRIP HIDE PTP</ipxact:displayName>
+          <ipxact:value>TRUE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="P4_hide_ptp_atoms" type="string">
+          <ipxact:name>P4_hide_ptp_atoms</ipxact:name>
+          <ipxact:displayName>MRIP HIDE PTP</ipxact:displayName>
+          <ipxact:value>TRUE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="P5_hide_ptp_atoms" type="string">
+          <ipxact:name>P5_hide_ptp_atoms</ipxact:name>
+          <ipxact:displayName>MRIP HIDE PTP</ipxact:displayName>
+          <ipxact:value>TRUE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="P6_hide_ptp_atoms" type="string">
+          <ipxact:name>P6_hide_ptp_atoms</ipxact:name>
+          <ipxact:displayName>MRIP HIDE PTP</ipxact:displayName>
+          <ipxact:value>TRUE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="P7_hide_ptp_atoms" type="string">
+          <ipxact:name>P7_hide_ptp_atoms</ipxact:name>
+          <ipxact:displayName>MRIP HIDE PTP</ipxact:displayName>
+          <ipxact:value>TRUE</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="ENABLE_MRPHY" type="int">
           <ipxact:name>ENABLE_MRPHY</ipxact:name>
@@ -19447,6 +19448,16 @@ https://fpgasoftware.intel.com/eula.-->
           <ipxact:displayName>CH1_SRC_LEADER_LANE</ipxact:displayName>
           <ipxact:value>0</ipxact:value>
         </ipxact:parameter>
+        <ipxact:parameter parameterId="CH_SRC_TX_AVMM_ENABLE" type="int">
+          <ipxact:name>CH_SRC_TX_AVMM_ENABLE</ipxact:name>
+          <ipxact:displayName>CH_SRC_TX_AVMM_ENABLE</ipxact:displayName>
+          <ipxact:value>1</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="CH_SRC_RX_AVMM_ENABLE" type="int">
+          <ipxact:name>CH_SRC_RX_AVMM_ENABLE</ipxact:name>
+          <ipxact:displayName>CH_SRC_RX_AVMM_ENABLE</ipxact:displayName>
+          <ipxact:value>1</ipxact:value>
+        </ipxact:parameter>
         <ipxact:parameter parameterId="ch_xcvr_tx_eq_main_tap" type="string">
           <ipxact:name>ch_xcvr_tx_eq_main_tap</ipxact:name>
           <ipxact:displayName>ch_xcvr_tx_eq_main_tap</ipxact:displayName>
@@ -19541,6 +19552,11 @@ https://fpgasoftware.intel.com/eula.-->
           <ipxact:name>FAST_SIM_ENABLE</ipxact:name>
           <ipxact:displayName>Enable fast simulation</ipxact:displayName>
           <ipxact:value>1</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ENABLE_ANLT_ECC" type="int">
+          <ipxact:name>ENABLE_ANLT_ECC</ipxact:name>
+          <ipxact:displayName>Enable ANLT ECC</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="OPTIMIZED_SIM_ENABLE" type="int">
           <ipxact:name>OPTIMIZED_SIM_ENABLE</ipxact:name>
@@ -19670,6 +19686,566 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="rx_adapt_enable" type="int">
           <ipxact:name>rx_adapt_enable</ipxact:name>
           <ipxact:displayName>rx_adapt_enable</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof0_tx_spread_spectrum_en" type="string">
+          <ipxact:name>prof0_tx_spread_spectrum_en</ipxact:name>
+          <ipxact:displayName>Spread Spectrum</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof0_tx_invert_pin" type="string">
+          <ipxact:name>prof0_tx_invert_pin</ipxact:name>
+          <ipxact:displayName>Enable TX P&amp;N Invert</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof0_ux_txeq_post_tap_1" type="int">
+          <ipxact:name>prof0_ux_txeq_post_tap_1</ipxact:name>
+          <ipxact:displayName>TX EQ Post Tap 1, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof0_ux_txeq_main_tap" type="int">
+          <ipxact:name>prof0_ux_txeq_main_tap</ipxact:name>
+          <ipxact:displayName>TX EQ Main Tap, 1.0 step size</ipxact:displayName>
+          <ipxact:value>55</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof0_ux_txeq_pre_tap_1" type="int">
+          <ipxact:name>prof0_ux_txeq_pre_tap_1</ipxact:name>
+          <ipxact:displayName>TX EQ Pre Tap 1, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof0_ux_txeq_pre_tap_2" type="int">
+          <ipxact:name>prof0_ux_txeq_pre_tap_2</ipxact:name>
+          <ipxact:displayName>TX EQ Pre Tap 2, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof0_rx_adaptation_mode" type="string">
+          <ipxact:name>prof0_rx_adaptation_mode</ipxact:name>
+          <ipxact:displayName>RX Adaptation mode</ipxact:displayName>
+          <ipxact:value>auto</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof0_rx_invert_pin" type="string">
+          <ipxact:name>prof0_rx_invert_pin</ipxact:name>
+          <ipxact:displayName>Enable RX P&amp;N Invert</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof0_rx_external_couple_type" type="string">
+          <ipxact:name>prof0_rx_external_couple_type</ipxact:name>
+          <ipxact:displayName>RX External Coupling Mode</ipxact:displayName>
+          <ipxact:value>AC</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof0_rx_termination_mode" type="string">
+          <ipxact:name>prof0_rx_termination_mode</ipxact:name>
+          <ipxact:displayName>Selects value of RX termination mode</ipxact:displayName>
+          <ipxact:value>GROUNDED</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof0_rx_onchip_termination" type="string">
+          <ipxact:name>prof0_rx_onchip_termination</ipxact:name>
+          <ipxact:displayName>Selects value of RX onchip termination</ipxact:displayName>
+          <ipxact:value>R_2</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof0_rxeq_vga_gain" type="int">
+          <ipxact:name>prof0_rxeq_vga_gain</ipxact:name>
+          <ipxact:displayName>RX EQ VGA Gain</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof0_rxeq_hf_boost" type="int">
+          <ipxact:name>prof0_rxeq_hf_boost</ipxact:name>
+          <ipxact:displayName>RX EQ High Frequency Boost</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof0_rxeq_dfe_tap_1" type="int">
+          <ipxact:name>prof0_rxeq_dfe_tap_1</ipxact:name>
+          <ipxact:displayName>RX EQ DFE Data Tap1</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof0_protocol_hard_pcie_lowloss" type="string">
+          <ipxact:name>prof0_protocol_hard_pcie_lowloss</ipxact:name>
+          <ipxact:displayName>Enable PCIe low loss</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="rx_adapt_enable0" type="int">
+          <ipxact:name>rx_adapt_enable0</ipxact:name>
+          <ipxact:displayName>rx_adapt_enable0</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof1_tx_spread_spectrum_en" type="string">
+          <ipxact:name>prof1_tx_spread_spectrum_en</ipxact:name>
+          <ipxact:displayName>Spread Spectrum</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof1_tx_invert_pin" type="string">
+          <ipxact:name>prof1_tx_invert_pin</ipxact:name>
+          <ipxact:displayName>Enable TX P&amp;N Invert</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof1_ux_txeq_post_tap_1" type="int">
+          <ipxact:name>prof1_ux_txeq_post_tap_1</ipxact:name>
+          <ipxact:displayName>TX EQ Post Tap 1, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof1_ux_txeq_main_tap" type="int">
+          <ipxact:name>prof1_ux_txeq_main_tap</ipxact:name>
+          <ipxact:displayName>TX EQ Main Tap, 1.0 step size</ipxact:displayName>
+          <ipxact:value>55</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof1_ux_txeq_pre_tap_1" type="int">
+          <ipxact:name>prof1_ux_txeq_pre_tap_1</ipxact:name>
+          <ipxact:displayName>TX EQ Pre Tap 1, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof1_ux_txeq_pre_tap_2" type="int">
+          <ipxact:name>prof1_ux_txeq_pre_tap_2</ipxact:name>
+          <ipxact:displayName>TX EQ Pre Tap 2, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof1_rx_adaptation_mode" type="string">
+          <ipxact:name>prof1_rx_adaptation_mode</ipxact:name>
+          <ipxact:displayName>RX Adaptation mode</ipxact:displayName>
+          <ipxact:value>auto</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof1_rx_invert_pin" type="string">
+          <ipxact:name>prof1_rx_invert_pin</ipxact:name>
+          <ipxact:displayName>Enable RX P&amp;N Invert</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof1_rx_external_couple_type" type="string">
+          <ipxact:name>prof1_rx_external_couple_type</ipxact:name>
+          <ipxact:displayName>RX External Coupling Mode</ipxact:displayName>
+          <ipxact:value>AC</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof1_rx_termination_mode" type="string">
+          <ipxact:name>prof1_rx_termination_mode</ipxact:name>
+          <ipxact:displayName>Selects value of RX termination mode</ipxact:displayName>
+          <ipxact:value>GROUNDED</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof1_rx_onchip_termination" type="string">
+          <ipxact:name>prof1_rx_onchip_termination</ipxact:name>
+          <ipxact:displayName>Selects value of RX onchip termination</ipxact:displayName>
+          <ipxact:value>R_2</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof1_rxeq_vga_gain" type="int">
+          <ipxact:name>prof1_rxeq_vga_gain</ipxact:name>
+          <ipxact:displayName>RX EQ VGA Gain</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof1_rxeq_hf_boost" type="int">
+          <ipxact:name>prof1_rxeq_hf_boost</ipxact:name>
+          <ipxact:displayName>RX EQ High Frequency Boost</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof1_rxeq_dfe_tap_1" type="int">
+          <ipxact:name>prof1_rxeq_dfe_tap_1</ipxact:name>
+          <ipxact:displayName>RX EQ DFE Data Tap1</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof1_protocol_hard_pcie_lowloss" type="string">
+          <ipxact:name>prof1_protocol_hard_pcie_lowloss</ipxact:name>
+          <ipxact:displayName>Enable PCIe low loss</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="rx_adapt_enable1" type="int">
+          <ipxact:name>rx_adapt_enable1</ipxact:name>
+          <ipxact:displayName>rx_adapt_enable1</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof2_tx_spread_spectrum_en" type="string">
+          <ipxact:name>prof2_tx_spread_spectrum_en</ipxact:name>
+          <ipxact:displayName>Spread Spectrum</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof2_tx_invert_pin" type="string">
+          <ipxact:name>prof2_tx_invert_pin</ipxact:name>
+          <ipxact:displayName>Enable TX P&amp;N Invert</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof2_ux_txeq_post_tap_1" type="int">
+          <ipxact:name>prof2_ux_txeq_post_tap_1</ipxact:name>
+          <ipxact:displayName>TX EQ Post Tap 1, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof2_ux_txeq_main_tap" type="int">
+          <ipxact:name>prof2_ux_txeq_main_tap</ipxact:name>
+          <ipxact:displayName>TX EQ Main Tap, 1.0 step size</ipxact:displayName>
+          <ipxact:value>55</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof2_ux_txeq_pre_tap_1" type="int">
+          <ipxact:name>prof2_ux_txeq_pre_tap_1</ipxact:name>
+          <ipxact:displayName>TX EQ Pre Tap 1, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof2_ux_txeq_pre_tap_2" type="int">
+          <ipxact:name>prof2_ux_txeq_pre_tap_2</ipxact:name>
+          <ipxact:displayName>TX EQ Pre Tap 2, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof2_rx_adaptation_mode" type="string">
+          <ipxact:name>prof2_rx_adaptation_mode</ipxact:name>
+          <ipxact:displayName>RX Adaptation mode</ipxact:displayName>
+          <ipxact:value>auto</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof2_rx_invert_pin" type="string">
+          <ipxact:name>prof2_rx_invert_pin</ipxact:name>
+          <ipxact:displayName>Enable RX P&amp;N Invert</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof2_rx_external_couple_type" type="string">
+          <ipxact:name>prof2_rx_external_couple_type</ipxact:name>
+          <ipxact:displayName>RX External Coupling Mode</ipxact:displayName>
+          <ipxact:value>AC</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof2_rx_termination_mode" type="string">
+          <ipxact:name>prof2_rx_termination_mode</ipxact:name>
+          <ipxact:displayName>Selects value of RX termination mode</ipxact:displayName>
+          <ipxact:value>GROUNDED</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof2_rx_onchip_termination" type="string">
+          <ipxact:name>prof2_rx_onchip_termination</ipxact:name>
+          <ipxact:displayName>Selects value of RX onchip termination</ipxact:displayName>
+          <ipxact:value>R_2</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof2_rxeq_vga_gain" type="int">
+          <ipxact:name>prof2_rxeq_vga_gain</ipxact:name>
+          <ipxact:displayName>RX EQ VGA Gain</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof2_rxeq_hf_boost" type="int">
+          <ipxact:name>prof2_rxeq_hf_boost</ipxact:name>
+          <ipxact:displayName>RX EQ High Frequency Boost</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof2_rxeq_dfe_tap_1" type="int">
+          <ipxact:name>prof2_rxeq_dfe_tap_1</ipxact:name>
+          <ipxact:displayName>RX EQ DFE Data Tap1</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof2_protocol_hard_pcie_lowloss" type="string">
+          <ipxact:name>prof2_protocol_hard_pcie_lowloss</ipxact:name>
+          <ipxact:displayName>Enable PCIe low loss</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="rx_adapt_enable2" type="int">
+          <ipxact:name>rx_adapt_enable2</ipxact:name>
+          <ipxact:displayName>rx_adapt_enable2</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof3_tx_spread_spectrum_en" type="string">
+          <ipxact:name>prof3_tx_spread_spectrum_en</ipxact:name>
+          <ipxact:displayName>Spread Spectrum</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof3_tx_invert_pin" type="string">
+          <ipxact:name>prof3_tx_invert_pin</ipxact:name>
+          <ipxact:displayName>Enable TX P&amp;N Invert</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof3_ux_txeq_post_tap_1" type="int">
+          <ipxact:name>prof3_ux_txeq_post_tap_1</ipxact:name>
+          <ipxact:displayName>TX EQ Post Tap 1, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof3_ux_txeq_main_tap" type="int">
+          <ipxact:name>prof3_ux_txeq_main_tap</ipxact:name>
+          <ipxact:displayName>TX EQ Main Tap, 1.0 step size</ipxact:displayName>
+          <ipxact:value>55</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof3_ux_txeq_pre_tap_1" type="int">
+          <ipxact:name>prof3_ux_txeq_pre_tap_1</ipxact:name>
+          <ipxact:displayName>TX EQ Pre Tap 1, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof3_ux_txeq_pre_tap_2" type="int">
+          <ipxact:name>prof3_ux_txeq_pre_tap_2</ipxact:name>
+          <ipxact:displayName>TX EQ Pre Tap 2, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof3_rx_adaptation_mode" type="string">
+          <ipxact:name>prof3_rx_adaptation_mode</ipxact:name>
+          <ipxact:displayName>RX Adaptation mode</ipxact:displayName>
+          <ipxact:value>auto</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof3_rx_invert_pin" type="string">
+          <ipxact:name>prof3_rx_invert_pin</ipxact:name>
+          <ipxact:displayName>Enable RX P&amp;N Invert</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof3_rx_external_couple_type" type="string">
+          <ipxact:name>prof3_rx_external_couple_type</ipxact:name>
+          <ipxact:displayName>RX External Coupling Mode</ipxact:displayName>
+          <ipxact:value>AC</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof3_rx_termination_mode" type="string">
+          <ipxact:name>prof3_rx_termination_mode</ipxact:name>
+          <ipxact:displayName>Selects value of RX termination mode</ipxact:displayName>
+          <ipxact:value>GROUNDED</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof3_rx_onchip_termination" type="string">
+          <ipxact:name>prof3_rx_onchip_termination</ipxact:name>
+          <ipxact:displayName>Selects value of RX onchip termination</ipxact:displayName>
+          <ipxact:value>R_2</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof3_rxeq_vga_gain" type="int">
+          <ipxact:name>prof3_rxeq_vga_gain</ipxact:name>
+          <ipxact:displayName>RX EQ VGA Gain</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof3_rxeq_hf_boost" type="int">
+          <ipxact:name>prof3_rxeq_hf_boost</ipxact:name>
+          <ipxact:displayName>RX EQ High Frequency Boost</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof3_rxeq_dfe_tap_1" type="int">
+          <ipxact:name>prof3_rxeq_dfe_tap_1</ipxact:name>
+          <ipxact:displayName>RX EQ DFE Data Tap1</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof3_protocol_hard_pcie_lowloss" type="string">
+          <ipxact:name>prof3_protocol_hard_pcie_lowloss</ipxact:name>
+          <ipxact:displayName>Enable PCIe low loss</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="rx_adapt_enable3" type="int">
+          <ipxact:name>rx_adapt_enable3</ipxact:name>
+          <ipxact:displayName>rx_adapt_enable3</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof4_tx_spread_spectrum_en" type="string">
+          <ipxact:name>prof4_tx_spread_spectrum_en</ipxact:name>
+          <ipxact:displayName>Spread Spectrum</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof4_tx_invert_pin" type="string">
+          <ipxact:name>prof4_tx_invert_pin</ipxact:name>
+          <ipxact:displayName>Enable TX P&amp;N Invert</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof4_ux_txeq_post_tap_1" type="int">
+          <ipxact:name>prof4_ux_txeq_post_tap_1</ipxact:name>
+          <ipxact:displayName>TX EQ Post Tap 1, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof4_ux_txeq_main_tap" type="int">
+          <ipxact:name>prof4_ux_txeq_main_tap</ipxact:name>
+          <ipxact:displayName>TX EQ Main Tap, 1.0 step size</ipxact:displayName>
+          <ipxact:value>55</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof4_ux_txeq_pre_tap_1" type="int">
+          <ipxact:name>prof4_ux_txeq_pre_tap_1</ipxact:name>
+          <ipxact:displayName>TX EQ Pre Tap 1, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof4_ux_txeq_pre_tap_2" type="int">
+          <ipxact:name>prof4_ux_txeq_pre_tap_2</ipxact:name>
+          <ipxact:displayName>TX EQ Pre Tap 2, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof4_rx_adaptation_mode" type="string">
+          <ipxact:name>prof4_rx_adaptation_mode</ipxact:name>
+          <ipxact:displayName>RX Adaptation mode</ipxact:displayName>
+          <ipxact:value>auto</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof4_rx_invert_pin" type="string">
+          <ipxact:name>prof4_rx_invert_pin</ipxact:name>
+          <ipxact:displayName>Enable RX P&amp;N Invert</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof4_rx_external_couple_type" type="string">
+          <ipxact:name>prof4_rx_external_couple_type</ipxact:name>
+          <ipxact:displayName>RX External Coupling Mode</ipxact:displayName>
+          <ipxact:value>AC</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof4_rx_termination_mode" type="string">
+          <ipxact:name>prof4_rx_termination_mode</ipxact:name>
+          <ipxact:displayName>Selects value of RX termination mode</ipxact:displayName>
+          <ipxact:value>GROUNDED</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof4_rx_onchip_termination" type="string">
+          <ipxact:name>prof4_rx_onchip_termination</ipxact:name>
+          <ipxact:displayName>Selects value of RX onchip termination</ipxact:displayName>
+          <ipxact:value>R_2</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof4_rxeq_vga_gain" type="int">
+          <ipxact:name>prof4_rxeq_vga_gain</ipxact:name>
+          <ipxact:displayName>RX EQ VGA Gain</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof4_rxeq_hf_boost" type="int">
+          <ipxact:name>prof4_rxeq_hf_boost</ipxact:name>
+          <ipxact:displayName>RX EQ High Frequency Boost</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof4_rxeq_dfe_tap_1" type="int">
+          <ipxact:name>prof4_rxeq_dfe_tap_1</ipxact:name>
+          <ipxact:displayName>RX EQ DFE Data Tap1</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof4_protocol_hard_pcie_lowloss" type="string">
+          <ipxact:name>prof4_protocol_hard_pcie_lowloss</ipxact:name>
+          <ipxact:displayName>Enable PCIe low loss</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="rx_adapt_enable4" type="int">
+          <ipxact:name>rx_adapt_enable4</ipxact:name>
+          <ipxact:displayName>rx_adapt_enable4</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof5_tx_spread_spectrum_en" type="string">
+          <ipxact:name>prof5_tx_spread_spectrum_en</ipxact:name>
+          <ipxact:displayName>Spread Spectrum</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof5_tx_invert_pin" type="string">
+          <ipxact:name>prof5_tx_invert_pin</ipxact:name>
+          <ipxact:displayName>Enable TX P&amp;N Invert</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof5_ux_txeq_post_tap_1" type="int">
+          <ipxact:name>prof5_ux_txeq_post_tap_1</ipxact:name>
+          <ipxact:displayName>TX EQ Post Tap 1, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof5_ux_txeq_main_tap" type="int">
+          <ipxact:name>prof5_ux_txeq_main_tap</ipxact:name>
+          <ipxact:displayName>TX EQ Main Tap, 1.0 step size</ipxact:displayName>
+          <ipxact:value>55</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof5_ux_txeq_pre_tap_1" type="int">
+          <ipxact:name>prof5_ux_txeq_pre_tap_1</ipxact:name>
+          <ipxact:displayName>TX EQ Pre Tap 1, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof5_ux_txeq_pre_tap_2" type="int">
+          <ipxact:name>prof5_ux_txeq_pre_tap_2</ipxact:name>
+          <ipxact:displayName>TX EQ Pre Tap 2, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof5_rx_adaptation_mode" type="string">
+          <ipxact:name>prof5_rx_adaptation_mode</ipxact:name>
+          <ipxact:displayName>RX Adaptation mode</ipxact:displayName>
+          <ipxact:value>auto</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof5_rx_invert_pin" type="string">
+          <ipxact:name>prof5_rx_invert_pin</ipxact:name>
+          <ipxact:displayName>Enable RX P&amp;N Invert</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof5_rx_external_couple_type" type="string">
+          <ipxact:name>prof5_rx_external_couple_type</ipxact:name>
+          <ipxact:displayName>RX External Coupling Mode</ipxact:displayName>
+          <ipxact:value>AC</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof5_rx_termination_mode" type="string">
+          <ipxact:name>prof5_rx_termination_mode</ipxact:name>
+          <ipxact:displayName>Selects value of RX termination mode</ipxact:displayName>
+          <ipxact:value>GROUNDED</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof5_rx_onchip_termination" type="string">
+          <ipxact:name>prof5_rx_onchip_termination</ipxact:name>
+          <ipxact:displayName>Selects value of RX onchip termination</ipxact:displayName>
+          <ipxact:value>R_2</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof5_rxeq_vga_gain" type="int">
+          <ipxact:name>prof5_rxeq_vga_gain</ipxact:name>
+          <ipxact:displayName>RX EQ VGA Gain</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof5_rxeq_hf_boost" type="int">
+          <ipxact:name>prof5_rxeq_hf_boost</ipxact:name>
+          <ipxact:displayName>RX EQ High Frequency Boost</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof5_rxeq_dfe_tap_1" type="int">
+          <ipxact:name>prof5_rxeq_dfe_tap_1</ipxact:name>
+          <ipxact:displayName>RX EQ DFE Data Tap1</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof5_protocol_hard_pcie_lowloss" type="string">
+          <ipxact:name>prof5_protocol_hard_pcie_lowloss</ipxact:name>
+          <ipxact:displayName>Enable PCIe low loss</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="rx_adapt_enable5" type="int">
+          <ipxact:name>rx_adapt_enable5</ipxact:name>
+          <ipxact:displayName>rx_adapt_enable5</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof6_tx_spread_spectrum_en" type="string">
+          <ipxact:name>prof6_tx_spread_spectrum_en</ipxact:name>
+          <ipxact:displayName>Spread Spectrum</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof6_tx_invert_pin" type="string">
+          <ipxact:name>prof6_tx_invert_pin</ipxact:name>
+          <ipxact:displayName>Enable TX P&amp;N Invert</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof6_ux_txeq_post_tap_1" type="int">
+          <ipxact:name>prof6_ux_txeq_post_tap_1</ipxact:name>
+          <ipxact:displayName>TX EQ Post Tap 1, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof6_ux_txeq_main_tap" type="int">
+          <ipxact:name>prof6_ux_txeq_main_tap</ipxact:name>
+          <ipxact:displayName>TX EQ Main Tap, 1.0 step size</ipxact:displayName>
+          <ipxact:value>55</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof6_ux_txeq_pre_tap_1" type="int">
+          <ipxact:name>prof6_ux_txeq_pre_tap_1</ipxact:name>
+          <ipxact:displayName>TX EQ Pre Tap 1, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof6_ux_txeq_pre_tap_2" type="int">
+          <ipxact:name>prof6_ux_txeq_pre_tap_2</ipxact:name>
+          <ipxact:displayName>TX EQ Pre Tap 2, 1.0 step size</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof6_rx_adaptation_mode" type="string">
+          <ipxact:name>prof6_rx_adaptation_mode</ipxact:name>
+          <ipxact:displayName>RX Adaptation mode</ipxact:displayName>
+          <ipxact:value>auto</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof6_rx_invert_pin" type="string">
+          <ipxact:name>prof6_rx_invert_pin</ipxact:name>
+          <ipxact:displayName>Enable RX P&amp;N Invert</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof6_rx_external_couple_type" type="string">
+          <ipxact:name>prof6_rx_external_couple_type</ipxact:name>
+          <ipxact:displayName>RX External Coupling Mode</ipxact:displayName>
+          <ipxact:value>AC</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof6_rx_termination_mode" type="string">
+          <ipxact:name>prof6_rx_termination_mode</ipxact:name>
+          <ipxact:displayName>Selects value of RX termination mode</ipxact:displayName>
+          <ipxact:value>GROUNDED</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof6_rx_onchip_termination" type="string">
+          <ipxact:name>prof6_rx_onchip_termination</ipxact:name>
+          <ipxact:displayName>Selects value of RX onchip termination</ipxact:displayName>
+          <ipxact:value>R_2</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof6_rxeq_vga_gain" type="int">
+          <ipxact:name>prof6_rxeq_vga_gain</ipxact:name>
+          <ipxact:displayName>RX EQ VGA Gain</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof6_rxeq_hf_boost" type="int">
+          <ipxact:name>prof6_rxeq_hf_boost</ipxact:name>
+          <ipxact:displayName>RX EQ High Frequency Boost</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof6_rxeq_dfe_tap_1" type="int">
+          <ipxact:name>prof6_rxeq_dfe_tap_1</ipxact:name>
+          <ipxact:displayName>RX EQ DFE Data Tap1</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prof6_protocol_hard_pcie_lowloss" type="string">
+          <ipxact:name>prof6_protocol_hard_pcie_lowloss</ipxact:name>
+          <ipxact:displayName>Enable PCIe low loss</ipxact:displayName>
+          <ipxact:value>DISABLE</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="rx_adapt_enable6" type="int">
+          <ipxact:name>rx_adapt_enable6</ipxact:name>
+          <ipxact:displayName>rx_adapt_enable6</ipxact:displayName>
           <ipxact:value>0</ipxact:value>
         </ipxact:parameter>
       </ipxact:parameters>
@@ -19896,9 +20472,7 @@ https://fpgasoftware.intel.com/eula.-->
         <altera:port_mapping altera:name="o_reconfig_eth_readdata_valid" altera:internal="o_reconfig_eth_readdata_valid"></altera:port_mapping>
         <altera:port_mapping altera:name="o_reconfig_eth_waitrequest" altera:internal="o_reconfig_eth_waitrequest"></altera:port_mapping>
       </altera:interface_mapping>
-      <altera:interface_mapping altera:name="refclk_bus_out" altera:internal="intel_eth_gts_0.refclk_bus_out" altera:type="conduit" altera:dir="end">
-        <altera:port_mapping altera:name="o_refclk_bus_out" altera:internal="o_refclk_bus_out"></altera:port_mapping>
-      </altera:interface_mapping>
+      <altera:interface_mapping altera:name="refclk_bus_out" altera:internal="intel_eth_gts_0.refclk_bus_out"></altera:interface_mapping>
       <altera:interface_mapping altera:name="reset_status_ports" altera:internal="intel_eth_gts_0.reset_status_ports" altera:type="conduit" altera:dir="end">
         <altera:port_mapping altera:name="o_rst_ack_n" altera:internal="o_rst_ack_n"></altera:port_mapping>
         <altera:port_mapping altera:name="o_rx_rst_ack_n" altera:internal="o_rx_rst_ack_n"></altera:port_mapping>

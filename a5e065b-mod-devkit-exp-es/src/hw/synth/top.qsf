@@ -6,11 +6,9 @@
 set_global_assignment -name TOP_LEVEL_ENTITY top
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 24.3.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "20:47:52  SEPTEMBER 19, 2024"
-set_global_assignment -name LAST_QUARTUS_VERSION "25.1.0 Pro Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "25.3.0 Pro Edition"
 set_global_assignment -name FAMILY "Agilex 5"
 set_global_assignment -name DEVICE A5ED065BB32AE6SR0
-set_global_assignment -name PWRMGT_VOLTAGE_OUTPUT_FORMAT "LINEAR FORMAT"
-set_global_assignment -name PWRMGT_LINEAR_FORMAT_N "-12"
 
 
 # Flow assignments
@@ -20,6 +18,7 @@ set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name NUM_PARALLEL_PROCESSORS 4
 # Include custom IP in IP search path
 set_global_assignment -name IP_SEARCH_PATHS "../src/custom_ip/**/*;../src/qsys/**/*;../src/ip/**/*;../src/custom_rtl/**/*"
+
 # Disable assembler during "play button" flow
 set_global_assignment -name FLOW_DISABLE_ASSEMBLER ON
 # Disable spawning the Timing Analyzer GUI during the "play button" flow
@@ -28,7 +27,10 @@ set_global_assignment -name FLOW_ENABLE_INTERACTIVE_TIMING_ANALYZER OFF
 set_global_assignment -name POWER_DEFAULT_TOGGLE_RATE 20%
 # Set POWER_DEFAULT_INPUT_IO_TOGGLE_RATE
 set_global_assignment -name POWER_DEFAULT_INPUT_IO_TOGGLE_RATE 20%
+# Promote pins without location assignments to errors
+set_global_assignment -name PROMOTE_WARNING_TO_ERROR 12677
 
+# Configuration Assignments
 set_global_assignment -name HPS_DAP_NO_CERTIFICATE on
 set_global_assignment -name QSPI_OWNERSHIP HPS
 set_global_assignment -name ENABLE_INTERMEDIATE_SNAPSHOTS ON
@@ -54,58 +56,112 @@ set_global_assignment -name PWRMGT_SLAVE_DEVICE7_ADDRESS 00
 set_global_assignment -name PWRMGT_TRANSLATED_VOLTAGE_VALUE_UNIT VOLTS
 set_global_assignment -name STRATIX_JTAG_USER_CODE 4
 set_global_assignment -name USE_CHECKSUM_AS_USERCODE OFF
+set_global_assignment -name PWRMGT_VOLTAGE_OUTPUT_FORMAT "LINEAR FORMAT"
+set_global_assignment -name PWRMGT_LINEAR_FORMAT_N "-12"
+
 
 set_location_assignment PIN_BK31 -to fpga_clk_100
 set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to fpga_clk_100 -entity top
 set_location_assignment PIN_BU28 -to fpga_reset_n
 set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to fpga_reset_n -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_osc_clk -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_jtag_tck -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_jtag_tms -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_jtag_tdo -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_jtag_tdi -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_osc_clk -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_jtag_tck -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_jtag_tms -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_jtag_tdo -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_jtag_tdi -entity top
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to hps_jtag_tdo -entity top
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to hps_jtag_tck -entity top
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to hps_jtag_tms -entity top
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to hps_jtag_tdi -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_emac2_TX_CLK -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_emac2_TX_CTL -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_emac2_RX_CLK -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_emac2_RX_CTL -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_jtag_tck -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_jtag_tms -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_jtag_tdi -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_usb1_CLK -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_usb1_STP -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_usb1_DIR -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_usb1_NXT -entity top
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_usb1_STP -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_usb1_CLK -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_usb1_DIR -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_usb1_NXT -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_usb1_DATA0 -entity top
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_usb1_DATA0 -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_usb1_DATA0 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_usb1_DATA1 -entity top
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_usb1_DATA1 -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_usb1_DATA1 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_usb1_DATA2 -entity top
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_usb1_DATA2 -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_usb1_DATA2 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_usb1_DATA3 -entity top
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_usb1_DATA3 -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_usb1_DATA3 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_usb1_DATA4 -entity top
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_usb1_DATA4 -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_usb1_DATA4 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_usb1_DATA5 -entity top
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_usb1_DATA5 -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_usb1_DATA5 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_usb1_DATA6 -entity top
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_usb1_DATA6 -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_usb1_DATA6 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_usb1_DATA7 -entity top
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_usb1_DATA7 -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_usb1_DATA7 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_TX_CLK -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_TX_CTL -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_RX_CLK -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_RX_CTL -entity top
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to hps_emac2_TX_CLK -entity top
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_emac2_TX_CTL -entity top
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to hps_emac2_RX_CLK -entity top
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to hps_emac2_RX_CTL -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_emac2_RXD0 -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_emac2_TXD0 -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_emac2_RX_CLK -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_emac2_RX_CTL -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_RXD0 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_TXD0 -entity top
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_emac2_TXD0 -entity top
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to hps_emac2_RXD0 -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_emac2_RXD1 -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_emac2_TXD1 -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_emac2_RXD0 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_RXD1 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_TXD1 -entity top
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_emac2_TXD1 -entity top
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to hps_emac2_RXD1 -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_emac2_RXD2 -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_emac2_TXD2 -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_emac2_RXD1 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_RXD2 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_TXD2 -entity top
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_emac2_TXD2 -entity top
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to hps_emac2_RXD2 -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_emac2_RXD3 -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_emac2_TXD3 -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_emac2_RXD2 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_RXD3 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_TXD3 -entity top
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_emac2_TXD3 -entity top
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to hps_emac2_RXD3 -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_emac2_MDIO -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_emac2_MDC -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_emac2_RXD3 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_MDIO -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_MDC -entity top
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to hps_emac2_MDIO -entity top
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to hps_emac2_MDC -entity top
 set_instance_assignment -name AUTO_OPEN_DRAIN_PINS ON -to hps_emac2_MDIO -entity top
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to hps_emac2_MDIO -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_uart0_TX -entity top
-set_instance_assignment -name IO_STANDARD "1.8 V" -to hps_uart0_RX -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_emac2_MDIO -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_uart0_TX -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_uart0_RX -entity top
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to hps_uart0_TX -entity top
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to hps_uart0_RX -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_uart0_RX -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_i2c_emac1_SDA -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_i2c_emac1_SCL -entity top
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to hps_i2c_emac1_SDA -entity top
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to hps_i2c_emac1_SCL -entity top
+set_instance_assignment -name AUTO_OPEN_DRAIN_PINS ON -to hps_i2c_emac1_SDA -entity top
+set_instance_assignment -name AUTO_OPEN_DRAIN_PINS ON -to hps_i2c_emac1_SCL -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_i2c_emac1_SDA -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_i2c_emac1_SCL -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_gpio0_io0 -entity top
+set_instance_assignment -name CURRENT_STRENGTH_NEW 2MA -to hps_gpio0_io0 -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_gpio0_io0 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_gpio0_io10 -entity top
+set_instance_assignment -name CURRENT_STRENGTH_NEW 2MA -to hps_gpio0_io10 -entity top
+set_instance_assignment -name WEAK_PULL_UP_DN_SEL PULL_UP_20 -to hps_gpio0_io10 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_gpio1_io3 -entity top
+set_instance_assignment -name CURRENT_STRENGTH_NEW 2MA -to hps_gpio1_io3 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_gpio1_io4 -entity top
+set_instance_assignment -name CURRENT_STRENGTH_NEW 2MA -to hps_gpio1_io4 -entity top
 set_global_assignment -name NUMBER_OF_SLAVE_DEVICE 2
 
-
 # Back-Annotate Pin Location Assignment
+set_location_assignment PIN_CF12 -to fpga_led_pio[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to fpga_led_pio[0] -entity top
 set_location_assignment PIN_H108 -to emif_hps_emif_mem_0_mem_ck_t
 set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.2-V SSTL" -to emif_hps_emif_mem_0_mem_ck_t -entity top
 set_location_assignment PIN_F108 -to emif_hps_emif_mem_0_mem_ck_c
@@ -164,20 +220,25 @@ set_location_assignment PIN_H117 -to emif_hps_emif_mem_0_mem_reset_n
 set_instance_assignment -name IO_STANDARD "SSTL-12" -to emif_hps_emif_mem_0_mem_reset_n -entity top
 set_location_assignment PIN_K108 -to emif_hps_emif_mem_0_mem_par
 set_instance_assignment -name IO_STANDARD "SSTL-12" -to emif_hps_emif_mem_0_mem_par -entity top
-set_location_assignment PIN_T124 -to hps_jtag_tdo
-set_location_assignment PIN_D132 -to hps_sdmmc_CCLK
 set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_sdmmc_CCLK -entity top
-set_location_assignment PIN_L135 -to hps_usb1_STP
-set_location_assignment PIN_M127 -to hps_emac2_TX_CLK
-set_location_assignment PIN_K127 -to hps_emac2_TX_CTL
-set_location_assignment PIN_K124 -to hps_emac2_TXD0
-set_location_assignment PIN_Y127 -to hps_emac2_TXD1
-set_location_assignment PIN_U134 -to hps_emac2_PPS
 set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_PPS -entity top
-set_location_assignment PIN_F127 -to hps_emac2_TXD2
-set_location_assignment PIN_Y124 -to hps_emac2_TXD3
-set_location_assignment PIN_AG115 -to hps_emac2_MDC
 set_location_assignment PIN_W134 -to hps_uart0_TX
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_sdmmc_CMD -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_sdmmc_D0 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_sdmmc_D1 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_sdmmc_D2 -entity top
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_sdmmc_D3 -entity top
+set_location_assignment PIN_AK115 -to hps_uart0_RX
+set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_PPS_TRIG -entity top
+set_location_assignment PIN_BW19 -to fpga_button_pio[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to fpga_button_pio[0] -entity top
+set_location_assignment PIN_AK111 -to emif_hps_emif_oct_0_oct_rzqin
+set_instance_assignment -name IO_STANDARD "1.2-V" -to emif_hps_emif_oct_0_oct_rzqin -entity top
+set_location_assignment PIN_Y108 -to emif_hps_emif_mem_0_mem_alert_n
+set_location_assignment PIN_AB117 -to emif_hps_emif_ref_clk_0_clk
+set_location_assignment PIN_AT115 -to "usb31_phy_refclk_p_clk(n)"
+set_instance_assignment -name IO_STANDARD "CURRENT MODE LOGIC (CML)" -to "usb31_phy_refclk_p_clk(n)" -entity top
+set_location_assignment PIN_Y117 -to "emif_hps_emif_ref_clk_0_clk(n)"
 set_location_assignment PIN_B122 -to emif_hps_emif_mem_0_mem_dqs_t[0]
 set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.2-V POD" -to emif_hps_emif_mem_0_mem_dqs_t[0] -entity top
 set_location_assignment PIN_AG90 -to emif_hps_emif_mem_0_mem_dqs_t[1]
@@ -186,6 +247,8 @@ set_location_assignment PIN_K95 -to emif_hps_emif_mem_0_mem_dqs_t[2]
 set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.2-V POD" -to emif_hps_emif_mem_0_mem_dqs_t[2] -entity top
 set_location_assignment PIN_F95 -to emif_hps_emif_mem_0_mem_dqs_t[3]
 set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.2-V POD" -to emif_hps_emif_mem_0_mem_dqs_t[3] -entity top
+set_location_assignment PIN_A101 -to emif_hps_emif_mem_0_mem_dqs_t[4]
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.2-V POD" -to emif_hps_emif_mem_0_mem_dqs_t[4] -entity top
 set_location_assignment PIN_A125 -to emif_hps_emif_mem_0_mem_dqs_c[0]
 set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.2-V POD" -to emif_hps_emif_mem_0_mem_dqs_c[0] -entity top
 set_location_assignment PIN_AG93 -to emif_hps_emif_mem_0_mem_dqs_c[1]
@@ -194,6 +257,8 @@ set_location_assignment PIN_M95 -to emif_hps_emif_mem_0_mem_dqs_c[2]
 set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.2-V POD" -to emif_hps_emif_mem_0_mem_dqs_c[2] -entity top
 set_location_assignment PIN_D95 -to emif_hps_emif_mem_0_mem_dqs_c[3]
 set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.2-V POD" -to emif_hps_emif_mem_0_mem_dqs_c[3] -entity top
+set_location_assignment PIN_B101 -to emif_hps_emif_mem_0_mem_dqs_c[4]
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.2-V POD" -to emif_hps_emif_mem_0_mem_dqs_c[4] -entity top
 set_location_assignment PIN_A128 -to emif_hps_emif_mem_0_mem_dq[0]
 set_instance_assignment -name IO_STANDARD "1.2-V POD" -to emif_hps_emif_mem_0_mem_dq[0] -entity top
 set_location_assignment PIN_A113 -to emif_hps_emif_mem_0_mem_dq[1]
@@ -258,46 +323,26 @@ set_location_assignment PIN_F98 -to emif_hps_emif_mem_0_mem_dq[30]
 set_instance_assignment -name IO_STANDARD "1.2-V POD" -to emif_hps_emif_mem_0_mem_dq[30] -entity top
 set_location_assignment PIN_D84 -to emif_hps_emif_mem_0_mem_dq[31]
 set_instance_assignment -name IO_STANDARD "1.2-V POD" -to emif_hps_emif_mem_0_mem_dq[31] -entity top
-set_location_assignment PIN_AB132 -to hps_sdmmc_CMD
-set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_sdmmc_CMD -entity top
-set_location_assignment PIN_E135 -to hps_sdmmc_D0
-set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_sdmmc_D0 -entity top
-set_location_assignment PIN_F132 -to hps_sdmmc_D1
-set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_sdmmc_D1 -entity top
-set_location_assignment PIN_AA135 -to hps_sdmmc_D2
-set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_sdmmc_D2 -entity top
-set_location_assignment PIN_V127 -to hps_sdmmc_D3
-set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_sdmmc_D3 -entity top
-set_location_assignment PIN_AD135 -to hps_usb1_DATA0
-set_location_assignment PIN_M132 -to hps_usb1_DATA1
-set_location_assignment PIN_K132 -to hps_usb1_DATA2
-set_location_assignment PIN_AG129 -to hps_usb1_DATA3
-set_location_assignment PIN_J134 -to hps_usb1_DATA4
-set_location_assignment PIN_AG120 -to hps_usb1_DATA5
-set_location_assignment PIN_G134 -to hps_usb1_DATA6
-set_location_assignment PIN_G135 -to hps_usb1_DATA7
-set_location_assignment PIN_R134 -to hps_emac2_MDIO
-set_location_assignment PIN_T132 -to hps_osc_clk
-set_location_assignment PIN_P132 -to hps_usb1_CLK
-set_location_assignment PIN_J135 -to hps_usb1_DIR
-set_location_assignment PIN_AD134 -to hps_usb1_NXT
-set_location_assignment PIN_AK115 -to hps_uart0_RX
-set_location_assignment PIN_AL120 -to hps_emac2_PPS_TRIG
-set_instance_assignment -name IO_STANDARD "1.8-V" -to hps_emac2_PPS_TRIG -entity top
-set_location_assignment PIN_Y132 -to hps_jtag_tms
-set_location_assignment PIN_P124 -to hps_jtag_tdi
-set_location_assignment PIN_M124 -to hps_emac2_RX_CLK
-set_location_assignment PIN_AB127 -to hps_emac2_RX_CTL
-set_location_assignment PIN_H127 -to hps_emac2_RXD0
-set_location_assignment PIN_AB124 -to hps_emac2_RXD1
-set_location_assignment PIN_F124 -to hps_emac2_RXD2
-set_location_assignment PIN_D124 -to hps_emac2_RXD3
-set_location_assignment PIN_T127 -to hps_jtag_tck
-set_location_assignment PIN_AK111 -to emif_hps_emif_oct_0_oct_rzqin
-set_instance_assignment -name IO_STANDARD "1.2-V" -to emif_hps_emif_oct_0_oct_rzqin -entity top
-set_location_assignment PIN_Y108 -to emif_hps_emif_mem_0_mem_alert_n
-set_location_assignment PIN_AB117 -to emif_hps_emif_ref_clk_0_clk
-set_location_assignment PIN_Y117 -to "emif_hps_emif_ref_clk_0_clk(n)"
+set_location_assignment PIN_A110 -to emif_hps_emif_mem_0_mem_dq[32]
+set_instance_assignment -name IO_STANDARD "1.2-V POD" -to emif_hps_emif_mem_0_mem_dq[32] -entity top
+set_location_assignment PIN_B91 -to emif_hps_emif_mem_0_mem_dq[33]
+set_instance_assignment -name IO_STANDARD "1.2-V POD" -to emif_hps_emif_mem_0_mem_dq[33] -entity top
+set_location_assignment PIN_B106 -to emif_hps_emif_mem_0_mem_dq[34]
+set_instance_assignment -name IO_STANDARD "1.2-V POD" -to emif_hps_emif_mem_0_mem_dq[34] -entity top
+set_location_assignment PIN_A91 -to emif_hps_emif_mem_0_mem_dq[35]
+set_instance_assignment -name IO_STANDARD "1.2-V POD" -to emif_hps_emif_mem_0_mem_dq[35] -entity top
+set_location_assignment PIN_A106 -to emif_hps_emif_mem_0_mem_dq[36]
+set_instance_assignment -name IO_STANDARD "1.2-V POD" -to emif_hps_emif_mem_0_mem_dq[36] -entity top
+set_location_assignment PIN_B88 -to emif_hps_emif_mem_0_mem_dq[37]
+set_instance_assignment -name IO_STANDARD "1.2-V POD" -to emif_hps_emif_mem_0_mem_dq[37] -entity top
+set_location_assignment PIN_B103 -to emif_hps_emif_mem_0_mem_dq[38]
+set_instance_assignment -name IO_STANDARD "1.2-V POD" -to emif_hps_emif_mem_0_mem_dq[38] -entity top
+set_location_assignment PIN_A94 -to emif_hps_emif_mem_0_mem_dq[39]
+set_instance_assignment -name IO_STANDARD "1.2-V POD" -to emif_hps_emif_mem_0_mem_dq[39] -entity top
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 40 OHM WITHOUT CALIBRATION" -to fpga_led_pio[0] -entity top
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 40 OHM WITHOUT CALIBRATION" -to usb31_io_usb_ctrl -entity top
+set_instance_assignment -name SLEW_RATE 2 -to hps_i2c_emac1_SCL -entity top
+set_instance_assignment -name SLEW_RATE 2 -to hps_i2c_emac1_SDA -entity top
 set_global_assignment -name BOARD default
 
 ### SFP ####
@@ -351,21 +396,20 @@ set_instance_assignment -name IO_STANDARD "HIGH SPEED DIFFERENTIAL I/O" -to o_tx
 
 
 ############### MACRO
-
 set_global_assignment -name VERILOG_MACRO NUM_SFP_1
 set_global_assignment -name VERILOG_MACRO MAC_SRD_CFG_25G
 set_global_assignment -name VERILOG_MACRO NON_PTP_ETHERNET
 
 ############### TCL files
-
 set_global_assignment -name SOURCE_TCL_SCRIPT_FILE rtl_list.tcl
 set_global_assignment -name SOURCE_TCL_SCRIPT_FILE ip_list.tcl
 
 ############### SDC files
-
-set_global_assignment -name SDC_FILE ptp_bridge_ip.sdc
+set_global_assignment -name SDC_FILE packet_switch.sdc
 set_global_assignment -name SDC_FILE top.sdc
 
+
 ############### DRC fix CDC-50001
-set_global_assignment -name SYNCHRONIZATION_REGISTER_CHAIN_LENGTH 2
+set_global_assignment -name MAXIMUM_SYNCHRONIZER_LENGTH_PROTECTED 2
 set_global_assignment -name SYNCHRONIZER_IDENTIFICATION "FORCED IF ASYNCHRONOUS"
+

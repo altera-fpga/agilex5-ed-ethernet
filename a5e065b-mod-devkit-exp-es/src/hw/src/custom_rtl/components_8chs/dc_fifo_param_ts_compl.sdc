@@ -14,9 +14,9 @@ proc apply_sdc_dcfifo_for_ptrs {from_node_list to_node_list} {
    # control skew for bits
    set_max_skew -from $from_node_list -to $to_node_list -get_skew_value_from_clock_period src_clock_period -skew_value_multiplier 0.8
    # path delay (exception for net delay)
-   if { ![string equal "quartus_syn" $::TimeQuestInfo(nameofexecutable)] } {
-      set_net_delay -from $from_node_list -to $to_node_list -max -get_value_from_clock_period dst_clock_period -value_multiplier 0.8
-   }
+#   if { ![string equal "quartus_syn" $::TimeQuestInfo(nameofexecutable)] } {
+#      set_net_delay -from $from_node_list -to $to_node_list -max -get_value_from_clock_period dst_clock_period -value_multiplier 0.8
+#   }
    #relax setup and hold calculation
    set_max_delay -from $from_node_list -to $to_node_list 100
    set_min_delay -from $from_node_list -to $to_node_list -100

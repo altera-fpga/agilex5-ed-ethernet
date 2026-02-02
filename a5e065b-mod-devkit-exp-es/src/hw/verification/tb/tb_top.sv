@@ -80,6 +80,7 @@ module tb_top ();
   bit clk_100m;
   bit clk_161m;
   bit clk_156m;
+  bit clk_125m;
 
   bit ninit_done;
   bit h2f_reset;
@@ -113,6 +114,7 @@ module tb_top ();
 
   bit all_dma_desc_done = 0;
   bit end_response_seq = 0;
+  bit reconfig_reset;
 
   //======================================================
   // Interface Instantiation
@@ -151,9 +153,23 @@ module tb_top ();
   end
 
   initial begin
+    clk_125m <= 0;
+    forever #4000ps clk_125m <= ~clk_125m;
+  end
+
+  initial begin
     sm_eth_reset_if.resetn = 1;
     fpga_reset_n = 1;
-    force dut.h2f_reset = 0;
+    // force dut.h2f_reset = 0;
+    force tb_top.dut.gen_mulit_inst[0].hssi_ss_top.u0.i_reconfig_clk=clk_125m;
+    force tb_top.dut.gen_mulit_inst[0].hssi_ss_top.u0.i_reconfig_reset=reconfig_reset ;
+    reconfig_reset =1;
+    #10ns reconfig_reset=0;
+  end
+
+  initial begin
+    force dut.ninit_done = 1;
+    #10000ns;
     force dut.ninit_done = 0;
   end
 
@@ -187,10 +203,10 @@ module tb_top ();
   //======================================================
 	//assign axi_if.master_if[0].bready  = 1; //rfq:removed due to vip error 
   // axi_if.slave -> F2H for data transfer
-  assign axi_if.slave_if[0].aresetn = sm_eth_reset_if.resetn;
+  assign axi_if.slave_if[0].aresetn = dut.iopll_locked_export_100M;
   // assign axi_if.slave_if[1].aresetn = `SM_ETH_SSGDMA_PATH.app_reset_status_n;
   // axi_if.master -> H2F for CSR access
-  assign axi_if.master_if[0].aresetn = sm_eth_reset_if.resetn;
+  assign axi_if.master_if[0].aresetn = dut.iopll_locked_export_125M;
 
   //======================================================
   // DUT Instantiation
@@ -201,7 +217,7 @@ module tb_top ();
 	   .NUM_PG_SUPPORT    (1)
        ) dut (
         .fpga_clk_100          (clk_100m),
-        .fpga_reset_n          (sm_eth_reset_if.resetn),
+        // .fpga_reset_n          (sm_eth_reset_if.resetn),
         .i_rx_serial_data      (serial_data[0]),
         .i_rx_serial_data_n    (serial_data_n[0]),
         .o_tx_serial_data      (serial_data[0]),
@@ -231,7 +247,7 @@ module tb_top ();
         .write               (sfp_slv_a0_if.write),
         .byteenable          (sfp_slv_a0_if.byteenable),
         .writedata           (sfp_slv_a0_if.writedata),
-        .rst_n               (sm_eth_reset_if.resetn),
+        .rst_n               (dut.iopll_locked_export_125M),
         .i2c_data_in         (a0_bfm_sda_in),
         .i2c_clk_in          (a0_bfm_scl_in),
         .i2c_data_oe         (a0_bfm_sda_oe),
@@ -249,7 +265,7 @@ module tb_top ();
         .write               (sfp_slv_a2_if.write),
         .byteenable          (sfp_slv_a2_if.byteenable),
         .writedata           (sfp_slv_a2_if.writedata),
-        .rst_n               (sm_eth_reset_if.resetn),
+        .rst_n               (dut.iopll_locked_export_125M),
         .i2c_data_in         (a2_bfm_sda_in),
         .i2c_clk_in          (a2_bfm_scl_in),
         .i2c_data_oe         (a2_bfm_sda_oe),

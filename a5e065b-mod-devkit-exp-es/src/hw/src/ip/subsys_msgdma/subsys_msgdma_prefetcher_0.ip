@@ -20,10 +20,10 @@ https://fpgasoftware.intel.com/eula.-->
   <ipxact:busInterfaces>
     <ipxact:busInterface>
       <ipxact:name>Clock</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="clock" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -57,10 +57,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>Clock_reset</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="reset" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -89,10 +89,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>Descriptor_Read_Master</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -336,10 +336,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>Descriptor_Write_Master</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -591,10 +591,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>Descriptor_Write_Dispatcher_Source</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="avalon_streaming" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="avalon_streaming" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon_streaming" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon_streaming" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -699,10 +699,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>Response_Sink</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="avalon_streaming" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="avalon_streaming" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon_streaming" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon_streaming" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -807,10 +807,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>Csr</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="avalon" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -855,7 +855,9 @@ https://fpgasoftware.intel.com/eula.-->
           </ipxact:portMaps>
         </ipxact:abstractionType>
       </ipxact:abstractionTypes>
-      <ipxact:slave></ipxact:slave>
+      <ipxact:slave>
+        <ipxact:memoryMapRef memoryMapRef="Csr"></ipxact:memoryMapRef>
+      </ipxact:slave>
       <ipxact:parameters>
         <ipxact:parameter parameterId="addressAlignment" type="string">
           <ipxact:name>addressAlignment</ipxact:name>
@@ -1148,10 +1150,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>Csr_Irq</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="interrupt" version="25.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="interrupt" version="25.3"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="interrupt" version="25.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="interrupt" version="25.3"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1199,6 +1201,231 @@ https://fpgasoftware.intel.com/eula.-->
       </ipxact:parameters>
     </ipxact:busInterface>
   </ipxact:busInterfaces>
+  <ipxact:memoryMaps>
+    <ipxact:memoryMap>
+      <ipxact:name>Csr</ipxact:name>
+      <ipxact:addressBlock>
+        <ipxact:name>msgdma_prefetcher_csr_block</ipxact:name>
+        <ipxact:baseAddress>0x0</ipxact:baseAddress>
+        <ipxact:range>0x14</ipxact:range>
+        <ipxact:width>32</ipxact:width>
+        <ipxact:usage>register</ipxact:usage>
+        <ipxact:access>read-write</ipxact:access>
+        <ipxact:register>
+          <ipxact:name>prefetcher_control</ipxact:name>
+          <ipxact:displayName>Control Register</ipxact:displayName>
+          <ipxact:description>Control Register</ipxact:description>
+          <ipxact:addressOffset>0x0</ipxact:addressOffset>
+          <ipxact:size>32</ipxact:size>
+          <ipxact:access>read-write</ipxact:access>
+          <ipxact:field>
+            <ipxact:name>reserved</ipxact:name>
+            <ipxact:displayName>Reserved</ipxact:displayName>
+            <ipxact:description>Reserved</ipxact:description>
+            <ipxact:bitOffset>5</ipxact:bitOffset>
+            <ipxact:resets>
+              <ipxact:reset>
+                <ipxact:value>0x0000000</ipxact:value>
+                <ipxact:mask>0x7ffffff</ipxact:mask>
+              </ipxact:reset>
+            </ipxact:resets>
+            <ipxact:bitWidth>27</ipxact:bitWidth>
+            <ipxact:access>read-only</ipxact:access>
+          </ipxact:field>
+          <ipxact:field>
+            <ipxact:name>park_mode</ipxact:name>
+            <ipxact:displayName>Park Mode</ipxact:displayName>
+            <ipxact:description>Enables mSGDMA to repeatedly execute the same linked list over and over again.</ipxact:description>
+            <ipxact:bitOffset>4</ipxact:bitOffset>
+            <ipxact:resets>
+              <ipxact:reset>
+                <ipxact:value>0x0</ipxact:value>
+                <ipxact:mask>0x1</ipxact:mask>
+              </ipxact:reset>
+            </ipxact:resets>
+            <ipxact:bitWidth>1</ipxact:bitWidth>
+            <ipxact:access>read-write</ipxact:access>
+          </ipxact:field>
+          <ipxact:field>
+            <ipxact:name>global_interrupt_enable_mask</ipxact:name>
+            <ipxact:displayName>Global Interrupt Enable Mask</ipxact:displayName>
+            <ipxact:description>Set this bit to allow interrupts to propagate to the interrupt sender port.</ipxact:description>
+            <ipxact:bitOffset>3</ipxact:bitOffset>
+            <ipxact:resets>
+              <ipxact:reset>
+                <ipxact:value>0x0</ipxact:value>
+                <ipxact:mask>0x1</ipxact:mask>
+              </ipxact:reset>
+            </ipxact:resets>
+            <ipxact:bitWidth>1</ipxact:bitWidth>
+            <ipxact:access>read-write</ipxact:access>
+          </ipxact:field>
+          <ipxact:field>
+            <ipxact:name>reset_prefetcher</ipxact:name>
+            <ipxact:displayName>Reset_Prefetcher</ipxact:displayName>
+            <ipxact:description>Allows software to stop prefetcher core when it is in the middle of data transfer. When this bit is set to 1, prefetcher core begin its reset sequence.</ipxact:description>
+            <ipxact:bitOffset>2</ipxact:bitOffset>
+            <ipxact:resets>
+              <ipxact:reset>
+                <ipxact:value>0x0</ipxact:value>
+                <ipxact:mask>0x1</ipxact:mask>
+              </ipxact:reset>
+            </ipxact:resets>
+            <ipxact:bitWidth>1</ipxact:bitWidth>
+            <ipxact:access>read-write</ipxact:access>
+            <ipxact:modifiedWriteValue>oneToSet</ipxact:modifiedWriteValue>
+          </ipxact:field>
+          <ipxact:field>
+            <ipxact:name>desc_poll_en</ipxact:name>
+            <ipxact:displayName>Desc_Poll_En</ipxact:displayName>
+            <ipxact:description>Descriptor polling enable bit.</ipxact:description>
+            <ipxact:bitOffset>1</ipxact:bitOffset>
+            <ipxact:resets>
+              <ipxact:reset>
+                <ipxact:value>0x0</ipxact:value>
+                <ipxact:mask>0x1</ipxact:mask>
+              </ipxact:reset>
+            </ipxact:resets>
+            <ipxact:bitWidth>1</ipxact:bitWidth>
+            <ipxact:access>read-write</ipxact:access>
+          </ipxact:field>
+          <ipxact:field>
+            <ipxact:name>run</ipxact:name>
+            <ipxact:displayName>Run</ipxact:displayName>
+            <ipxact:description>Software sets this bit to 1 to start the descriptor fetching operation which subsequently initiates DMA transaction.</ipxact:description>
+            <ipxact:bitOffset>0</ipxact:bitOffset>
+            <ipxact:resets>
+              <ipxact:reset>
+                <ipxact:value>0x0</ipxact:value>
+                <ipxact:mask>0x1</ipxact:mask>
+              </ipxact:reset>
+            </ipxact:resets>
+            <ipxact:bitWidth>1</ipxact:bitWidth>
+            <ipxact:access>read-write</ipxact:access>
+            <ipxact:modifiedWriteValue>oneToSet</ipxact:modifiedWriteValue>
+          </ipxact:field>
+        </ipxact:register>
+        <ipxact:register>
+          <ipxact:name>prefetcher_nxt_desc_ptr_low</ipxact:name>
+          <ipxact:displayName>Next Descriptor Pointer Low Register</ipxact:displayName>
+          <ipxact:description>Next Descriptor Pointer Low Register</ipxact:description>
+          <ipxact:addressOffset>0x4</ipxact:addressOffset>
+          <ipxact:size>32</ipxact:size>
+          <ipxact:access>read-write</ipxact:access>
+          <ipxact:field>
+            <ipxact:name>nxt_desc_ptr_low</ipxact:name>
+            <ipxact:displayName>Next Descriptor Pointer Low</ipxact:displayName>
+            <ipxact:description>Contains the address[31:0] of the next descriptor to process. The address of the descriptors must be aligned to the descriptor read/write data width boundary.</ipxact:description>
+            <ipxact:bitOffset>0</ipxact:bitOffset>
+            <ipxact:resets>
+              <ipxact:reset>
+                <ipxact:value>0x00000000</ipxact:value>
+                <ipxact:mask>0xffffffff</ipxact:mask>
+              </ipxact:reset>
+            </ipxact:resets>
+            <ipxact:bitWidth>32</ipxact:bitWidth>
+            <ipxact:access>read-write</ipxact:access>
+          </ipxact:field>
+        </ipxact:register>
+        <ipxact:register>
+          <ipxact:name>prefetcher_nxt_desc_ptr_high</ipxact:name>
+          <ipxact:displayName>Next Descriptor Pointer High Register</ipxact:displayName>
+          <ipxact:description>Next Descriptor Pointer High Register</ipxact:description>
+          <ipxact:addressOffset>0x8</ipxact:addressOffset>
+          <ipxact:size>32</ipxact:size>
+          <ipxact:access>read-write</ipxact:access>
+          <ipxact:field>
+            <ipxact:name>nxt_desc_ptr_high</ipxact:name>
+            <ipxact:displayName>Next Descriptor Pointer High</ipxact:displayName>
+            <ipxact:description>Contains the address[63:32] of the next descriptor to process. The address of the descriptors must be aligned to the descriptor read/write data width boundary.</ipxact:description>
+            <ipxact:bitOffset>0</ipxact:bitOffset>
+            <ipxact:resets>
+              <ipxact:reset>
+                <ipxact:value>0x00000000</ipxact:value>
+                <ipxact:mask>0xffffffff</ipxact:mask>
+              </ipxact:reset>
+            </ipxact:resets>
+            <ipxact:bitWidth>32</ipxact:bitWidth>
+            <ipxact:access>read-write</ipxact:access>
+          </ipxact:field>
+        </ipxact:register>
+        <ipxact:register>
+          <ipxact:name>prefetcher_desc_poll_freq</ipxact:name>
+          <ipxact:displayName>Descriptor Polling Frequency Register</ipxact:displayName>
+          <ipxact:description>Descriptor Polling Frequency Register</ipxact:description>
+          <ipxact:addressOffset>0xc</ipxact:addressOffset>
+          <ipxact:size>32</ipxact:size>
+          <ipxact:access>read-write</ipxact:access>
+          <ipxact:field>
+            <ipxact:name>reserved</ipxact:name>
+            <ipxact:displayName>Reserved</ipxact:displayName>
+            <ipxact:description>Reserved</ipxact:description>
+            <ipxact:bitOffset>16</ipxact:bitOffset>
+            <ipxact:resets>
+              <ipxact:reset>
+                <ipxact:value>0x0000</ipxact:value>
+                <ipxact:mask>0xffff</ipxact:mask>
+              </ipxact:reset>
+            </ipxact:resets>
+            <ipxact:bitWidth>16</ipxact:bitWidth>
+            <ipxact:access>read-only</ipxact:access>
+          </ipxact:field>
+          <ipxact:field>
+            <ipxact:name>poll_freq</ipxact:name>
+            <ipxact:displayName>Poll_Freq</ipxact:displayName>
+            <ipxact:description>Frequency of descriptor polling operation in term of number of clock cycles.</ipxact:description>
+            <ipxact:bitOffset>0</ipxact:bitOffset>
+            <ipxact:resets>
+              <ipxact:reset>
+                <ipxact:value>0x0000</ipxact:value>
+                <ipxact:mask>0xffff</ipxact:mask>
+              </ipxact:reset>
+            </ipxact:resets>
+            <ipxact:bitWidth>16</ipxact:bitWidth>
+            <ipxact:access>read-write</ipxact:access>
+          </ipxact:field>
+        </ipxact:register>
+        <ipxact:register>
+          <ipxact:name>prefetcher_status</ipxact:name>
+          <ipxact:displayName>Status Register</ipxact:displayName>
+          <ipxact:description>Status Register</ipxact:description>
+          <ipxact:addressOffset>0x10</ipxact:addressOffset>
+          <ipxact:size>32</ipxact:size>
+          <ipxact:access>read-write</ipxact:access>
+          <ipxact:field>
+            <ipxact:name>reserved</ipxact:name>
+            <ipxact:displayName>Reserved</ipxact:displayName>
+            <ipxact:description>Reserved</ipxact:description>
+            <ipxact:bitOffset>1</ipxact:bitOffset>
+            <ipxact:resets>
+              <ipxact:reset>
+                <ipxact:value>0x00000000</ipxact:value>
+                <ipxact:mask>0x7fffffff</ipxact:mask>
+              </ipxact:reset>
+            </ipxact:resets>
+            <ipxact:bitWidth>31</ipxact:bitWidth>
+            <ipxact:access>read-only</ipxact:access>
+          </ipxact:field>
+          <ipxact:field>
+            <ipxact:name>irq</ipxact:name>
+            <ipxact:displayName>IRQ</ipxact:displayName>
+            <ipxact:description>Set when an interrupt condition occurs. Software need to perform write 1 to clear this field.</ipxact:description>
+            <ipxact:bitOffset>0</ipxact:bitOffset>
+            <ipxact:resets>
+              <ipxact:reset>
+                <ipxact:value>0x0</ipxact:value>
+                <ipxact:mask>0x1</ipxact:mask>
+              </ipxact:reset>
+            </ipxact:resets>
+            <ipxact:bitWidth>1</ipxact:bitWidth>
+            <ipxact:access>read-write</ipxact:access>
+            <ipxact:modifiedWriteValue>oneToClear</ipxact:modifiedWriteValue>
+          </ipxact:field>
+        </ipxact:register>
+      </ipxact:addressBlock>
+      <ipxact:addressUnitBits>8</ipxact:addressUnitBits>
+    </ipxact:memoryMap>
+  </ipxact:memoryMaps>
   <ipxact:model>
     <ipxact:views>
       <ipxact:view>
@@ -1652,7 +1879,7 @@ https://fpgasoftware.intel.com/eula.-->
         </ipxact:parameter>
         <ipxact:parameter parameterId="GUI_TIMESTAMP_WRITEBACK" type="int">
           <ipxact:name>GUI_TIMESTAMP_WRITEBACK</ipxact:name>
-          <ipxact:displayName>Enable Timestamp Write Back</ipxact:displayName>
+          <ipxact:displayName>Enable sideband support on response port</ipxact:displayName>
           <ipxact:value>1</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="ENABLE_READ_BURST" type="int">

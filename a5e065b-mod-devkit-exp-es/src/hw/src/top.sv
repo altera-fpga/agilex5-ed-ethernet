@@ -19,7 +19,6 @@ module top #(
 
 // Clock and Reset
 input    wire          fpga_clk_100,
-input    wire          fpga_reset_n,
 
 // HPS EMIF
 output   wire          emif_hps_emif_mem_0_mem_ck_t,
@@ -36,9 +35,9 @@ output   wire          emif_hps_emif_mem_0_mem_par,
 input    wire          emif_hps_emif_mem_0_mem_alert_n,
 input    wire          emif_hps_emif_oct_0_oct_rzqin,
 input    wire          emif_hps_emif_ref_clk_0_clk,
-inout    wire [3:0]    emif_hps_emif_mem_0_mem_dqs_t,
-inout    wire [3:0]    emif_hps_emif_mem_0_mem_dqs_c,
-inout    wire [31:0]   emif_hps_emif_mem_0_mem_dq,
+inout    wire [4:0]    emif_hps_emif_mem_0_mem_dqs_t,
+inout    wire [4:0]    emif_hps_emif_mem_0_mem_dqs_c,
+inout    wire [39:0]   emif_hps_emif_mem_0_mem_dq,
 input    wire          hps_jtag_tck,
 input    wire          hps_jtag_tms,
 output   wire          hps_jtag_tdo,
@@ -76,8 +75,6 @@ input  wire [NUM_CHANNELS*1-1:0]   i_rx_serial_data_n,
 output wire [NUM_CHANNELS*1-1:0]   o_tx_serial_data,
 output wire [NUM_CHANNELS*1-1:0]   o_tx_serial_data_n,
 
-//input wire                        i_refclk2pll_p,
-//input wire                        i_reconfig_clk
  input wire  [NUM_CHANNELS-1:0]     i_clk_ref_p,
 //output wire  [NUM_CHANNELS*1-1:0] o_clk_rec_div_66
 
@@ -101,15 +98,10 @@ output wire                sfp_tx_disable
   wire                         system_reset;
   wire [NUM_CHANNELS-1:0]      iopll_locked_export_161;
   wire                         iopll_locked_export,iopll_locked_export_100M,iopll_locked_export_125M;
-  
-  wire                         h2f_reset;
   wire                         msgdma_app_reset_n;
   wire                         msgdma_app_reset_n_161_0;
-  assign                       combined_reset_n = fpga_reset_n & ~h2f_reset & ~ninit_done;
-  
   wire                         clk_bdg_125_clk;
   wire                         clk_bdg_100_clk;
-        
   wire                         clk_bdg_161_0_in_clk_clk;
   wire                         rst_bdg_ap_resetn_reset;
   
@@ -274,38 +266,26 @@ output wire                sfp_tx_disable
   logic [NUM_CHANNELS-1:0][DMA_DATA_WIDTH-1:0]              dma_axi_st_rx_tdata_o ;
   logic [NUM_CHANNELS-1:0][DMA_DATA_WIDTH/8-1:0]            dma_axi_st_rx_tkeep_o ;
   logic [NUM_CHANNELS-1:0]                                  dma_axi_st_rx_tlast_o ;
-           
-  logic [NUM_CHANNELS-1:0]                                  tx_init_done, rx_init_done;
   wire  [NUM_CHANNELS-1:0]                                  ss_app_cold_rst_ack_n, ss_app_warm_rst_ack_n, ss_app_cold_rst_ack_n_sync, ss_app_warm_rst_ack_n_sync;
-  reg   [NUM_CHANNELS-1:0]                                  tcam_cold_rst_n, tcam_warm_rst_n, o_tx_pll_locked_ptpb;
-  wire  [NUM_CHANNELS-1:0]                                  ss_app_rst_rdy, app_ss_st_areset_n;
-  reg   [NUM_CHANNELS-1:0]                                  ss_app_rst_rdy_161m_d, ss_app_rst_rdy_161m_2d, ss_app_rst_rdy_161m_3d;
-  reg   [NUM_CHANNELS-1:0]                                  app_ss_rst_req, ss_app_rst_rdy_d, ss_app_rst_rdy_2d, ss_app_rst_rdy_3d, ss_app_rst_rdy_edge_det;
-           
+  reg   [NUM_CHANNELS-1:0]                                  tcam_cold_rst_n, tcam_warm_rst_n;
   wire  [NUM_CHANNELS-1:0]                                  hssi_ptp_tx_egrts_tvalid ;      
   wire  [NUM_CHANNELS-1:0] [TXEGR_TS_DW-1:0]                hssi_ptp_tx_egrts_tdata;                          
   wire  [NUM_CHANNELS-1:0]                                  hssi_ptp_rx_ingrts_tvalid ;    
   wire  [NUM_CHANNELS-1:0] [RXIGR_TS_DW-1:0]                hssi_ptp_rx_ingrts_tdata;      
-
-
-   wire                                                    port0_tx_dma_fifo_0_out_ts_req_valid;       
-   wire   [19:0]                                           port0_tx_dma_fifo_0_out_ts_req_fingerprint;   
-   logic [NUM_CHANNELS-1:0]                                tx_ts_valid ;
-   logic [NUM_CHANNELS-1:0] [TS_REQ_FP_WIDTH-1:0]          tx_ts_fp ;
-   logic [NUM_CHANNELS-1:0] [RXIGR_TS_DW-1:0]              tx_ts_data ;
-   logic [NUM_CHANNELS-1:0]                                dma_axi_st_rxigrts0_tvalid;
-   logic [NUM_CHANNELS-1:0]  [RXIGR_TS_DW-1:0]             dma_axi_st_rxigrts0_tdata;   
-  
-  wire [NUM_CHANNELS-1:0]                                  axi_st_txegrts_tvalid_o;
-  wire [NUM_CHANNELS-1:0][TX_EGRESS-1:0]                   axi_st_txegrts_tdata_o;
-                                                              
-  wire [NUM_CHANNELS-1:0]                                  axi_st_rxingrts_tvalid_o;
-  wire [NUM_CHANNELS-1:0][RX_INGRESS-1:0]                  axi_st_rxingrts_tdata_o;
-
- 
-
-
- wire [NUM_CHANNELS-1:0][20-1:0]                            i_reconfig_eth_addr           ;
+  wire                                                      port0_tx_dma_fifo_0_out_ts_req_valid;       
+  wire   [19:0]                                             port0_tx_dma_fifo_0_out_ts_req_fingerprint;   
+  logic [NUM_CHANNELS-1:0]                                  tx_ts_valid ;
+  logic [NUM_CHANNELS-1:0] [TS_REQ_FP_WIDTH-1:0]            tx_ts_fp ;
+  logic [NUM_CHANNELS-1:0] [RXIGR_TS_DW-1:0]                tx_ts_data ;
+  logic [NUM_CHANNELS-1:0]                                  dma_axi_st_rxigrts0_tvalid;
+  logic [NUM_CHANNELS-1:0]  [RXIGR_TS_DW-1:0]               dma_axi_st_rxigrts0_tdata;   
+														   
+  wire [NUM_CHANNELS-1:0]                                   axi_st_txegrts_tvalid_o;
+  wire [NUM_CHANNELS-1:0][TX_EGRESS-1:0]                    axi_st_txegrts_tdata_o;
+                                                               
+  wire [NUM_CHANNELS-1:0]                                   axi_st_rxingrts_tvalid_o;
+  wire [NUM_CHANNELS-1:0][RX_INGRESS-1:0]                   axi_st_rxingrts_tdata_o;
+  wire [NUM_CHANNELS-1:0][20-1:0]                           i_reconfig_eth_addr           ;
   wire [NUM_CHANNELS-1:0][4-1:0]                            i_reconfig_eth_byteenable     ;
   wire [NUM_CHANNELS-1:0]                                   o_reconfig_eth_readdata_valid ;
   wire [NUM_CHANNELS-1:0]                                   i_reconfig_eth_read           ;
@@ -318,20 +298,11 @@ output wire                sfp_tx_disable
  // wire [NUM_CHANNELS-1:0] [FIFO_DEPTH-1:0]                  tx_fifo_length;
  // wire [NUM_CHANNELS-1:0] [FIFO_DEPTH-1:0]                  rx_fifo_length;
   assign i_reconfig_clk[0] = clk_bdg_125_clk;
-  assign sfp_i2c_scl_in = sfp_i2c_scl;
-  assign sfp_i2c_sda_in = sfp_i2c_sda;
-  assign sfp_i2c_scl    = sfp_i2c_scl_oe ? 1'b0 : 1'bz;
-  assign sfp_i2c_sda    = sfp_i2c_sda_oe ? 1'b0 : 1'bz;
+  assign sfp_i2c_scl_in    = sfp_i2c_scl;
+  assign sfp_i2c_sda_in    = sfp_i2c_sda;
+  assign sfp_i2c_scl       = sfp_i2c_scl_oe ? 1'b0 : 1'bz;
+  assign sfp_i2c_sda       = sfp_i2c_sda_oe ? 1'b0 : 1'bz;
 
-
-  altera_reset_synchronizer #(
-      .ASYNC_RESET (1),
-      .DEPTH       (2)
-  ) sys_rst_inst (
-      .reset_in  (~combined_reset_n),
-      .clk       (system_clk_100),
-      .reset_out (system_reset)
-  );
   assign                 system_clk_100   = fpga_clk_100;
   
   wire                   o_pma_cpu_clk;
@@ -340,21 +311,38 @@ output wire                sfp_tx_disable
   axis_if #(.DATA_W(TDATA_WIDTH),.TID(TID)) axis_d2h_if [NUM_CHANNELS-1:0]();
 
  
+
+`ifdef SIM_MODE
+   assign system_reset_n = ~ninit_done;
+`else
+   defparam rd1.CNTR_BITS = 28;
+   alt_reset_delay rd1 (.clk(fpga_clk_100), .ready_in(~ninit_done), .ready_out(system_reset_n) );
+`endif
+  assign system_reset = (~system_reset_n);
+
+  ipm_cdc_async_rst #(
+      .NUM_STAGES                 (3)
+   ) sync_ninit_done (
+      .clk                        (clk_bdg_125_clk),        
+      .arst_in                    (system_reset),    
+      .srst_out                   (system_reset_csr) 
+   );
+ 
+
    
   axi4lite_if #(.AWADDR_WIDTH(16), .WDATA_WIDTH(32), .ARADDR_WIDTH(16), .RDATA_WIDTH(32))  axi4lite_pktcli [NUM_CHANNELS-1:0]();
-  axi4lite_if #(.AWADDR_WIDTH(16), .WDATA_WIDTH(32), .ARADDR_WIDTH(16), .RDATA_WIDTH(32))  axi4lite_ptpbridge();
+  axi4lite_if #(.AWADDR_WIDTH(16), .WDATA_WIDTH(32), .ARADDR_WIDTH(16), .RDATA_WIDTH(32))  axi4lite_packetsw();
   
 
   logic [NUM_CHANNELS-1:0] [3:0] trafficgen_system_status;
   wire [1:0] o_tx_lanes_stable_sync, o_tx_pll_locked_sync, o_rx_pcs_ready_sync;
 
-  assign trafficgen_system_status[0] = {o_rx_pcs_ready_sync[0] ,o_tx_pll_locked_sync[0], o_tx_lanes_stable_sync[0] , combined_reset_n};
- // assign trafficgen_system_status[1] = {o_rx_pcs_ready_sync[1] ,o_tx_pll_locked_sync[1], o_tx_lanes_stable_sync[1] , combined_reset_n};
+  assign trafficgen_system_status[0] = {o_rx_pcs_ready_sync[0] ,o_tx_pll_locked_sync[0], o_tx_lanes_stable_sync[0] , system_reset_csr};
 
 // **************************************************************************//
 //                 synchronizers                                             //
 // **************************************************************************//  
-  for (genvar i=0; i < 1; i++) begin : sts_tx_lanes_stable
+  for (genvar i=0; i < NUM_CHANNELS; i++) begin : sts_tx_lanes_stable
     eth_f_altera_std_synchronizer_nocut tx_lanes_stable (
         .clk        (clk_bdg_125_clk),
         .reset_n    (o_tx_lanes_stable[i]),
@@ -363,7 +351,7 @@ output wire                sfp_tx_disable
     );
    end
 
-  for (genvar i=0; i < 1; i++) begin : sts_tx_pll_locked
+  for (genvar i=0; i < NUM_CHANNELS; i++) begin : sts_tx_pll_locked
     eth_f_altera_std_synchronizer_nocut tx_pll_locked (
         .clk        (clk_bdg_125_clk),
         .reset_n    (o_tx_pll_locked[i]),
@@ -372,14 +360,14 @@ output wire                sfp_tx_disable
     );
    end
     
-  for (genvar i=0; i < 1; i++) begin : sts_rx_pcs_ready
+  for (genvar i=0; i < NUM_CHANNELS; i++) begin : sts_rx_pcs_ready
     eth_f_altera_std_synchronizer_nocut rx_pcs_ready (
         .clk        (clk_bdg_125_clk),
         .reset_n    (o_rx_pcs_ready[i]),
         .din        (1'b1 ),         
         .dout       (o_rx_pcs_ready_sync[i])
     );
-   end
+   end   
 
    eth_f_altera_std_synchronizer_nocut sync_iopll_lock_100M (
       .clk                       (clk_bdg_100_clk),
@@ -394,14 +382,20 @@ output wire                sfp_tx_disable
       .dout                      (iopll_locked_export_125M)
     );
 	
-	 
-	 eth_f_altera_std_synchronizer_nocut sync_iopll_lock_161_0 (
+   eth_f_altera_std_synchronizer_nocut sync_iopll_lock_161_0 (
       .clk                       (o_clk_pll_161m[0]),
       .reset_n                   (iopll_locked_export),
       .din                       (1'b1 ),
       .dout                      (iopll_locked_export_161[0])
     );
-     
+	 
+//	    eth_f_altera_std_synchronizer_nocut sync_iopll_lock_161_1 (
+//     .clk                       (o_clk_pll_161m[1]),
+//     .reset_n                   (iopll_locked_export),
+//     .din                       (1'b1 ),
+//     .dout                      (iopll_locked_export_161[1])
+//   );
+
 // **************************************************************************//
 //                 Dummy timestamp generation(egress)                        //
 // **************************************************************************// 
@@ -558,8 +552,8 @@ qsys_top soc_inst (
   .hps_io_uart0_rx                           (hps_uart0_RX),          
   .hps_io_uart0_tx                           (hps_uart0_TX), 
   .hps_io_hps_osc_clk                        (hps_osc_clk),
-  .h2f_reset_reset                           (h2f_reset),
-  .reset_reset_n                             (~system_reset),
+  .h2f_reset_reset                           (),
+  .reset_reset_n                             (system_reset_n),
   // --------------   Tx mSGDMA to HSSI ----------------------//
   .axi_tx_st_tready                          (axis_h2d_if[0].tready),
   .axi_tx_st_tvalid                          (axis_h2d_if[0].tvalid),
@@ -661,25 +655,25 @@ qsys_top soc_inst (
    .axi4lite_pktcli_0_m0_rvalid          (axi4lite_pktcli[0].rvalid  ),
    .axi4lite_pktcli_0_m0_rready          (axi4lite_pktcli[0].rready  ),
 
-   .axi4lite_ptpbridge_m0_awaddr          (axi4lite_ptpbridge.awaddr  ),
-   .axi4lite_ptpbridge_m0_awprot          (axi4lite_ptpbridge.awprot  ),
-   .axi4lite_ptpbridge_m0_awvalid         (axi4lite_ptpbridge.awvalid ),
-   .axi4lite_ptpbridge_m0_awready         (axi4lite_ptpbridge.awready ),
-   .axi4lite_ptpbridge_m0_wdata           (axi4lite_ptpbridge.wdata   ),
-   .axi4lite_ptpbridge_m0_wstrb           (axi4lite_ptpbridge.wstrb   ),
-   .axi4lite_ptpbridge_m0_wvalid          (axi4lite_ptpbridge.wvalid  ),
-   .axi4lite_ptpbridge_m0_wready          (axi4lite_ptpbridge.wready  ),
-   .axi4lite_ptpbridge_m0_bresp           (axi4lite_ptpbridge.bresp   ),
-   .axi4lite_ptpbridge_m0_bvalid          (axi4lite_ptpbridge.bvalid  ),
-   .axi4lite_ptpbridge_m0_bready          (axi4lite_ptpbridge.bready  ),
-   .axi4lite_ptpbridge_m0_araddr          (axi4lite_ptpbridge.araddr  ),
-   .axi4lite_ptpbridge_m0_arprot          (axi4lite_ptpbridge.arprot  ),
-   .axi4lite_ptpbridge_m0_arvalid         (axi4lite_ptpbridge.arvalid ),
-   .axi4lite_ptpbridge_m0_arready         (axi4lite_ptpbridge.arready ),
-   .axi4lite_ptpbridge_m0_rdata           (axi4lite_ptpbridge.rdata   ),
-   .axi4lite_ptpbridge_m0_rresp           (axi4lite_ptpbridge.rresp   ),
-   .axi4lite_ptpbridge_m0_rvalid          (axi4lite_ptpbridge.rvalid  ),
-   .axi4lite_ptpbridge_m0_rready          (axi4lite_ptpbridge.rready  )
+   .axi4lite_packetsw_m0_awaddr          (axi4lite_packetsw.awaddr  ),
+   .axi4lite_packetsw_m0_awprot          (axi4lite_packetsw.awprot  ),
+   .axi4lite_packetsw_m0_awvalid         (axi4lite_packetsw.awvalid ),
+   .axi4lite_packetsw_m0_awready         (axi4lite_packetsw.awready ),
+   .axi4lite_packetsw_m0_wdata           (axi4lite_packetsw.wdata   ),
+   .axi4lite_packetsw_m0_wstrb           (axi4lite_packetsw.wstrb   ),
+   .axi4lite_packetsw_m0_wvalid          (axi4lite_packetsw.wvalid  ),
+   .axi4lite_packetsw_m0_wready          (axi4lite_packetsw.wready  ),
+   .axi4lite_packetsw_m0_bresp           (axi4lite_packetsw.bresp   ),
+   .axi4lite_packetsw_m0_bvalid          (axi4lite_packetsw.bvalid  ),
+   .axi4lite_packetsw_m0_bready          (axi4lite_packetsw.bready  ),
+   .axi4lite_packetsw_m0_araddr          (axi4lite_packetsw.araddr  ),
+   .axi4lite_packetsw_m0_arprot          (axi4lite_packetsw.arprot  ),
+   .axi4lite_packetsw_m0_arvalid         (axi4lite_packetsw.arvalid ),
+   .axi4lite_packetsw_m0_arready         (axi4lite_packetsw.arready ),
+   .axi4lite_packetsw_m0_rdata           (axi4lite_packetsw.rdata   ),
+   .axi4lite_packetsw_m0_rresp           (axi4lite_packetsw.rresp   ),
+   .axi4lite_packetsw_m0_rvalid          (axi4lite_packetsw.rvalid  ),
+   .axi4lite_packetsw_m0_rready          (axi4lite_packetsw.rready  )
     
 ); 
 
@@ -768,7 +762,7 @@ generate for(genvar i=0;i<NUM_CHANNELS;i++) begin : gen_mulit_inst
    .o_rx_pcs_fully_aligned (),
 
    //------------  Tx ports  ----------------------/                                                                                  
-   //  AXI Stream Tx, from PTP bridge subystem   
+   //  AXI Stream Tx, from Packet Switch subystem   
    .pp_app_ss_st_tx_tready       (hssi_ss_st_tx_tready[i]),
    .app_pp_ss_st_tx_tvalid       (hssi_ss_st_tx_tvalid[i]),
    .app_pp_ss_st_tx_tdata        (hssi_ss_st_tx_tdata[i] ),
@@ -784,7 +778,7 @@ generate for(genvar i=0;i<NUM_CHANNELS;i++) begin : gen_mulit_inst
    .axi_st_txegrts_tdata_o       (hssi_ptp_tx_egrts_tdata[i]),
    
   //------------  Rx ports  ----------------------/                                                                                  
-  //  AXI Stream Rx, to PTP bridge subystem                                                                                   
+  //  AXI Stream Rx, to Packet Switch subystem                                                                                   
    .ss_pp_app_rx_tvalid                  (hssi_ss_st_rx_tvalid[i]),
    .ss_pp_app_rx_tdata                   (hssi_ss_st_rx_tdata[i] ),
    .ss_pp_app_rx_tkeep                   (hssi_ss_st_rx_tkeep[i] ),
@@ -834,7 +828,7 @@ generate for(genvar i=0;i<NUM_CHANNELS;i++) begin : gen_mulit_inst
     .WORDS                                 (WORDS),
     .EMPTY_WIDTH                           (EMPTY_WIDTH)
   ) packet_client_axi_adaptor_top_0(
-    .i_arst                                (eth_user_tx_rst_n[i]), // active low reset
+    .i_arst                                (eth_user_rx_rst_n[i]), // active low reset
     .i_clk_tx                              (o_clk_pll_161m[i] ),
     .i_clk_rx                              (o_clk_pll_161m[i] ),
     
@@ -847,8 +841,10 @@ generate for(genvar i=0;i<NUM_CHANNELS;i++) begin : gen_mulit_inst
     .i_avst_tx_data                        (avst_tx_data_int             [i]),
     .i_avst_tx_error                       (avst_tx_error_int            [i]),
     .i_avst_tx_skip_crc                    (avst_tx_skip_crc_int         [i]),
-                                                                         
-    // to ptp_bridge                                                         
+
+																	     
+    // to packet_switch                                                         
+
     .i_axis_tx_ready                       (user_axi_st_tx_tready_o      [i]),
     .o_axis_tx_valid                       (user_axi_st_tx_tvalid_i      [i]),
     .o_axis_tx_tdata                       (user_axi_st_tx_tdata_i       [i]),
@@ -856,7 +852,7 @@ generate for(genvar i=0;i<NUM_CHANNELS;i++) begin : gen_mulit_inst
     .o_axis_tx_tlast                       (user_axi_st_tx_tlast_i       [i]),
     .o_axis_tx_tuser                       (user_axi_st_tx_tuser_ptp_i   [i]),
 
-    // from ptp_bridge
+    // from packet_switch
     .o_axis_rx_ready                       (user_axi_st_rx_tready_i      [i]),
     .i_axis_rx_valid                       (user_axi_st_rx_tvalid_o      [i]),
     .i_axis_rx_tdata                       (user_axi_st_rx_tdata_o       [i]),
@@ -885,7 +881,8 @@ generate for(genvar i=0;i<NUM_CHANNELS;i++) begin : gen_mulit_inst
     ,.WORDS            (WORDS            ) 
     ,.EMPTY_WIDTH      (EMPTY_WIDTH      ) 
     ) i_eth_f_packet_client_top (
-    .i_arst                                (!eth_user_tx_rst_n[i]) , //active high reset
+    .i_arst_tx                                (!eth_user_tx_rst_n[i]) , 
+    .i_arst_rx                                (!eth_user_rx_rst_n[i]) , 
     .i_clk_tx                              (o_clk_pll_161m   [i] ),
     .i_clk_rx                              (o_clk_pll_161m   [i] ),
     .i_clk_status                          (clk_bdg_125_clk),
@@ -923,7 +920,7 @@ end endgenerate
 //                  Reset Controller
 // ********************************************************************* //  
 srd_rst_ctrl #(
-  .NUM_MACSEC_INST (NUM_CHANNELS)
+  .NUM_CHANNELS (NUM_CHANNELS)
 )inst_srd_rst_ctrl
 (
   .pwrgood_rst_n             (iopll_locked_export_125M), 
@@ -997,7 +994,7 @@ srd_rst_ctrl #(
 // so removing the negedge iopll_locked_export_125M, we should during synchronous reset 
 // ################################################################### // 
 // ********************************************************************* //
-//                  PTP bridge reset sequence
+//                  Packet Switch reset sequence
 // ********************************************************************* //  
 
 // cold boot reset logic
@@ -1008,14 +1005,12 @@ srd_rst_ctrl #(
     .dout       (ss_app_cold_rst_ack_n_sync[0])
   );
   
-always @(posedge clk_bdg_125_clk )
- if(~iopll_locked_export_125M)
-    tcam_cold_rst_n[0] <= 1'b1;
-  else if (ss_app_rst_rdy_edge_det[0])
-     tcam_cold_rst_n[0] <= 1'b0;
+always @(posedge clk_bdg_125_clk or negedge iopll_locked_export_125M) 
+  if(~iopll_locked_export_125M)
+    tcam_cold_rst_n[0] <= 1'b0;
   else if(~ss_app_cold_rst_ack_n_sync[0])
     tcam_cold_rst_n[0] <= 1'b1;
-
+	 
 // warm boot reset logic
   eth_f_altera_std_synchronizer_nocut warm_boot_rstack_tcam_inst_1 (
     .clk        (clk_bdg_125_clk),
@@ -1024,93 +1019,32 @@ always @(posedge clk_bdg_125_clk )
     .dout       (ss_app_warm_rst_ack_n_sync[0])
   );
 
-always @(posedge clk_bdg_125_clk )
-  if (~iopll_locked_export_125M)
-    tcam_warm_rst_n[0] <= 1'b1;
-  else if (ss_app_rst_rdy_edge_det[0])
-     tcam_warm_rst_n[0] <= 1'b0;
+always @(posedge clk_bdg_125_clk or negedge iopll_locked_export_125M) 
+  if(~iopll_locked_export_125M)
+    tcam_warm_rst_n[0] <= 1'b0;
   else if(~ss_app_warm_rst_ack_n_sync[0])
     tcam_warm_rst_n[0] <= 1'b1;
 
-always @(posedge o_clk_pll_161m[0] or negedge iopll_locked_export_161[0])
-  if(~iopll_locked_export_161[0])
-    app_ss_rst_req[0] <= 1'b1;
-  else if(ss_app_rst_rdy[0])
-    app_ss_rst_req[0] <= 1'b0;
-
-	
-//always @(posedge clk_bdg_100_clk or negedge iopll_locked_export_100M)
-always @(posedge clk_bdg_125_clk or negedge iopll_locked_export_125M)
-  if(~iopll_locked_export_125M) begin
-      ss_app_rst_rdy_d <= 2'b11;
-      ss_app_rst_rdy_2d <= 2'b11;
-      ss_app_rst_rdy_3d <= 2'b11;
-     end
-  else
-    begin
-      ss_app_rst_rdy_d <= ss_app_rst_rdy;
-      ss_app_rst_rdy_2d <= ss_app_rst_rdy_d;
-      ss_app_rst_rdy_3d <= ss_app_rst_rdy_2d;
-     end    
-     
-assign ss_app_rst_rdy_edge_det[0] = ss_app_rst_rdy_3d[0] & (!ss_app_rst_rdy_2d[0]);
-
-reg [1:0]   o_tx_pll_locked_d, o_tx_pll_locked_2d, o_tx_pll_locked_3d ;
-reg o_tx_pll_locked_ptpb_100M_d, o_tx_pll_locked_ptpb_100M_2d;
-
-always @(posedge o_clk_pll_161m[0] or negedge iopll_locked_export_161[0])
-  if(~iopll_locked_export_161[0]) begin
-      o_tx_pll_locked_ptpb[0]    <= 1'b1;
-      ss_app_rst_rdy_161m_d[0]   <= 1'b0;
-      ss_app_rst_rdy_161m_2d[0]  <= 1'b0;
-      ss_app_rst_rdy_161m_3d[0]  <= 1'b0;
-      o_tx_pll_locked_d[0]  <= 1'b0;
-      o_tx_pll_locked_2d[0] <= 1'b0;
-      o_tx_pll_locked_3d[0] <= 1'b0;
-     end
-  else
-    begin
-      ss_app_rst_rdy_161m_d[0]   <= ss_app_rst_rdy[0];
-      ss_app_rst_rdy_161m_2d[0]  <= ss_app_rst_rdy_161m_d[0];
-      ss_app_rst_rdy_161m_3d[0]  <= ss_app_rst_rdy_161m_2d[0];
-      o_tx_pll_locked_d[0]  <= o_tx_pll_locked[0];
-      o_tx_pll_locked_2d[0] <= o_tx_pll_locked_d[0];
-      o_tx_pll_locked_3d[0] <= o_tx_pll_locked_2d[0];
-		
-		if (ss_app_rst_rdy_161m_3d[0] && (!ss_app_rst_rdy_161m_2d[0]))
-		  o_tx_pll_locked_ptpb[0] <= 1'b0;
-		else if (o_tx_pll_locked_3d[0])
-		  o_tx_pll_locked_ptpb[0] <= 1'b1;
-	 end	
-	 	 
-always @(posedge clk_bdg_125_clk or negedge iopll_locked_export_125M)
-  if(~iopll_locked_export_125M) begin
-      o_tx_pll_locked_ptpb_100M_d <= 1'b1;
-      o_tx_pll_locked_ptpb_100M_2d <= 1'b1;
-     end
-  else  begin 
-    o_tx_pll_locked_ptpb_100M_d <= o_tx_pll_locked_ptpb;
-    o_tx_pll_locked_ptpb_100M_2d <= o_tx_pll_locked_ptpb_100M_d;
-  end
- 
 assign dma_axi_st_tx_tvalid_i[0]                = axis_h2d_if[0].tvalid;
 assign dma_axi_st_tx_tdata_i[0]                 = axis_h2d_if[0].tdata;
 assign dma_axi_st_tx_tkeep_i[0]                 = axis_h2d_if[0].tkeep;
 assign dma_axi_st_tx_tlast_i[0]                 = axis_h2d_if[0].tlast;
 assign dma_axi_st_tx_tuser_last_segment_i[0][0] = axis_h2d_if[0].tlast;
-assign axis_h2d_if[0].tready                    = dma_axi_st_tx_tready_o[0]  ;
+assign axis_h2d_if[0].tready                    = dma_axi_st_tx_tready_o[0];
 
 assign axis_d2h_if[0].tvalid                  = dma_axi_st_rx_tvalid_o[0];
 assign axis_d2h_if[0].tdata                   = dma_axi_st_rx_tdata_o[0]  ;
 assign axis_d2h_if[0].tkeep                   = dma_axi_st_rx_tkeep_o[0]  ;
 assign axis_d2h_if[0].tlast                   = dma_axi_st_rx_tlast_o[0]  ;
-assign dma_axi_st_rx_tready_i[0]              = 1'b1;//axis_d2h_if[0].tready  ;
+assign dma_axi_st_rx_tready_i[0]              = 1'b1;
 assign axis_d2h_if[0].tid                     = 'd0;  
 
+
+
 // ********************************************************************* //
-//                  PTP Bridge subsystem
+//                  Packet Switch subsystem
 // ********************************************************************* //      
-ptp_bridge_subsys
+packet_switch_subsys
    #(.HSSI_PORT  (NUM_CHANNELS )   
      ,.USER_PORT  (NUM_CHANNELS )   
      ,.DMA_CHNL   (NUM_CHANNELS )   
@@ -1156,9 +1090,8 @@ ptp_bridge_subsys
     ,.EGR_DMA_BYTE_ROTATE      (EGR_DMA_BYTE_ROTATE )      
     ,.EGR_USER_BYTE_ROTATE     (EGR_USER_BYTE_ROTATE)      
     ,.EGR_HSSI_BYTE_ROTATE     (EGR_HSSI_BYTE_ROTATE) 
-    
-    ,.DBG_CNTR_EN              (DBG_CNTR_EN            )         
-   ) ptp_bridge_subsys
+    ,.DBG_CNTR_EN              (DBG_CNTR_EN            )    	 
+   ) packet_switch_subsys
 
   (
     //AXI Streaming Interface     
@@ -1170,21 +1103,19 @@ ptp_bridge_subsys
     ,.rx_areset_n_i        (eth_user_rx_rst_n)
                                                    
     // axi_lite csr clock & reset                  
-    ,.axi_lite_clk_i        (clk_bdg_125_clk) 
-    ,.axi_lite_rst_n_i      (o_tx_pll_locked_ptpb_100M_2d) 
+    ,.axi_lite_clk_i   (clk_bdg_125_clk)	  
+    ,.axi_lite_rst_n_i (iopll_locked_export_125M) 
     //----------------------------------------------------------------------------------------- 
     // init_done status
-    ,.tx_init_done_o        (tx_init_done)
-    ,.rx_init_done_o        (rx_init_done)
+    ,.tx_init_done_o        ()
+    ,.rx_init_done_o        ()
 
     //-----------------------------------------------------------------------------------------
     //TCAM Reset Interface
-    ,.tcam_ss_rst_n         (tcam_cold_rst_n)
-    ,.tcam_ss_clk           (o_clk_pll_161m)
     ,.app_ss_cold_rst_n     (tcam_cold_rst_n)      
     ,.app_ss_warm_rst_n     (tcam_warm_rst_n)       
-    ,.app_ss_rst_req        (app_ss_rst_req)     
-    ,.ss_app_rst_rdy        (ss_app_rst_rdy)
+    ,.app_ss_rst_req        ('0)     
+    ,.ss_app_rst_rdy        ()
     ,.ss_app_cold_rst_ack_n (ss_app_cold_rst_ack_n)
     ,.ss_app_warm_rst_ack_n (ss_app_warm_rst_ack_n)
 
@@ -1192,31 +1123,31 @@ ptp_bridge_subsys
     // axi_lite: sync to axi_lite_clk
 
     //-----WRITE ADDRESS CHANNEL-------
-    ,.axi_lite_awaddr_i    (axi4lite_ptpbridge.awaddr )
-    ,.axi_lite_awvalid_i   (axi4lite_ptpbridge.awvalid)
-    ,.axi_lite_awready_o   (axi4lite_ptpbridge.awready)
+    ,.axi_lite_awaddr_i    (axi4lite_packetsw.awaddr )
+    ,.axi_lite_awvalid_i   (axi4lite_packetsw.awvalid)
+    ,.axi_lite_awready_o   (axi4lite_packetsw.awready)
     //---------------------------------            
     //-----WRITE DATA CHANNEL----------            
-    ,.axi_lite_wdata_i     (axi4lite_ptpbridge.wdata )
-    ,.axi_lite_wvalid_i    (axi4lite_ptpbridge.wvalid)
-    ,.axi_lite_wready_o    (axi4lite_ptpbridge.wready)
-    ,.axi_lite_wstrb_i     (axi4lite_ptpbridge.wstrb )
+    ,.axi_lite_wdata_i     (axi4lite_packetsw.wdata )
+    ,.axi_lite_wvalid_i    (axi4lite_packetsw.wvalid)
+    ,.axi_lite_wready_o    (axi4lite_packetsw.wready)
+    ,.axi_lite_wstrb_i     (axi4lite_packetsw.wstrb )
     //---------------------------------            
     //-----WRITE RESPONSE CHANNEL------            
-    ,.axi_lite_bresp_o    (axi4lite_ptpbridge.bresp  )
-    ,.axi_lite_bvalid_o   (axi4lite_ptpbridge.bvalid )
-    ,.axi_lite_bready_i   (axi4lite_ptpbridge.bready )
+    ,.axi_lite_bresp_o    (axi4lite_packetsw.bresp  )
+    ,.axi_lite_bvalid_o   (axi4lite_packetsw.bvalid )
+    ,.axi_lite_bready_i   (axi4lite_packetsw.bready )
     //---------------------------------            
     //-----READ ADDRESS CHANNEL-------             
-    ,.axi_lite_araddr_i   (axi4lite_ptpbridge.araddr )
-    ,.axi_lite_arvalid_i  (axi4lite_ptpbridge.arvalid)
-    ,.axi_lite_arready_o  (axi4lite_ptpbridge.arready)
+    ,.axi_lite_araddr_i   (axi4lite_packetsw.araddr )
+    ,.axi_lite_arvalid_i  (axi4lite_packetsw.arvalid)
+    ,.axi_lite_arready_o  (axi4lite_packetsw.arready)
     //---------------------------------            
     //-----READ DATA CHANNEL----------             
-    ,.axi_lite_rresp_o    (axi4lite_ptpbridge.rresp )
-    ,.axi_lite_rdata_o    (axi4lite_ptpbridge.rdata )
-    ,.axi_lite_rvalid_o   (axi4lite_ptpbridge.rvalid)
-    ,.axi_lite_rready_i   (axi4lite_ptpbridge.rready)
+    ,.axi_lite_rresp_o    (axi4lite_packetsw.rresp )
+    ,.axi_lite_rdata_o    (axi4lite_packetsw.rdata )
+    ,.axi_lite_rvalid_o   (axi4lite_packetsw.rvalid)
+    ,.axi_lite_rready_i   (axi4lite_packetsw.rready)
 
     //=========================================================================================
     // TX Interface:  

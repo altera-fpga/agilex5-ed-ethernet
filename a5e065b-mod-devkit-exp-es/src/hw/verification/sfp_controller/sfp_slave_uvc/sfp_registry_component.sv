@@ -18,28 +18,35 @@ class sfp_registry_component extends uvm_component;
    bit config_rand;
    bit count;
    //Port: SFP data_in_port
+   
+   //Variables used to send to SB
+   logic [31:0] data_to_sb;
+   bit set_data_for_sb;
+   bit data_read_by_sb;
+   int address;
  
    function new(string name, uvm_component parent);
       super.new(name, parent);
       item_collected_export = new("item_collected_export", this);
    endfunction: new
+
+   virtual task run_phase(uvm_phase phase);
+     super.run_phase(phase);
+       init_array();
+   endtask: run_phase
  
    function write(sfp_slave_seq_item pkt);
       sfp_slave_seq_item _pkt;
       $cast(_pkt, pkt.clone());
       _pkt.print();
-        if (count == 0) begin
-          `uvm_info("sfp_registry_component", $sformatf("Value of Count bit for SFP registry component : Config Rand : %h", count), UVM_LOW);
-          init_array();
-          count=count+1;
-          `uvm_info("sfp_registry_component", $sformatf("Value of Count bit for SFP registry component : Config Rand : %h", count), UVM_LOW);
-        end	 
-      update_registry(_pkt);
+      if(_pkt.sfp_slv_pkt_type == SFP_SLV_WRITE)begin  //write operation
+        update_registry(_pkt);
+      end
    endfunction: write
 
    function init_array();
-     for(int i='h00;i< 'h120;i=i+'h1) begin
        `uvm_info("sfp_registry_component", $sformatf("Value of Config rand bit for SFP registry component : Config Rand : %h", config_rand), UVM_LOW);
+     for(int i='h00;i< 'h120;i=i+'h1) begin
        sfp_registry_lo_pg0[i] = $urandom;
        sfp_registry_up_pg2[i] = $urandom;
        sfp_registry_up_pg3[i] = $urandom;
@@ -211,51 +218,76 @@ class sfp_registry_component extends uvm_component;
      addr_count = addr_count+1;
     end
 
-   `uvm_info("sfp_registry_component",$sformatf("addr_count is %d,addr is %h,read is %d",addr_count,addr,read),UVM_LOW);
+   `uvm_info(get_type_name(),$sformatf("addr_count is %d,addr is %h,read is %d",addr_count,addr,read),UVM_LOW);
 
    if (pg_nxt == 0 && addr_count <= 'd256) begin
-   `uvm_info("sfp_registry_component", $sformatf("Read value  for address is 'h%h ,Data is 'h%h,'h%h,'h%h,'h%h",addr,sfp_registry_lo_pg0[addr],sfp_registry_lo_pg0[addr+1],sfp_registry_lo_pg0[addr+2],sfp_registry_lo_pg0[addr+3]), UVM_LOW);
+   `uvm_info(get_type_name(), 
+	     $sformatf("Read value  for address is 'h%h ,Data is 'h%h,'h%h,'h%h,'h%h",
+	                addr,sfp_registry_lo_pg0[addr],sfp_registry_lo_pg0[addr+1],sfp_registry_lo_pg0[addr+2],sfp_registry_lo_pg0[addr+3]), 
+	     UVM_LOW);
+     data_to_sb =  {sfp_registry_lo_pg0[addr+3],sfp_registry_lo_pg0[addr+2],sfp_registry_lo_pg0[addr+1],sfp_registry_lo_pg0[addr]};
+     `uvm_info(get_type_name(), 
+	       $sformatf("The data to send SB is here: %0h And it's address: %0h",data_to_sb,addr), 
+	       UVM_LOW);
      if(addr_count == 'd256) begin
        addr_count = 128;
        pg_nxt ='h2;
      end
+     set_data_for_sb = set_data_for_sb+1;
      return ({sfp_registry_lo_pg0[addr+3],sfp_registry_lo_pg0[addr+2],sfp_registry_lo_pg0[addr+1],sfp_registry_lo_pg0[addr]});
    end
    else if (pg_nxt == 8'h2 && addr_count<= 'd256) begin
-   `uvm_info("sfp_registry_component", $sformatf("Read value  for address is 'h%h ,Data is 'h%h,'h%h,'h%h,'h%h",addr,sfp_registry_up_pg2[addr],sfp_registry_up_pg2[addr+1],sfp_registry_up_pg2[addr+2],sfp_registry_up_pg2[addr+3]), UVM_LOW);
+     `uvm_info("sfp_registry_component", $sformatf("Read value  for address is 'h%h ,Data is 'h%h,'h%h,'h%h,'h%h",addr,sfp_registry_up_pg2[addr],sfp_registry_up_pg2[addr+1],sfp_registry_up_pg2[addr+2],sfp_registry_up_pg2[addr+3]), UVM_LOW);
+    data_to_sb =  ({sfp_registry_up_pg2[addr+3],sfp_registry_up_pg2[addr+2],sfp_registry_up_pg2[addr+1],sfp_registry_up_pg2[addr]});
+     `uvm_info(get_type_name(), 
+	       $sformatf("The data to send SB is here: %0h And it's address: %0h",data_to_sb,addr), 
+	       UVM_LOW);
     if(addr_count == 'd256) begin
        addr_count = 'd128;
        pg_nxt='h3;
     end
+     set_data_for_sb = set_data_for_sb+1;
      return ({sfp_registry_up_pg2[addr+3],sfp_registry_up_pg2[addr+2],sfp_registry_up_pg2[addr+1],sfp_registry_up_pg2[addr]});
    end
    else if ( pg_nxt == 8'h3 && addr_count <= 'd256) begin
    `uvm_info("sfp_registry_component", $sformatf("Read value  for address is 'h%h ,Data is 'h%h,'h%h,'h%h,'h%h",addr,sfp_registry_up_pg3[addr],sfp_registry_up_pg3[addr+1],sfp_registry_up_pg3[addr+2],sfp_registry_up_pg3[addr+3]), UVM_LOW);
+   data_to_sb =  ({sfp_registry_up_pg3[addr+3],sfp_registry_up_pg3[addr+2],sfp_registry_up_pg3[addr+1],sfp_registry_up_pg3[addr]});
+     `uvm_info(get_type_name(), 
+	       $sformatf("The data to send SB is here: %0h And it's address: %0h",data_to_sb,addr), 
+	       UVM_LOW);
      if (addr_count =='d256) begin
          addr_count ='d128;
 	 pg_nxt ='h20;
      end
+     set_data_for_sb = set_data_for_sb+1;
      return ({sfp_registry_up_pg3[addr+3],sfp_registry_up_pg3[addr+2],sfp_registry_up_pg3[addr+1],sfp_registry_up_pg3[addr]});
    end
    else if ( pg_nxt == 8'h20 && addr_count <='d256) begin
    `uvm_info("sfp_registry_component", $sformatf("Read value  for address is 'h%h ,Data is 'h%h,'h%h,'h%h,'h%h",addr,sfp_registry_up_pg20[addr],sfp_registry_up_pg20[addr+1],sfp_registry_up_pg20[addr+2],sfp_registry_up_pg20[addr+3]), UVM_LOW);
+   data_to_sb =  ({sfp_registry_up_pg20[addr+3],sfp_registry_up_pg20[addr+2],sfp_registry_up_pg20[addr+1],sfp_registry_up_pg20[addr]});
+     `uvm_info(get_type_name(), 
+	       $sformatf("The data to send SB is here: %0h And it's address: %0h",data_to_sb,addr), 
+	       UVM_LOW);
      if(addr_count =='d256) begin
        addr_count = 'd128;
        pg_nxt ='h21;
      end
+     set_data_for_sb = set_data_for_sb+1;
      return ({sfp_registry_up_pg20[addr+3],sfp_registry_up_pg20[addr+2],sfp_registry_up_pg20[addr+1],sfp_registry_up_pg20[addr]});
    end
    else if ( pg_nxt == 8'h21 && addr_count <= 'd256) begin
    `uvm_info("sfp_registry_component", $sformatf("Read value  for address is 'h%h ,Data is 'h%h,'h%h,'h%h,'h%h",addr,sfp_registry_up_pg21[addr],sfp_registry_up_pg21[addr+1],sfp_registry_up_pg21[addr+2],sfp_registry_up_pg21[addr+3]), UVM_LOW);
+   data_to_sb =  ({sfp_registry_up_pg21[addr+3],sfp_registry_up_pg21[addr+2],sfp_registry_up_pg21[addr+1],sfp_registry_up_pg21[addr]});
+     `uvm_info(get_type_name(), 
+	       $sformatf("The data to send SB is here: %0h And it's address: %0h",data_to_sb,addr), 
+	       UVM_LOW);
      if(addr_count =='d256) begin
        addr_count = 'd0;
        pg_nxt ='h0;
      end
+     set_data_for_sb = set_data_for_sb+1;
      return ({sfp_registry_up_pg21[addr+3],sfp_registry_up_pg21[addr+2],sfp_registry_up_pg21[addr+1],sfp_registry_up_pg21[addr]});
    end
   endfunction : get_read_data
-
-
-
 
 endclass: sfp_registry_component
