@@ -51,6 +51,7 @@ Download toolchain from https://developer.arm.com/-/media/Files/downloads/gnu/11
 	$ export CROSS_COMPILE=`pwd`/arm-gnu-toolchain-11.3.rel1-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-
     	$ git clone https://github.com/altera-fpga/linux-socfpga.git -b socfpga-6.12.19-lts-ethernet-sed
     	$ cd linux-socfpga/
+	$ git checkout SED-1x10GE-a5e065b-mdk-Q25.3-Rel-1.1
     	$ make defconfig
     	$ make menuconfig
     	  Enable the configs listed:
