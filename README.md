@@ -38,9 +38,9 @@ Directory Structure used in this example design:
 ## Project Details
 
 - **Family**: Agilex™ 5
-- **Quartus Version**: 25.3
-- **Development Kit**: [Agilex™ 5 FPGA E-Series 065B Modular Development Kit](https://www.altera.com/products/devkit/a1jui000006mvpfmau/agilex-5-fpga-and-soc-e-series-modular-development-kit-es)
-- **Device Part**: A5ED065BB32AE6SR0
+- **Quartus Version**: 26.1
+- **Development Kit**: [Agilex™ 5 FPGA and SoC E-Series 065B Modular Development Kit](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit)
+- **Device Part**: A5ED065BB32AE4S
 
 ## Getting Started
 
@@ -51,6 +51,6 @@ Building the design is easy with the scripts provided in the repo. Clone the rep
 
 
 Follow the below procedure to build the HW and the Software artifacts. 
-- [Building the hardware](a5e065b-mod-devkit-exp-es/src/hw/README.md)
-- [Building the software](a5e065b-mod-devkit-exp-es/src/sw/README.md)
+- [Building the hardware](a5e065b-mod-devkit-exp-prod/src/hw/README.md)
+- [Building the software](a5e065b-mod-devkit-exp-prod/src/sw/README.md)
 
