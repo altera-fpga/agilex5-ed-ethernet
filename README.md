@@ -28,7 +28,7 @@ For more information, refer to the [altera github doc](https://altera-fpga.githu
 Directory Structure used in this example design:
 
  ```bash
-    |--- a5e065b-mod-devkit-exp-es/src
+    |--- a5e065b-mod-devkit-exp-prod/src
     |   |--- hw
     |   |--- sw
  ```
