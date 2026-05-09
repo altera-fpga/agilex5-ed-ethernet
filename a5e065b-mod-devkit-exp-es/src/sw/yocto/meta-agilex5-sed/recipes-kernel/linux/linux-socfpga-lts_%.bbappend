@@ -1,6 +1,5 @@
-KERNEL_REPO = "git://github.com/altera-fpga/linux-socfpga.git"
+KERNEL_REPO = "git://github.com/altera-innersource/applications.fpga.soc.linux-socfpga.git"
 SRCREV = "${AUTOREV}"
-#SRCREV = "SED-1x10GE-a5e065b-mdk-Q25.1-Rel-1.1"
 LINUX_VERSION = "6.12.19"
 KBRANCH = "socfpga-6.12.19-lts-ethernet-sed"
 LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
@@ -33,6 +32,7 @@ python() {
 }
 
 SRC_URI:append:agilex5_modular = " file://fit_kernel_agilex5_modular_sed_ETH_1P10G.its"
+SRC_URI:append:agilex5_modular = " file://fit_kernel_agilex5_modular_sed_ETH_1P10G_noFPGA.its"
 
 #SRC_URI:append = " file://ubifs.scc"
 
@@ -58,6 +58,7 @@ do_deploy:append() {
 			if [[ ${SOLUTION} == "ETH_1P10G" ]]; then
 				cp ${WORKDIR}/fit_kernel_${MACHINE}_sed_${SOLUTION}.its ${B}/fit_kernel.its
 				cp ${B}/fit_kernel.its ${B}/fit_kernel_${MACHINE}.its
+				cp ${WORKDIR}/fit_kernel_${MACHINE}_sed_${SOLUTION}_noFPGA.its ${B}/fit_kernel_noFPGA.its
 			fi
 		fi
         
@@ -67,11 +68,13 @@ do_deploy:append() {
                 xz --force --format=lzma ${B}/Image
                 # Generate kernel.itb
                 mkimage -f ${B}/fit_kernel.its ${B}/kernel_sed.itb
+		mkimage -f ${B}/fit_kernel_noFPGA.its ${B}/kernel_sed_noFPGA.itb
 		cp ${B}/kernel_sed.itb ${B}/kernel.itb
                 # Deploy kernel.its, kernel.itb and Image.lzma
                 install -m 744 ${B}/fit_kernel.its ${DEPLOYDIR}
 		install -m 744 ${B}/fit_kernel_${MACHINE}.its ${DEPLOYDIR}
                 install -m 744 ${B}/kernel_sed.itb ${DEPLOYDIR}
+                install -m 744 ${B}/kernel_sed_noFPGA.itb ${DEPLOYDIR}
                 install -m 744 ${B}/kernel.itb ${DEPLOYDIR}
                 install -m 744 ${B}/Image.lzma ${DEPLOYDIR}
         fi
