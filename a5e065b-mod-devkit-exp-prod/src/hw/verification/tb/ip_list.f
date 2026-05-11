@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 # ######################################################################## 
 
-src/ip/hps_subsys/ip/hps_subsys/agilex_hps.ip
+src/ip/hps_subsys/agilex_hps.ip
 
 src/ip/qsys_top/clk_100.ip
 src/ip/qsys_top/rst_in.ip
