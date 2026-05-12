@@ -5,8 +5,15 @@ echo "8" > /proc/irq/24/smp_affinity && echo "8" > /proc/irq/23/smp_affinity
 echo -e "Clearing old packetswitch rules Port - 0..."
 packetswitch --port 0 --flush-all-keys
 echo -e "Clearing old TC rules Port - 0..."
-tc filter del dev eth1 egress
-tc qdisc del dev eth1 clsact
+
+FILTERS=$(tc filter show dev eth1 egress 2>/dev/null)
+if [[ -z "$FILTERS" ]]; then
+	 echo -e "No Filters attached to eth1. Continuing..."
+else
+	 echo -e "Clearing old TC rules Port - 0..."
+	 tc filter del dev eth1 egress
+	 tc qdisc del dev eth1 clsact
+fi
 
 echo -e "Flushing old IPv4 and IPv6 addresses and routes"
 ip addres flush eth1 && ip route flush dev eth1
