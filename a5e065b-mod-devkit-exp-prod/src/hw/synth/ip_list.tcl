@@ -3,9 +3,9 @@
 # SPDX-License-Identifier: MIT
 # ######################################################################## 
 
-set_global_assignment -name IP_FILE ../src/ip/hps_subsys/ip/hps_subsys/agilex_hps.ip
-set_global_assignment -name IP_FILE ../src/ip/hps_subsys/ip/qsys_top/emif_io96b_hps.ip
-set_global_assignment -name IP_FILE  ../src/ip/hps_subsys/ip/hps_subsys/hps_subsys_f2sdram_adapter_0.ip
+set_global_assignment -name IP_FILE ../src/ip/hps_subsys/agilex_hps.ip
+set_global_assignment -name IP_FILE ../src/ip/hps_subsys/emif_io96b_hps.ip
+set_global_assignment -name IP_FILE  ../src/ip/hps_subsys/hps_subsys_f2sdram_adapter_0.ip
 
 set_global_assignment -name IP_FILE ../src/ip/qsys_top/clk_100.ip
 set_global_assignment -name IP_FILE ../src/ip/qsys_top/rst_in.ip

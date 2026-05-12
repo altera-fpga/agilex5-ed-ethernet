@@ -23,7 +23,7 @@
 
 # Programming Files Generation Steps <UPDATE BELOW>
 
- 1. File link of [`u-boot-spl-dtb.hex`](https://github.com/altera-fpga/agilex5-ed-ethernet/blob/main/a5e065b-mod-devkit-exp-es/src/sw/artifacts/u-boot-spl-dtb.hex) 
+ 1. File link of [`u-boot-spl-dtb.hex`](https://github.com/altera-fpga/agilex5-ed-ethernet/blob/main/a5e065b-mod-devkit-exp-prod/src/sw/artifacts/u-boot-spl-dtb.hex) 
 
  2. Generate `top.{core,hps}.rbf` including U-Boot SPL:
 
