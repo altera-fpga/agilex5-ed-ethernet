@@ -38,9 +38,9 @@ Directory Structure used in this example design:
 ## Project Details
 
 - **Family**: Agilex™ 5
-- **Quartus Version**: 25.3
-- **Development Kit**: [Agilex™ 5 FPGA E-Series 065B Modular Development Kit](https://www.altera.com/products/devkit/a1jui000006mvpfmau/agilex-5-fpga-and-soc-e-series-modular-development-kit-prod)
-- **Device Part**: A5ED065BB32AE6SR0
+- **Quartus Version**: 26.1
+- **Development Kit**: [Agilex™ 5 FPGA E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit)
+- **Device Part**: A5ED065BB32AE4S
 
 ## Getting Started
 
@@ -48,9 +48,12 @@ Building the design is easy with the scripts provided in the repo. Clone the rep
 	
 	$ git clone https://github.com/altera-fpga/agilex5-ed-ethernet.git
 	$ cd agilex5-ed-ethernet
+	$ git checkout SED-1x10GE-a5e065b-mdk-Q26.1-Rel-1.1
+
 
 
 Follow the below procedure to build the HW and the Software artifacts. 
 - [Building the hardware](a5e065b-mod-devkit-exp-prod/src/hw/README.md)
 - [Building the software](a5e065b-mod-devkit-exp-prod/src/sw/README.md)
 
+**NOTE**: Kindly refer to this [Release Q25.3-Rel-1.1](https://github.com/altera-fpga/agilex5-ed-ethernet/releases/tag/SED-1x10GE-a5e065b-mdk-Q25.3-Rel-1.1) for Design targetted to [Agilex™ 5 FPGA and SoC E-Series Modular Development Kit (ES)](https://www.altera.com/products/devkit/po-3001/agilex-5-fpga-and-soc-e-series-modular-development-kit-es)
