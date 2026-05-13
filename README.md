@@ -20,7 +20,7 @@ Important features of the design include
 - Programmable packet routing functionality handled within the Packet Switch module
 - DMA engines to efficiently transfer data between the HPS and Ethernet MAC
 
-For more information, refer to the [altera github doc](https://altera-fpga.github.io/rel-25.3/embedded-designs/agilex-5/e-series/modular/ethernet/agx5e-ethernet-10g/ug-agx5e-ethernet-10g/).
+For more information, refer to the [altera github doc](https://altera-fpga.github.io/rel-26.1/embedded-designs/agilex-5/e-series/modular-065b/ethernet/agx5e-ethernet-10g/ug-agx5e-ethernet-10g/).
 
 
 ## Repository Structure
@@ -28,7 +28,7 @@ For more information, refer to the [altera github doc](https://altera-fpga.githu
 Directory Structure used in this example design:
 
  ```bash
-    |--- a5e065b-mod-devkit-exp-es/src
+    |--- a5e065b-mod-devkit-exp-prod/src
     |   |--- hw
     |   |--- sw
  ```
@@ -39,7 +39,7 @@ Directory Structure used in this example design:
 
 - **Family**: Agilex™ 5
 - **Quartus Version**: 25.3
-- **Development Kit**: [Agilex™ 5 FPGA E-Series 065B Modular Development Kit](https://www.altera.com/products/devkit/a1jui000006mvpfmau/agilex-5-fpga-and-soc-e-series-modular-development-kit-es)
+- **Development Kit**: [Agilex™ 5 FPGA E-Series 065B Modular Development Kit](https://www.altera.com/products/devkit/a1jui000006mvpfmau/agilex-5-fpga-and-soc-e-series-modular-development-kit-prod)
 - **Device Part**: A5ED065BB32AE6SR0
 
 ## Getting Started
@@ -51,6 +51,6 @@ Building the design is easy with the scripts provided in the repo. Clone the rep
 
 
 Follow the below procedure to build the HW and the Software artifacts. 
-- [Building the hardware](a5e065b-mod-devkit-exp-es/src/hw/README.md)
-- [Building the software](a5e065b-mod-devkit-exp-es/src/sw/README.md)
+- [Building the hardware](a5e065b-mod-devkit-exp-prod/src/hw/README.md)
+- [Building the software](a5e065b-mod-devkit-exp-prod/src/sw/README.md)
 
