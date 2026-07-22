@@ -26,7 +26,7 @@
 		};
 
 		fdt-0 {
-			description = "socfpga_agilex5_modular_devkit_eth";
+			description = "socfpga_agilex5_mk_devkit_eth";
 			data = /incbin/("./socfpga_agilex5_eth_1p10g.dtb");
 			type = "flat_dt";
 			arch = "arm64";

@@ -10,7 +10,7 @@ ARM64_GHRD_CORE_RBF = "ghrd.core.rbf"
 
 sha256sum_ETH_1P10G = "a472477a375abd01ec984ae3d6fc700c302de35cafa568e579c71430d88519b9"
 
-SRC_URI:agilex5_modular = "\
+SRC_URI:agilex5_mk_a5e065bb32aes1 = "\
                 file://${MACHINE}_gsrd_ghrd_${SOLUTION}.core.rbf;name=agilex_sm_gsrd_core \
                 "
 
