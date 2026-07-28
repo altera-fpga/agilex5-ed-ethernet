@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Source this file by running:
-# 	$ . <machine>-<image>-build.sh
+# 	$ . agilex5_mk_a5e065ab32aes1-ETH_1P25G-build.sh
 
 arg0=$0
 test -n "$BASH" && arg0=$BASH_SOURCE[0]
@@ -15,17 +15,37 @@ fi
 echo -e "\n[INFO] Selected ingredient versions for this build"
 #------------------------------------------------------------------------------------------#
 # Set Machine variant
+# 065A MK devkit has no dedicated machine conf in meta-intel-fpga-refdes yet, so
+# bitbake still targets the 065B machine (BB_MACHINE); PRODUCT_MACHINE is only used for the
+# user-facing workspace/staging folder and packaged file names. Same split as agilex5-ed-ptp's
+# a5e065a-prem-devkit-exp-prod/build.sh. Drop the split once an a5e065a machine conf exists.
 #------------------------------------------------------------------------------------------#
+BB_MACHINE=agilex5_mk_a5e065bb32aes1
 target=${filename%-*-*}
 if [ -n "${target}" -a "${target}" != "${filename}" ]; then
-	MACHINE=${target}
+	PRODUCT_MACHINE=${target}
 fi
-if [ -z "${MACHINE}" ]; then
-	echo "MACHINE must be set before sourcing this script"
-	return
+if [ -z "${PRODUCT_MACHINE}" ]; then
+	echo "[ERROR] Source agilex5_mk_a5e065ab32aes1-ETH_1P25G-build.sh"
+	return 1
 fi
-echo "MACHINE              = $MACHINE"
-export $MACHINE
+MACHINE=$BB_MACHINE
+echo "MACHINE (bitbake)    = $MACHINE"
+export MACHINE
+
+machine_workspace_link_setup() {
+	pushd "$WORKSPACE" > /dev/null
+		if [[ -e "$MACHINE-$IMAGE-rootfs" && ! -L "$MACHINE-$IMAGE-rootfs" ]]; then
+			rm -rf "$MACHINE-$IMAGE-rootfs"
+		fi
+		rm -f "$MACHINE-$IMAGE-rootfs"
+		ln -sfn "$PRODUCT_MACHINE-$IMAGE-rootfs" "$MACHINE-$IMAGE-rootfs"
+	popd > /dev/null
+}
+
+machine_workspace_link_teardown() {
+	rm -f "$WORKSPACE/$MACHINE-$IMAGE-rootfs"
+}
 #------------------------------------------------------------------------------------------#
 # Set IMAGE variant and SOLUTION VARIANT
 #------------------------------------------------------------------------------------------#
@@ -36,8 +56,8 @@ fi
 
 if [[ "$IMAGE" != "gsrd" ]]; then
 	if [[ "$MACHINE" == "agilex5"* ]]; then
-		if [[ "$IMAGE" == *"ETH_1P10G"* ]]; then
-			solution="ETH_1P10G"
+		if [[ "$IMAGE" == *"ETH_1P25G"* ]]; then
+			solution="ETH_1P25G"
 			SOLUTION=${solution}
 		fi
 		image="gsrd"  # Set image here, as it's the same for all cases
@@ -72,7 +92,7 @@ fi
 #------------------------------------------------------------------------------------------#
 ETH_SW_VERSION_STRING=""
 if [[ -n "${SOLUTION}" ]]; then
-	if [[ "$SOLUTION" == "ETH_1P10G" ]]; then
+	if [[ "$SOLUTION" == "ETH_1P25G" ]]; then
 		eth_sed_sw_version="-altera-eth-sed-Q26.1-R1.1"
 		ETH_SW_VERSION_STRING=${eth_sed_sw_version}
 	fi
@@ -140,31 +160,37 @@ echo -e "\n"
 # Clean up the build workspace for subsequent build to happen smoothly
 #------------------------------------------------------------------------------------------#
 # Setup staging folder for binaries generated
-STAGING_FOLDER=$WORKSPACE/$MACHINE-$IMAGE-images
+STAGING_FOLDER=$WORKSPACE/$PRODUCT_MACHINE-$IMAGE-images
 
 build_setup() {
 	if [ -d "$WORKSPACE" ]; then
 		echo -e "\n[INFO] Cleanup the /tmp, /conf folders in the workspace for next build"
 		pushd $WORKSPACE > /dev/null
-			rm -rf $MACHINE-$IMAGE-rootfs/tmp/ > /dev/null
-			rm -rf $MACHINE-$IMAGE-rootfs/conf/ > /dev/null
+			if [[ -e "$MACHINE-$IMAGE-rootfs" && ! -L "$MACHINE-$IMAGE-rootfs" ]]; then
+				rm -rf "$MACHINE-$IMAGE-rootfs"
+			fi
+			rm -f $MACHINE-$IMAGE-rootfs
+			rm -rf $PRODUCT_MACHINE-$IMAGE-rootfs/tmp/ > /dev/null
+			rm -rf $PRODUCT_MACHINE-$IMAGE-rootfs/conf/ > /dev/null
 
-			if [ -d $MACHINE-$IMAGE-images ]; then
+			if [ -d $PRODUCT_MACHINE-$IMAGE-images ]; then
 				echo "[INFO] Cleanup images folder in the workspace for next build"
-				rm -rf $MACHINE-$IMAGE-images > /dev/null
+				rm -rf $PRODUCT_MACHINE-$IMAGE-images > /dev/null
 			fi
 		popd > /dev/null
 	fi
 
-	if [ ! -d $WORKSPACE/$MACHINE-$IMAGE-rootfs ]; then
+	if [ ! -d $WORKSPACE/$PRODUCT_MACHINE-$IMAGE-rootfs ]; then
 		echo -e "\n[INFO] Create build workspace"
-		mkdir -p $WORKSPACE/$MACHINE-$IMAGE-rootfs
+		mkdir -p $WORKSPACE/$PRODUCT_MACHINE-$IMAGE-rootfs
 	fi
 
-	if [ ! -d $WORKSPACE/$MACHINE-$IMAGE-images ]; then
+	if [ ! -d $WORKSPACE/$PRODUCT_MACHINE-$IMAGE-images ]; then
 		echo -e "\n[INFO] Create image staging area"
-		mkdir -p $WORKSPACE/$MACHINE-$IMAGE-images
+		mkdir -p $WORKSPACE/$PRODUCT_MACHINE-$IMAGE-images
 	fi
+
+	machine_workspace_link_setup
 
 #------------------------------------------------------------------------------------------#
 # Update existing meta layers or clone a new one if it does not exists
@@ -172,7 +198,7 @@ build_setup() {
 	pushd $WORKSPACE > /dev/null
 		#git submodule foreach --recursive 'git checkout -- . 2>/dev/null || true'
 		# Update submodules to latest commit on each submodule's tracked branch (.gitmodules)
-		# scope to cwd so building a5e065b doesn't also init/update a5e065a's submodules (shared .gitmodules)
+		# scope to cwd so building a5e065a doesn't also init/update a5e065b's submodules (shared .gitmodules)
 		git submodule update --init -r --remote -- .
 		if [[ "$MACHINE" == "agilex5_mk_a5e065bb32aes1" && -n "${SOLUTION}" ]]; then
 			sed -i 's/kernel.itb/kernel_sed.itb/' meta-intel-fpga-refdes/conf/machine/agilex5_mk_a5e065bb32aes1-gsrd.conf
@@ -301,6 +327,21 @@ bitbake_esdk() {
 # Package Yocto bitbake generated binaries
 #------------------------------------------------------------------------------------------#
 package() {
+	# package() tears down its own $MACHINE-$IMAGE-rootfs symlink at the end (see
+	# below), so re-running package standalone (without a fresh build_setup) always found it
+	# missing and misreported a healthy build as failed. Recreate it here; ln -sfn is a no-op
+	# when build_setup already made it.
+	machine_workspace_link_setup
+
+	# bitbake_image/bitbake_esdk don't propagate their exit status, so a failed
+	# build previously fell through into a wall of confusing pushd/cp errors here. Guard the
+	# one place both paths route through instead of checking every caller.
+	if [ ! -d "$WORKSPACE/$MACHINE-$IMAGE-rootfs/tmp/deploy/images/$MACHINE/" ]; then
+		echo -e "\n[ERROR] $WORKSPACE/$MACHINE-$IMAGE-rootfs/tmp/deploy/images/$MACHINE/ not found."
+		echo -e "[ERROR] bitbake build did not complete successfully - check the bitbake log above. Skipping package step."
+		return 1
+	fi
+
 	echo -e "\n[INFO] Copy the build output and store in $STAGING_FOLDER"
 	pushd $WORKSPACE/$MACHINE-$IMAGE-rootfs/tmp/deploy/images/$MACHINE/ > /dev/null
 
@@ -352,8 +393,8 @@ package() {
 	popd > /dev/null
 
 	if [[ "$MACHINE" == *"agilex"* || "$MACHINE" == *"stratix10"* ]]; then
-		mkdir -p $STAGING_FOLDER/u-boot-$MACHINE-socdk-$IMAGE-atf
-		ub_cp_destination=$STAGING_FOLDER/u-boot-$MACHINE-socdk-$IMAGE-atf
+		mkdir -p $STAGING_FOLDER/u-boot-$PRODUCT_MACHINE-socdk-$IMAGE-atf
+		ub_cp_destination=$STAGING_FOLDER/u-boot-$PRODUCT_MACHINE-socdk-$IMAGE-atf
 	elif [[ "$MACHINE" == "arria10" || "$MACHINE" == "cyclone5" ]]; then
 		mkdir -p $STAGING_FOLDER/u-boot-$MACHINE-socdk-$IMAGE
 		ub_cp_destination=$STAGING_FOLDER/u-boot-$MACHINE-socdk-$IMAGE
@@ -456,9 +497,13 @@ package() {
 				mv "$file" "${file/_dk_a5e013bb32aesi0/}"
 			done
 		elif [ "$MACHINE" == "agilex5_mk_a5e065bb32aes1" ]; then
-			for file in *_mk_a5e065bb32aes1*; do
-				mv "$file" "${file/_mk_a5e065bb32aes1/}"
+			for file in *${BB_MACHINE}*; do
+				[ -e "$file" ] || continue
+				mv -f "$file" "${file/${BB_MACHINE}/${PRODUCT_MACHINE}}"
 			done
+			if [ -d "${MACHINE}_${IMAGE}_ghrd" ]; then
+				mv -f "${MACHINE}_${IMAGE}_ghrd" "${PRODUCT_MACHINE}_${IMAGE}_ghrd"
+			fi
 		elif [ "$MACHINE" == "stratix10_htile" ]; then
 			for file in *_htile*; do
 				mv "$file" "${file/_htile/}"
@@ -475,10 +520,16 @@ package() {
 	        	tar cvzf sdimage.tar.gz gsrd-console-image-stratix10.wic
             		md5sum sdimage.tar.gz > sdimage.tar.gz.md5sum
             		xz --best console-image-minimal-stratix10.wic
-	    	elif [[ "$MACHINE" == *"agilex5_dk_"* || "$MACHINE" == *"agilex5_mk_"* ]]; then
+	    	elif [[ "$MACHINE" == *"agilex5_dk_"* ]]; then
 	        	tar cvzf sdimage.tar.gz gsrd-console-image-agilex5.wic
             		md5sum sdimage.tar.gz > sdimage.tar.gz.md5sum
             		xz --best console-image-minimal-agilex5.wic
+	    	elif [[ "$MACHINE" == *"agilex5_mk_"* ]]; then
+	        	# "mk" rename keeps the full PRODUCT_MACHINE name (unlike "dk",
+	        	# which collapses to bare "agilex5"), so the packaged wic keeps that name too.
+	        	tar cvzf sdimage.tar.gz gsrd-console-image-${PRODUCT_MACHINE}.wic
+            		md5sum sdimage.tar.gz > sdimage.tar.gz.md5sum
+            		xz --best console-image-minimal-${PRODUCT_MACHINE}.wic
 	    	else
             		tar cvzf sdimage.tar.gz gsrd-console-image-$MACHINE.wic
             		md5sum sdimage.tar.gz > sdimage.tar.gz.md5sum
@@ -498,7 +549,8 @@ package() {
 		popd > /dev/null
 	fi
 
-	echo -e "\n[INFO] Completed: Binaries are store in $WORKSPACE/$MACHINE-$IMAGE-images"
+	echo -e "\n[INFO] Completed: Binaries are store in $WORKSPACE/$PRODUCT_MACHINE-$IMAGE-images"
+	machine_workspace_link_teardown
 	echo -e "\n"
 }
 
