@@ -14,6 +14,8 @@ do_configure:append() {
                 # DTB Generation
                 cp ${STAGING_KERNEL_DIR}/arch/${ARCH}/boot/dts/intel/socfpga_agilex5_eth_1p25g.dts ${WORKDIR}/socfpga_agilex5_eth_1p25g.dts
                 cp ${STAGING_KERNEL_DIR}/arch/${ARCH}/boot/dts/intel/socfpga_agilex5_eth_1p25g.dtsi ${WORKDIR}/socfpga_agilex5_eth_1p25g.dtsi
+                cp ${STAGING_KERNEL_DIR}/arch/${ARCH}/boot/dts/intel/socfpga_agilex5_eth_1p10g.dts ${WORKDIR}/socfpga_agilex5_eth_1p10g.dts
+                cp ${STAGING_KERNEL_DIR}/arch/${ARCH}/boot/dts/intel/socfpga_agilex5_eth_1p10g.dtsi ${WORKDIR}/socfpga_agilex5_eth_1p10g.dtsi
                 cp ${STAGING_KERNEL_DIR}/arch/${ARCH}/boot/dts/intel/socfpga_agilex5_socdk.dts ${WORKDIR}/socfpga_agilex5_socdk.dts
         fi
 

@@ -9,6 +9,7 @@ IMAGE_TYPE ?= "gsrd"
 ARM64_GHRD_CORE_RBF = "ghrd.core.rbf"
 
 sha256sum_ETH_1P25G = "a472477a375abd01ec984ae3d6fc700c302de35cafa568e579c71430d88519b9"
+sha256sum_ETH_1P10G = "17bc3db3c1fc2b7491f8c807c70eb54cff2021fb52cbdb64633aab3161cf9154"
 
 SRC_URI:agilex5_mk_a5e065bb32aes1 = "\
                 file://${MACHINE}_gsrd_ghrd_${SOLUTION}.core.rbf;name=agilex_sm_gsrd_core \

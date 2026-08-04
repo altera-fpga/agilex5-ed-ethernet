@@ -140,7 +140,7 @@ echo -e "\n"
 # Clean up the build workspace for subsequent build to happen smoothly
 #------------------------------------------------------------------------------------------#
 # Setup staging folder for binaries generated
-STAGING_FOLDER=$WORKSPACE/$MACHINE-$IMAGE-images
+STAGING_FOLDER=$WORKSPACE/$MACHINE-$IMAGE-${SOLUTION:+$SOLUTION-}images
 
 build_setup() {
 	if [ -d "$WORKSPACE" ]; then

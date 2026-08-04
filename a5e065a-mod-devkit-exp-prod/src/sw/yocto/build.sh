@@ -59,6 +59,9 @@ if [[ "$IMAGE" != "gsrd" ]]; then
 		if [[ "$IMAGE" == *"ETH_1P25G"* ]]; then
 			solution="ETH_1P25G"
 			SOLUTION=${solution}
+		elif [[ "$IMAGE" == *"ETH_1P10G"* ]]; then
+			solution="ETH_1P10G"
+			SOLUTION=${solution}
 		fi
 		image="gsrd"  # Set image here, as it's the same for all cases
 		IMAGE=${image}
@@ -92,7 +95,7 @@ fi
 #------------------------------------------------------------------------------------------#
 ETH_SW_VERSION_STRING=""
 if [[ -n "${SOLUTION}" ]]; then
-	if [[ "$SOLUTION" == "ETH_1P25G" ]]; then
+	if [[ "$SOLUTION" == "ETH_1P25G" || "$SOLUTION" == "ETH_1P10G" ]]; then
 		eth_sed_sw_version="-altera-eth-sed-Q26.1-R1.1"
 		ETH_SW_VERSION_STRING=${eth_sed_sw_version}
 	fi
@@ -160,7 +163,7 @@ echo -e "\n"
 # Clean up the build workspace for subsequent build to happen smoothly
 #------------------------------------------------------------------------------------------#
 # Setup staging folder for binaries generated
-STAGING_FOLDER=$WORKSPACE/$PRODUCT_MACHINE-$IMAGE-images
+STAGING_FOLDER=$WORKSPACE/$PRODUCT_MACHINE-$IMAGE-${SOLUTION:+$SOLUTION-}images
 
 build_setup() {
 	if [ -d "$WORKSPACE" ]; then
@@ -173,9 +176,9 @@ build_setup() {
 			rm -rf $PRODUCT_MACHINE-$IMAGE-rootfs/tmp/ > /dev/null
 			rm -rf $PRODUCT_MACHINE-$IMAGE-rootfs/conf/ > /dev/null
 
-			if [ -d $PRODUCT_MACHINE-$IMAGE-images ]; then
+			if [ -d "$STAGING_FOLDER" ]; then
 				echo "[INFO] Cleanup images folder in the workspace for next build"
-				rm -rf $PRODUCT_MACHINE-$IMAGE-images > /dev/null
+				rm -rf "$STAGING_FOLDER" > /dev/null
 			fi
 		popd > /dev/null
 	fi
@@ -185,9 +188,9 @@ build_setup() {
 		mkdir -p $WORKSPACE/$PRODUCT_MACHINE-$IMAGE-rootfs
 	fi
 
-	if [ ! -d $WORKSPACE/$PRODUCT_MACHINE-$IMAGE-images ]; then
+	if [ ! -d "$STAGING_FOLDER" ]; then
 		echo -e "\n[INFO] Create image staging area"
-		mkdir -p $WORKSPACE/$PRODUCT_MACHINE-$IMAGE-images
+		mkdir -p "$STAGING_FOLDER"
 	fi
 
 	machine_workspace_link_setup
@@ -324,6 +327,30 @@ bitbake_esdk() {
 }
 
 #------------------------------------------------------------------------------------------#
+# Rebuild only the SOLUTION-specific pieces (kernel.itb + ghrd core.rbf) for a
+# MACHINE that already has a full bitbake_image build in its $MACHINE-$IMAGE-rootfs.
+# Everything else (kernel Image, rootfs, u-boot, ATF) is
+# untouched by SOLUTION, so skip re-cleaning/rebuilding them.
+# Forces just the two solution-dependent recipes' deploy task instead
+# of a full bitbake_image re-run; add more forced tasks if a future SED design
+# changes something other than kernel.itb/ghrd core.rbf.
+#------------------------------------------------------------------------------------------#
+bitbake_itb() {
+	pushd $WORKSPACE/$MACHINE-$IMAGE-rootfs > /dev/null
+		echo -e "\n[INFO] Switch SOLUTION to $SOLUTION in conf/site.conf"
+		sed -i "s/^SOLUTION = .*/SOLUTION = \"$SOLUTION\"/" conf/site.conf
+
+		echo -e "\n[INFO] Regenerate kernel.itb for SOLUTION=$SOLUTION"
+		bitbake virtual/kernel -c deploy -f
+		echo -e "\n[INFO] Regenerate ghrd core.rbf for SOLUTION=$SOLUTION"
+		bitbake hw-ref-design -c deploy -f
+	popd > /dev/null
+
+	echo -e "\n[INFO] Proceed with: package"
+	echo -e "\n"
+}
+
+#------------------------------------------------------------------------------------------#
 # Package Yocto bitbake generated binaries
 #------------------------------------------------------------------------------------------#
 package() {
@@ -332,6 +359,8 @@ package() {
 	# missing and misreported a healthy build as failed. Recreate it here; ln -sfn is a no-op
 	# when build_setup already made it.
 	machine_workspace_link_setup
+
+	mkdir -p "$STAGING_FOLDER"
 
 	# bitbake_image/bitbake_esdk don't propagate their exit status, so a failed
 	# build previously fell through into a wall of confusing pushd/cp errors here. Guard the

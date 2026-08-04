@@ -1,5 +1,5 @@
 KERNEL_REPO = "git://github.com/altera-fpga/linux-socfpga.git"
-SRCREV = "${AUTOREV}"
+SRCREV = "2a105454b45cb4588436395247f59be08c623455"
 #SRCREV = "SED-1x25GE-a5e065b-mdk-Q26.1-Rel-1.1"
 LINUX_VERSION = "6.12.19"
 KBRANCH = "socfpga-6.12.19-lts-ethernet-sed"
@@ -33,6 +33,7 @@ python() {
 }
 
 SRC_URI:append:agilex5_mk_a5e065bb32aes1 = " file://fit_kernel_agilex5_mk_a5e065bb32aes1_sed_ETH_1P25G.its"
+SRC_URI:append:agilex5_mk_a5e065bb32aes1 = " file://fit_kernel_agilex5_mk_a5e065bb32aes1_sed_ETH_1P10G.its"
 
 #SRC_URI:append = " file://ubifs.scc"
 
@@ -44,6 +45,8 @@ do_deploy:append() {
 		if [[ -n ${SOLUTION} ]]; then
 			if [[ ${SOLUTION} == "ETH_1P25G" ]]; then
 				cp ${DTBDEPLOYDIR}/socfpga_agilex5_eth_1p25g.dtb ${B};
+			elif [[ ${SOLUTION} == "ETH_1P10G" ]]; then
+				cp ${DTBDEPLOYDIR}/socfpga_agilex5_eth_1p10g.dtb ${B};
 			fi
 		fi
 		# core.rbf
@@ -55,10 +58,8 @@ do_deploy:append() {
         if [[ "${MACHINE}" == *"agilex"* || "${MACHINE}" == "stratix10" ]]; then
                 # kernel.its
 		if [[ -n ${SOLUTION} ]]; then
-			if [[ ${SOLUTION} == "ETH_1P25G" ]]; then
-				cp ${WORKDIR}/fit_kernel_${MACHINE}_sed_${SOLUTION}.its ${B}/fit_kernel.its
-				cp ${B}/fit_kernel.its ${B}/fit_kernel_${MACHINE}.its
-			fi
+			cp ${WORKDIR}/fit_kernel_${MACHINE}_sed_${SOLUTION}.its ${B}/fit_kernel.its
+			cp ${B}/fit_kernel.its ${B}/fit_kernel_${MACHINE}.its
 		fi
         
                 # Image 
