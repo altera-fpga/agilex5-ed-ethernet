@@ -1,7 +1,7 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI:agilex5 = " file://uboot.txt file://uboot_script.its"
-SRC_URI:agilex5_modular = "file://uboot.txt file://uboot_script.its"
+SRC_URI:agilex5_mk_a5e065bb32aes1 = "file://uboot.txt file://uboot_script.its"
 
 do_compile() {
         if [[ "${MACHINE}" == *"agilex5"* ]]; then

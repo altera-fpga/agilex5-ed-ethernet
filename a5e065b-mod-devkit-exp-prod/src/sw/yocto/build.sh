@@ -170,10 +170,11 @@ build_setup() {
 # Update existing meta layers or clone a new one if it does not exists
 #------------------------------------------------------------------------------------------#
 	pushd $WORKSPACE > /dev/null
-		# Update submodules
-		git submodule update --init -r
-		if [[ "$MACHINE" == "agilex5_modular" && -n "${SOLUTION}" ]]; then
-			sed -i 's/kernel.itb/kernel_sed.itb/' meta-intel-fpga-refdes/conf/machine/agilex5_modular-gsrd.conf
+		#git submodule foreach --recursive 'git checkout -- . 2>/dev/null || true'
+		# Update submodules to latest commit on each submodule's tracked branch (.gitmodules)
+		git submodule update --init -r --remote
+		if [[ "$MACHINE" == "agilex5_mk_a5e065bb32aes1" && -n "${SOLUTION}" ]]; then
+			sed -i 's/kernel.itb/kernel_sed.itb/' meta-intel-fpga-refdes/conf/machine/agilex5_mk_a5e065bb32aes1-gsrd.conf
 		fi
 	popd > /dev/null
 
@@ -453,9 +454,9 @@ package() {
 			for file in *_dk_a5e013bb32aesi0*; do
 				mv "$file" "${file/_dk_a5e013bb32aesi0/}"
 			done
-		elif [ "$MACHINE" == "agilex5_modular" ]; then
-			for file in *_modular*; do
-				mv "$file" "${file/_modular/}"
+		elif [ "$MACHINE" == "agilex5_mk_a5e065bb32aes1" ]; then
+			for file in *_mk_a5e065bb32aes1*; do
+				mv "$file" "${file/_mk_a5e065bb32aes1/}"
 			done
 		elif [ "$MACHINE" == "stratix10_htile" ]; then
 			for file in *_htile*; do
@@ -473,7 +474,7 @@ package() {
 	        	tar cvzf sdimage.tar.gz gsrd-console-image-stratix10.wic
             		md5sum sdimage.tar.gz > sdimage.tar.gz.md5sum
             		xz --best console-image-minimal-stratix10.wic
-	    	elif [[ "$MACHINE" == *"agilex5_dk_"* || "$MACHINE" == *"agilex5_modular"* ]]; then
+	    	elif [[ "$MACHINE" == *"agilex5_dk_"* || "$MACHINE" == *"agilex5_mk_"* ]]; then
 	        	tar cvzf sdimage.tar.gz gsrd-console-image-agilex5.wic
             		md5sum sdimage.tar.gz > sdimage.tar.gz.md5sum
             		xz --best console-image-minimal-agilex5.wic
