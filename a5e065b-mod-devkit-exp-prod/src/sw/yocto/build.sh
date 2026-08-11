@@ -73,7 +73,7 @@ fi
 ETH_SW_VERSION_STRING=""
 if [[ -n "${SOLUTION}" ]]; then
 	if [[ "$SOLUTION" == "ETH_1P10G" ]]; then
-		eth_sed_sw_version="-altera-eth-sed-Q26.1-R1.1"
+		eth_sed_sw_version="-altera-eth-sed-Q26.1-R1.2"
 		ETH_SW_VERSION_STRING=${eth_sed_sw_version}
 	fi
 fi
