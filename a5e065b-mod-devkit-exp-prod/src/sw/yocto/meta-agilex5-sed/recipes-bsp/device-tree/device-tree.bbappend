@@ -15,6 +15,9 @@ do_configure:append() {
                 cp ${STAGING_KERNEL_DIR}/arch/${ARCH}/boot/dts/intel/socfpga_agilex5_eth_1p10g.dts ${WORKDIR}/socfpga_agilex5_eth_1p10g.dts
                 cp ${STAGING_KERNEL_DIR}/arch/${ARCH}/boot/dts/intel/socfpga_agilex5_eth_1p10g.dtsi ${WORKDIR}/socfpga_agilex5_eth_1p10g.dtsi
                 cp ${STAGING_KERNEL_DIR}/arch/${ARCH}/boot/dts/intel/socfpga_agilex5_socdk.dts ${WORKDIR}/socfpga_agilex5_socdk.dts
+
+		# Removing the LED and PIO changes that GHRD adds to socfpga_agilex5_socdk_modular.dts
+		sed -i '/#include "socfpga_agilex5_ghrd.dtsi"/d' ${WORKDIR}/socfpga_agilex5_socdk_modular.dts
         fi
 
 }
