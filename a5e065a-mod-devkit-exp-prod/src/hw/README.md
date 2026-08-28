@@ -49,7 +49,7 @@ User needs to modify above text content with required option by replacing `25G_N
 
 # Programming Files Generation Steps <UPDATE BELOW>
 
- 1. File link of [`u-boot-spl-dtb.hex`](../../artifacts/u-boot-spl-dtb.hex) 
+ 1. File link of [`u-boot-spl-dtb.hex`](../sw/artifacts/u-boot-spl-dtb.hex) 
 
  2. Generate `top.{core,hps}.rbf` including U-Boot SPL:
 
@@ -57,3 +57,4 @@ User needs to modify above text content with required option by replacing `25G_N
     cd synth/
     quartus_pfg -c -o hps=on -o hps_path=../../sw/artifacts/u-boot-spl-dtb.hex output_files/top.sof output_files/top.rbf
     ```
+

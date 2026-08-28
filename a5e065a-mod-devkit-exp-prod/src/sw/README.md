@@ -42,7 +42,7 @@ As described earlier, the Yocto builds everything required for a boot of the dev
 	$ . agilex5_mk_a5e065ab32aes1-ETH_1P10G-build.sh
 	$ build_default
 
-	All the required images are captured in the agilex5_modular-gsrd-images directory after a successfull build.
+	All the required images are captured in the agilex5_mk_a5e065ab32aes1-gsrd-ETH_1P10G-images directory after a successfull build.
 
 ### Linux kernel build
 You can build the Linux kernel alone for debugging purposes. The below steps will help you create a new Linux kernel from the base linux repo.
@@ -52,7 +52,7 @@ Download toolchain from https://developer.arm.com/-/media/Files/downloads/gnu/11
 	$ export CROSS_COMPILE=`pwd`/arm-gnu-toolchain-11.3.rel1-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-
     	$ git clone https://github.com/altera-fpga/linux-socfpga.git -b socfpga-6.12.19-lts-ethernet-sed
 		$ cd linux-socfpga/
-		$ git checkout SED-1x10GE-a5e065b-mdk-Q26.1.1-Rel-1.1
+		$ git checkout SED-1x25GbE-10GbE-a5e065b-mdk-Q26.1.1-Rel-1.1
     	$ make defconfig
     	$ make menuconfig
     	  Enable the configs listed:
