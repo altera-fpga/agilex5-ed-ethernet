@@ -16,14 +16,14 @@ The synth folder contains a Makefile and the Quartus Project.The Makefile suppor
 - `make all` - runs a full Quartus compile including the Assembler
 Running `make` will print out all the options supported
 
-The Design can be compiled to specificate datarate with or w/o ANLT option using two methods as explaied below.
+The Design can be compiled to specificate datarate w/o ANLT option using two methods as explained below.
 
 
 **Config File Method:**
 
-The project Makefile reads `src/hw/synth/config.txt` to determine the Ethernet data rate for the Ethernet Subsystem IPs. Open config.txt and set the configuration to the desired Ethernet data rate with ANLT support as shown in the snippet below.
+The project Makefile reads `src/hw/synth/config.txt` to determine the Ethernet data rate for the Ethernet Subsystem IPs. Open config.txt and set the configuration to the desired Ethernet data rate as shown in the snippet below.
 
-The config text file will have below config for 25GbE with ANLT;
+The config text file will have below config for 25GbE without ANLT;
 
 ```
 Configuration=25G_NON_ANLT
@@ -43,7 +43,7 @@ User needs to modify above text content with required option by replacing `25G_N
 
    ```
    cd synth/
-   make all CONFIG=10G_ANLT     - Runs a full Quartus compile including the Assembler for 10G_ANLT
+   make all CONFIG=10G_NON_ANLT     - Runs a full Quartus compile including the Assembler for 10G_NON_ANLT
    
    ```
 

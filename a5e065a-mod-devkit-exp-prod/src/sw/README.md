@@ -1,4 +1,4 @@
-# Intel® Agilex™ 5 Ethernet System Example Design - Software
+# Altera® Agilex™ 5 Ethernet System Example Design - Software
 
 ## Description
 The Ethernet System Example Design software repo helps in building the required software pieces to run Linux 
@@ -22,12 +22,13 @@ Directory Structure used in this example design:
 		|--- meta-intel-fpga-refdes
 		|--- meta-openembedded
 		|--- poky
-		|--- agilex5_modular-ETH_1P10G-build.sh
+		|--- agilex5_mk_a5e065ab32aes1-ETH_1P10G-build.sh
+		|--- agilex5_mk_a5e065ab32aes1-ETH_1P25G-build.sh
 		|--- build.sh
  ```
 ## Getting Started
 ### Configuring the Board
-Please refer to https://altera-fpga.github.io/rel-25.1/embedded-designs/agilex-5/e-series/modular/gsrd/ug-gsrd-agx5e-modular/#booting-from-sd-card to get details on how to setup the board. At the end of this setup, the system needs to be a HPS first boot system with its SD card programmed to boot the design after a power cycle. The link provides description to do the following
+Please refer to https://altera-fpga.github.io/rel-26.1/embedded-designs/agilex-5/e-series/modular-065a/gsrd/ug-gsrd-agx5e-modular-065a/#booting-from-sd-card to get details on how to setup the board. At the end of this setup, the system needs to be a HPS first boot system with its SD card programmed to boot the design after a power cycle. The link provides description to do the following
 
 - Burn the HPS first jic file to the QSFP flash to setup HPS first boot system
 - Burn the sd card wic image to the bootable SD card.
@@ -38,7 +39,7 @@ Please use the specific file provided in the release artifactory to burn the ima
 As described earlier, the Yocto builds everything required for a boot of the devkit with the deisgn. To start building please use the devkit specific script
 
 	$ cd <BASEDIR>/src/sw/yocto/
-	$ . agilex5_modular-ETH_1P10G-build.sh
+	$ . agilex5_mk_a5e065ab32aes1-ETH_1P10G-build.sh
 	$ build_default
 
 	All the required images are captured in the agilex5_modular-gsrd-images directory after a successfull build.
@@ -51,7 +52,7 @@ Download toolchain from https://developer.arm.com/-/media/Files/downloads/gnu/11
 	$ export CROSS_COMPILE=`pwd`/arm-gnu-toolchain-11.3.rel1-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-
     	$ git clone https://github.com/altera-fpga/linux-socfpga.git -b socfpga-6.12.19-lts-ethernet-sed
 		$ cd linux-socfpga/
-		$ git checkout SED-1x10GE-a5e065b-mdk-Q26.1-Rel-1.1
+		$ git checkout SED-1x10GE-a5e065b-mdk-Q26.1.1-Rel-1.1
     	$ make defconfig
     	$ make menuconfig
     	  Enable the configs listed:
