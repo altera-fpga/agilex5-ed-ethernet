@@ -1,2 +1,0 @@
-unset SRCREV
-SRCREV = "bcb6180adec1f10a7a20a6a91c913019095de35d"
