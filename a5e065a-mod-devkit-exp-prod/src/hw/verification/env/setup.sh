@@ -1,12 +1,14 @@
+########################################################################
+# Copyright (C) 2025 Altera Corporation.
+# SPDX-License-Identifier: MIT
+########################################################################
 
 export WORKDIR=$ROOTDIR
 export QUARTUS_HOME=$QUARTUS_ROOTDIR
 export QUARTUS_INSTALL_DIR=$QUARTUS_ROOTDIR
 export QUARTUS_ROOTDIR_OVERRIDE=$QUARTUS_ROOTDIR
 export IMPORT_IP_ROOTDIR=$QUARTUS_ROOTDIR/../ip
-export DESIGNWARE_HOME=/p/psg/EIP/synopsys/vip_common/vip_W-2025.03C
-export http_proxy=http://proxy-dmz.altera.com:912
-export https_proxy=http://proxy-dmz.altera.com:912
+export DESIGNWARE_HOME=<synopsys vip location> version-vip_W-2025.03C
 export VERDIR=$WORKDIR/verification
 export DESIGN=src
 export DESIGN_DIR=$ROOTDIR/$DESIGN/

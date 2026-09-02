@@ -427,7 +427,6 @@ set_global_assignment -name SYNCHRONIZER_IDENTIFICATION "FORCED IF ASYNCHRONOUS"
 
 set_global_assignment -name NUMBER_OF_SLAVE_DEVICE 1
 set_global_assignment -name SOURCE_TCL_SCRIPT_FILE ./read_config.tcl
-set_global_assignment -name SOURCE_TCL_SCRIPT_FILE ./config_dependant_settings.tcl
 set_global_assignment -name SOURCE_TCL_SCRIPT_FILE rtl_list.tcl
 set_global_assignment -name SOURCE_TCL_SCRIPT_FILE ip_list.tcl
 set_global_assignment -name SDC_FILE packet_switch.sdc

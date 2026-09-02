@@ -33,7 +33,6 @@
   `include "sm_eth_reset_sequencer.sv"
   `include "sm_eth_ehip_port_monitor.sv"
   `include "sm_eth_msgdma_subscriber.sv"
-  `include "sfp_scoreboard.sv"
   `include "sm_eth_env.sv"
 
 `endif // SM_ETH_TB_ENV_PKG__SV
