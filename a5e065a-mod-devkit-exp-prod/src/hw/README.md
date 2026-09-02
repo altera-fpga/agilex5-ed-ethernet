@@ -37,7 +37,7 @@ User needs to modify above text content with required option by replacing `25G_N
 
 - User can specify the configuration using the optional argument CONFIG. 
 - Supported options are `10G_NON_ANLT`and `25G_NON_ANLT`
-   - For e.g. `make all CONFIG=10G_ANLT`. 
+   - For e.g. `make all CONFIG=10G_NON_ANLT`. 
 - if the **CONFIG** argument is not specified, the value currently in `config.txt` will be built. 
 - Running <make> will print out all the options supported
 
