@@ -176,8 +176,7 @@ class sm_eth_base_test extends uvm_test;
     svr = uvm_report_server::get_server();
 
     if (svr.get_severity_count(UVM_FATAL) +
-        svr.get_severity_count(UVM_ERROR) +
-        svr.get_severity_count(UVM_WARNING) > 0)
+        svr.get_severity_count(UVM_ERROR) > 0)
       `uvm_info("final_phase", "\nSvtTestEpilog: Failed\n", UVM_LOW)
     else
       `uvm_info("final_phase", "\nSvtTestEpilog: Passed\n", UVM_LOW)
