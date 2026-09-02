@@ -107,6 +107,7 @@ ifdef HSSI_25G
 	sed -i '/ethernet_hip/a\set_global_assignment -name IP_FILE ../src/ip/subsys_hssi/gts_systempll_25G.ip' ../../synth/top.qsf
 	cp $(SYNTH_DIR)/ip_list.tcl $(SCRIPTS_DIR)/ip_list.tcl
 	sed -i '/emif_io96b_hps/d' ip_list.tcl
+	sed -i '/^#/d' ip_list.tcl
 	perl ip_script.pl HSSI_25G=1
 else ifdef HSSI_10G
 	sed -i '/dependant/d' ../../synth/top.qsf
@@ -114,6 +115,7 @@ else ifdef HSSI_10G
 	sed -i '/ethernet_hip/a\set_global_assignment -name IP_FILE ../src/ip/subsys_hssi/gts_systempll.ip' ../../synth/top.qsf
 	cp $(SYNTH_DIR)/ip_list.tcl $(SCRIPTS_DIR)/ip_list.tcl
 	sed -i '/emif_io96b_hps/d' ip_list.tcl
+	sed -i '/^#/d' ip_list.tcl
 	perl ip_script.pl HSSI_10G=1
 endif
 
