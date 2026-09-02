@@ -48,17 +48,17 @@ agilex5-ed-ethernet
 ## Project Details
 ### Design Configuration: 1-Port 10GbE
  
-	- **Family**: Agilex™ 5 E-Series (Group B)
-	- **Quartus Version**: 26.1
-	- **Development Kit**: [Agilex™ 5 FPGA E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit)
-	- **Device Part**: A5ED065BB32AE4S
+- **Family**: Agilex™ 5 E-Series (Group B)
+- **Quartus Version**: 26.1
+- **Development Kit**: [Agilex™ 5 FPGA E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit)
+- **Device Part**: A5ED065BB32AE4S
 	
 ### Design Configuration: 1-Port 25GbE/10GbE
  
-	- **Family**: Agilex™ 5 E-Series (Group A)
-	- **Quartus Version**: 26.1.1
-	- **Development Kit**: [Agilex™ 5 FPGA E-Series 065A Modular Development Kit (MK-A5E065BB32AEA)](https://www.altera.com/products/devkit/po-3278/agilex-5-fpga-and-soc-e-series-065a-modular-development-kit)
-	- **Device Part**: A5ED065AB32AE1V
+- **Family**: Agilex™ 5 E-Series (Group A)
+- **Quartus Version**: 26.1.1
+- **Development Kit**: [Agilex™ 5 FPGA E-Series 065A Modular Development Kit (MK-A5E065BB32AEA)](https://www.altera.com/products/devkit/po-3278/agilex-5-fpga-and-soc-e-series-065a-modular-development-kit)
+- **Device Part**: A5ED065AB32AE1V
 
 
 ## Getting Started
@@ -78,3 +78,4 @@ Follow the below procedure to build the HW and the Software artifacts.
 **NOTE**: 
 
 1. Kindly refer to this [Release Q25.3-Rel-1.1](https://github.com/altera-fpga/agilex5-ed-ethernet/releases/tag/SED-1x10GE-a5e065b-mdk-Q25.3-Rel-1.1) for Design targetted to [Agilex™ 5 FPGA and SoC E-Series Modular Development Kit (ES)](https://www.altera.com/products/devkit/po-3001/agilex-5-fpga-and-soc-e-series-modular-development-kit-es)
+
