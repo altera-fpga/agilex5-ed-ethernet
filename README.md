@@ -24,7 +24,7 @@ The System Example Design supports the following design configurations on Altera
 
 |SL No| Design configuration | Data-rate | Development Kit Supported | Device Family | Device Part | Quartus Release | Documentation |
 |-----|-----------------------|-----------|:--------------------------:|:--------------:|:-------------:|:------:|:-------------:|
-|1.   |1-port 10GbE           | 10GbE     | [MK-A5E065BB32AEA](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit) | Agilex™ 5 E-Series (Group B) | A5ED065BB32AE4S | Quartus Prime Pro 26.1 | [10G Git Doc]((https://altera-fpga.github.io/rel-26.1/embedded-designs/agilex-5/e-series/modular-065b/ethernet/agx5e-ethernet-10g/ug-agx5e-ethernet-10g/)) |
+|1.   |1-port 10GbE           | 10GbE     | [MK-A5E065BB32AEA](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit) | Agilex™ 5 E-Series (Group B) | A5ED065BB32AE4S | Quartus Prime Pro 26.1 | [10G Git Doc](https://altera-fpga.github.io/rel-26.1/embedded-designs/agilex-5/e-series/modular-065b/ethernet/agx5e-ethernet-10g/ug-agx5e-ethernet-10g/) |
 |2.   |1-port 25GbE/10GbE           | 25GbE/10GbE     | [MK-A5E065AB32AEA](https://www.altera.com/products/devkit/po-3278/agilex-5-fpga-and-soc-e-series-065a-modular-development-kit) | Agilex™ 5 E-Series (Group A) | A5ED065AB32AE1V | Quartus Prime Pro 26.1.1 |[25G/10G Git Doc](https://altera-fpga.github.io/rel-26.1.1/embedded-designs/agilex-5/e-series/modular-065a/ethernet/agx5e-ethernet/ug-agx5e-ethernet/) |
 
 <!-- ponytail: a5e065a-mod-devkit-exp-prod is currently an identical copy of the 10GbE design (dts not yet swapped to 25GbE); update this table/links once the 25G dts change lands. -->
