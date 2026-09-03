@@ -32,7 +32,7 @@ python() {
     d.setVar('SRC_URI', " ".join(filtered_src_uri_list))
 }
 
-SRC_URI:append:agilex5_modular = " file://fit_kernel_agilex5_modular_sed_ETH_1P10G.its"
+SRC_URI:append:agilex5_mk_a5e065bb32aes1 = " file://fit_kernel_agilex5_mk_a5e065bb32aes1_sed_ETH_1P10G.its"
 
 #SRC_URI:append = " file://ubifs.scc"
 
