@@ -20,14 +20,14 @@ Important features of the design include
 - Programmable packet routing functionality handled within the Packet Switch module
 - DMA engines to efficiently transfer data between the HPS and Ethernet MAC
 
-For more information, refer to the [altera github doc](https://altera-fpga.github.io/rel-26.1/embedded-designs/agilex-5/e-series/modular-065a/ethernet/agx5e-ethernet/ug-agx5e-ethernet/).
+For more information, refer to the [altera github doc](https://altera-fpga.github.io/rel-26.1.1/embedded-designs/agilex-5/e-series/modular-065a/ethernet/agx5e-ethernet/ug-agx5e-ethernet/).
 
 The System Example Design supports the following design configurations on Altera Development Kits.
 
-|SL No| Design configuration | Data-rate | Development Kit Supported | Device Family | Device Part | Release | Quartus Release |
-|-----|-----------------------|-----------|:--------------------------:|:--------------:|:-------------:|:------:|:-------------:|
-|1.   |1-port 10GbE           | 10GbE     | [MK-A5E065BB32AEA](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit) | Agilex™ 5 E-Series (Group B) | A5ED065BB32AE4S | [rel/26.1](https://github.com/altera-fpga/agilex5-ed-ethernet/tree/rel/26.1) | Quartus 26.1 |
-|2.   |1-port 25GbE/10GbE           | 25GbE/10GbE     | [MK-A5E065AB32AEA](https://www.altera.com/products/devkit/po-3278/agilex-5-fpga-and-soc-e-series-065a-modular-development-kit) | Agilex™ 5 E-Series (Group A) | A5ED065AB32AE1V | [rel/26.1.1](https://github.com/altera-fpga/agilex5-ed-ethernet/tree/rel/26.1.1) | Quartus 26.1.1 |
+|SL No| Design configuration | Data-rate | Development Kit Supported | Device Family | Device Part | Release |
+|-----|-----------------------|-----------|:--------------------------:|:--------------:|:-------------:|:------:|
+|1.   |1-port 25GbE/10GbE           | 25GbE/10GbE     | [MK-A5E065AB32AEA](https://www.altera.com/products/devkit/po-3278/agilex-5-fpga-and-soc-e-series-065a-modular-development-kit) | Agilex™ 5 E-Series (Group A) | A5ED065AB32AE1V | [rel/26.1.1](https://github.com/altera-fpga/agilex5-ed-ethernet/tree/rel/26.1.1) |
+|2.   |1-port 10GbE           | 10GbE     | [MK-A5E065BB32AEA](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit) | Agilex™ 5 E-Series (Group B) | A5ED065BB32AE4S | [rel/26.1](https://github.com/altera-fpga/agilex5-ed-ethernet/tree/rel/26.1) |
 
 <!-- ponytail: a5e065a-mod-devkit-exp-prod is currently an identical copy of the 10GbE design (dts not yet swapped to 25GbE); update this table/links once the 25G dts change lands. -->
 
@@ -40,25 +40,16 @@ agilex5-ed-ethernet
     |--- a5e065a-mod-devkit-exp-prod/src
     |   |--- hw
     |   |--- sw
-    |--- a5e065b-mod-devkit-exp-prod/src
-    |   |--- hw
-    |   |--- sw
  ```
  
  
 
 ## Project Details
-Design Configuration: 1-port 25G/10G
+
 - **Family**: Agilex™ 5
 - **Quartus Version**: 26.1.1
 - **Development Kit**: [Agilex™ 5 FPGA E-Series 065A Modular Development Kit (MK-A5E065AB32AEA)](https://www.altera.com/products/devkit/po-3278/agilex-5-fpga-and-soc-e-series-065a-modular-development-kit)
 - **Device Part**: A5ED065AB32AE1V
-
-Design Configuration: 1-port 10G
-- **Family**: Agilex™ 5
-- **Quartus Version**: 26.1
-- **Development Kit**: [Agilex™ 5 FPGA E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit)
-- **Device Part**: A5ED065BB32AE4S
 
 ## Getting Started
 
@@ -66,15 +57,16 @@ Building the design is easy with the scripts provided in the repo. Clone the rep
 	
 	$ git clone https://github.com/altera-fpga/agilex5-ed-ethernet.git
 	$ cd agilex5-ed-ethernet
-	$ git checkout main
+	$ git checkout SED-1xETH-a5e065a-mdk-Q26.1.1-Rel-1.1
 
 
 
 Follow the below procedure to build the HW and the Software artifacts. 
 - Building 25GbE/10GbE design on MK-A5E065AB32AEA: [Hardware](a5e065a-mod-devkit-exp-prod/src/hw/README.md) / [Software](a5e065a-mod-devkit-exp-prod/src/sw/README.md)
-- Building 10GbE design on MK-A5E065BB32AEA: [Hardware](a5e065b-mod-devkit-exp-prod/src/hw/README.md) / [Software](a5e065b-mod-devkit-exp-prod/src/sw/README.md)
 
 **NOTE**: 
 
-1. Kindly refer to this [Release Q25.3-Rel-1.1](https://github.com/altera-fpga/agilex5-ed-ethernet/releases/tag/SED-1x10GE-a5e065b-mdk-Q25.3-Rel-1.1) for Design targetted to [Agilex™ 5 FPGA and SoC E-Series Modular Development Kit (ES)](https://www.altera.com/products/devkit/po-3001/agilex-5-fpga-and-soc-e-series-modular-development-kit-es)
+1.Kindly refer to this [Release Q26.1-Rel-1.2](https://github.com/altera-fpga/agilex5-ed-ethernet/releases/tag/SED-1x10GE-a5e065b-mdk-Q26.1-Rel-1.2) for 10GbE Design targetted to [Agilex™ 5 FPGA E-Series 065B Modular Development Kit](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit)
+
+2. Kindly refer to this [Release Q25.3-Rel-1.1](https://github.com/altera-fpga/agilex5-ed-ethernet/releases/tag/SED-1x10GE-a5e065b-mdk-Q25.3-Rel-1.1) for Design targetted to [Agilex™ 5 FPGA and SoC E-Series Modular Development Kit (ES)](https://www.altera.com/products/devkit/po-3001/agilex-5-fpga-and-soc-e-series-modular-development-kit-es)
 
