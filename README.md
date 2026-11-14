@@ -1,5 +1,6 @@
 # Altera Agilex™ 5 Ethernet System Example Design
 
+The Altera Agilex™ 5 Ethernet System Example Design demonstrates 1-port 25GbE/10GbE Ethernet on Agilex™ 5 modular development kits with HPS, MSGDMA, packet switch, and GTS Ethernet Hard IP.
 
 ## Description
 The Ethernet System Example Design demonstrates Ethernet functionality of the Altera Agilex 5 FPGA 
@@ -46,10 +47,23 @@ agilex5-ed-ethernet
 
 ## Project Details
 
-- **Family**: Agilex™ 5
+- **Family**: Agilex 5
 - **Quartus Version**: 26.1.1
-- **Development Kit**: [Agilex™ 5 FPGA E-Series 065A Modular Development Kit (MK-A5E065AB32AEA)](https://www.altera.com/products/devkit/po-3278/agilex-5-fpga-and-soc-e-series-065a-modular-development-kit)
+- **Patch Number**: Unknown
+- **Development Kit**: DK-A5E065AB32AEA
 - **Device Part**: A5ED065AB32AE1V
+- **Category**: HPS, Ethernet
+- **URL**: https://github.com/altera-fpga/agilex5-ed-ethernet
+- **Design Package**: a5e065a-mod-devkit-exp-prod.zip
+
+## Documentations
+
+- **Title**: 065A Modular Design Package Readme
+**URL**: https://github.com/altera-fpga/agilex5-ed-ethernet/blob/main/a5e065a-mod-devkit-exp-prod/README.md
+- **Title**: Hardware Build (synth)
+**URL**: https://github.com/altera-fpga/agilex5-ed-ethernet/blob/main/a5e065a-mod-devkit-exp-prod/src/hw/README.md
+- **Title**: Software Build Readme
+**URL**: https://github.com/altera-fpga/agilex5-ed-ethernet/blob/main/a5e065a-mod-devkit-exp-prod/src/sw/README.md
 
 ## Getting Started
 
