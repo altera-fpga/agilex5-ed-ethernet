@@ -57,7 +57,7 @@ Follow below steps to create the patch & build Linux Kernel.
 For this design, the bbappend uses the innersource ethernet SED branch (see `linux-socfpga-lts_%.bbappend`). Example:
 
 ```bash
-$ git clone https://github.com/altera-innersource/applications.fpga.soc.linux-socfpga.git
+$ git clone https://github.com/altera-fpga/applications.fpga.soc.linux-socfpga.git
 $ cd applications.fpga.soc.linux-socfpga
 $ git checkout socfpga-6.12.19-lts-ethernet-sed
 ```

@@ -150,7 +150,7 @@ $ make bl31 CROSS_COMPILE=$CROSS_COMPILE PLAT=agilex5 DEPRECATED=1
 ### Building U-Boot from source (optional)
 
 ```bash
-$ git clone https://github.com/altera-fpga/u-boot-socfpga.git -b socfpga_v2026.01
+$ git clone https://github.com/altera-fpga/u-boot-socfpga.git -b socfpga_v2026.07
 $ cd u-boot-socfpga
 # copy bl31.bin into the U-Boot tree as required by your flow
 $ make socfpga_agilex5_defconfig

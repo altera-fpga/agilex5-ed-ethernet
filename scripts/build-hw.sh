@@ -3,7 +3,7 @@ set -ex
 
 # Match agx5_ethernet_ori/scripts/build-hw.sh (quartus_upgrade.sh sed-replaces this line)
 QUARTUS_VERSION=acds/26.3
-# VARIANT selects the design (default mk-a5e065bb32aea/ethernet); sets ETH_DIR, MAKE_STEM, REVISION, NFS_RELPATH
+# VARIANT selects the design (default mk-a5e065bb32aea/ethernet); sets ETH_DIR, MAKE_STEM, REVISION
 . "$(dirname "$0")/variant_config.sh"
 
 if [ -n "$BUILD_PATH" ]; then
@@ -18,10 +18,10 @@ cd "$ETH_DIR"
 # Hardware compile (SOF + reports under synth/ and ethernet/output_files)
 arc shell $QUARTUS_VERSION -- "make ${MAKE_STEM}-build"
 
-# Core RBF for Yocto / NFS (install/binaries/ghrd.core.rbf)
+# Core RBF for Yocto (install/binaries/ghrd.core.rbf)
 arc shell $QUARTUS_VERSION -- "make ${MAKE_STEM}-install-core-rbf"
 
-# Stage names expected by GitHub HW workflows (top.sof / top.core.rbf)
+# Stage expected output names (top.sof / top.core.rbf)
 mkdir -p synth/output_files
 if [ -f "output_files/${REVISION}.sof" ]; then
   cp -f "output_files/${REVISION}.sof" synth/output_files/top.sof
@@ -44,11 +44,10 @@ else
 fi
 
 # HPS RBF for regression (*.ghrd.hps.rbf). Needs u-boot-spl-dtb.hex — prefer a
-# prior SW publish on NFS latest/sw, then local Yocto deploy (rare on HW-only).
+# prior SW publish under BUILD_PATH, then local Yocto deploy (rare on HW-only).
 HEX_PATH=""
 for cand in \
   "${BUILD_PATH:+$BUILD_PATH/../latest/sw/u-boot-spl-dtb.hex}" \
-  "/nfs/site/disks/pac_release_1/github/psgpac/sed/build/nightly/${NFS_RELPATH}/latest/sw/u-boot-spl-dtb.hex" \
   "software/yocto_linux/build/tmp/deploy/images/agilex5e/u-boot-spl-dtb.hex" \
   "software/artifacts/u-boot-spl-dtb.hex"
 do

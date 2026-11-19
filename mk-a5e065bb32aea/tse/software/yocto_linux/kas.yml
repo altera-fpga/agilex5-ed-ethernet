@@ -5,7 +5,7 @@ header:
     - kas/bsp.yml
 
 # From environment: TSE_DESIGN=TSE_1P kas shell kas.yml ...
-# YOCTO_TMPDIR: node-local path for BitBake TMPDIR (OE sanity rejects NFS TMPDIR)
+# Keep BitBake TMPDIR on node-local storage.
 env:
   TSE_DESIGN: null
   YOCTO_TMPDIR: null
@@ -39,7 +39,7 @@ repos:
     url: https://github.com/kraj/meta-clang.git
     branch: wrynose
   meta-altera-fpga:
-    url: https://github.com/altera-innersource/applications.fpga.soc.meta-altera-fpga.git
+    url: https://github.com/altera-fpga/meta-altera-fpga.git
     branch: wrynose
     layers:
       meta-altera-bsp:

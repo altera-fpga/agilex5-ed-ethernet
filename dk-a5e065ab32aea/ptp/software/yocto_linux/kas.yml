@@ -5,7 +5,7 @@ header:
     - kas/bsp.yml
 
 # From environment: ETH_DESIGN=PTP_2P25G kas shell kas.yml ...
-# YOCTO_TMPDIR: node-local path for BitBake TMPDIR (OE sanity rejects NFS TMPDIR)
+# Keep BitBake TMPDIR on node-local storage.
 env:
   ETH_DESIGN: null
   YOCTO_TMPDIR: null

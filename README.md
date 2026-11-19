@@ -45,7 +45,7 @@ Directory structure used in this example design (every design directory has the 
 │       └── software/         # Software
 │           └── yocto_linux/  # KAS / Yocto BSP
 └── scripts
-    └── variant_config.sh     # Per-design settings used by build-hw.sh / build-sw.sh / CI
+    └── variant_config.sh     # Per-design settings used by build-hw.sh / build-sw.sh
 ```
 
 ## Project Details
@@ -61,8 +61,8 @@ Directory structure used in this example design (every design directory has the 
 Building the design is easy with the scripts provided in the repo. Clone the repository to get the source files
 
 ```bash
-$ git clone https://github.com/altera-innersource/applications.fpga.system-example-designs.agilex5-ed-ethernet.git
-$ cd applications.fpga.system-example-designs.agilex5-ed-ethernet
+$ git clone https://github.com/altera-fpga/agilex5-ed-ethernet.git
+$ cd agilex5-ed-ethernet
 $ git checkout <Release tag>
 ```
 
@@ -90,19 +90,3 @@ Run the targets from the design directory. Software-only builds need `output_fil
 | `dk-a5e065bb32aea/ptp` | `make dk-a5e065bb32aea-baseline-ptp10G-all` | `make dk-a5e065bb32aea-baseline-ptp10G-software-yocto_linux_sd-build-sw` |
 
 `make help` in a design directory lists all targets.
-
-### CI (GitHub Actions)
-
-Each design has its own top-level orchestrator workflow (check-for-changes → build hardware → build software):
-
-| Workflow | Design |
-|----------|--------|
-| `build_hw_sw.yml` | `mk-a5e065bb32aea/ethernet` (1x10G Ethernet) — push to `master`/tags, nightly |
-| `build_hw_sw_tse.yml` | `mk-a5e065bb32aea/tse` (Triple Speed Ethernet) — push to `GSRD_PTP_ETHERNET_TESTING`, regression test |
-| `build_hw_sw_ptp25G.yml` | `dk-a5e065ab32aea/ptp` (2x25G PTP) — push to `GSRD_PTP_ETHERNET_TESTING` |
-| `build_hw_sw_ptp10G.yml` | `dk-a5e065bb32aea/ptp` (2x10G PTP) — push to `GSRD_PTP_ETHERNET_TESTING` |
-| `build_hw_sw_ethernet25G.yml` | `mk-a5e065ab32aea/ethernet` (1x25G Ethernet) — push to `GSRD_PTP_ETHERNET_TESTING` |
-
-Each orchestrator calls the shared `build_hardware.yml` / `build_software.yml` reusable workflows with its own
-`variant` input (the design directory); per-design names and NFS paths live in `scripts/variant_config.sh`.
-A push to `GSRD_PTP_ETHERNET_TESTING` starts a variant when that push changes its design, `scripts/`, or its workflow. A README-only commit does not start a build. The **Run workflow** button appears in Actions only after the workflow file is also on the default branch.

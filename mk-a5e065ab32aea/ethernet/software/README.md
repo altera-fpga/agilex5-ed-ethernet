@@ -130,7 +130,7 @@ You can build the Linux kernel alone for debugging. Download the Arm GNU toolcha
 ```bash
 $ export ARCH=arm64
 $ export CROSS_COMPILE=`pwd`/arm-gnu-toolchain-11.3.rel1-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-
-$ git clone https://github.com/altera-innersource/applications.fpga.soc.linux-socfpga.git -b socfpga-6.12.19-lts-ethernet-sed
+$ git clone https://github.com/altera-fpga/applications.fpga.soc.linux-socfpga.git -b socfpga-6.12.19-lts-ethernet-sed
 $ cd applications.fpga.soc.linux-socfpga
 $ git checkout <Release Tag>
 $ make defconfig
@@ -143,7 +143,7 @@ $ make -j32
 ### Building ATF from source (optional)
 
 ```bash
-$ git clone https://github.com/altera-innersource/applications.fpga.soc.arm-trusted-firmware-dev.git -b socfpga_v2.14.0
+$ git clone https://github.com/altera-fpga/applications.fpga.soc.arm-trusted-firmware-dev.git -b socfpga_v2.14.0
 $ cd applications.fpga.soc.arm-trusted-firmware-dev
 $ make bl31 CROSS_COMPILE=$CROSS_COMPILE PLAT=agilex5 DEPRECATED=1
 ```
@@ -151,8 +151,8 @@ $ make bl31 CROSS_COMPILE=$CROSS_COMPILE PLAT=agilex5 DEPRECATED=1
 ### Building U-Boot from source (optional)
 
 ```bash
-$ git clone https://github.com/altera-innersource/applications.fpga.soc.uboot-socfpga-dev.git -b socfpga_v2026.01
-$ cd applications.fpga.soc.uboot-socfpga-dev
+$ git clone https://github.com/altera-fpga/u-boot-socfpga.git -b socfpga_v2026.07
+$ cd u-boot-socfpga
 # copy bl31.bin into the U-Boot tree as required by your flow
 $ make socfpga_agilex5_defconfig
 $ make -j32
@@ -162,13 +162,13 @@ $ make -j32
 
 ```text
 Packetgenerator application
-  - git clone https://github.com/altera-innersource/applications.fpga.hps.packetgenerator.git
+  - git clone https://github.com/altera-fpga/applications.fpga.hps.packetgenerator.git
   - cd applications.fpga.hps.packetgenerator
   - git checkout <Release Tag>
   - aarch64-linux-gnu-gcc *.c -o packetgenerator
 
 PacketSwitch application
-  - git clone https://github.com/altera-innersource/applications.fpga.hps.ptpbridge.git -b SM_PTPBridge
+  - git clone https://github.com/altera-fpga/applications.fpga.hps.ptpbridge.git -b SM_PTPBridge
   - cd applications.fpga.hps.ptpbridge
   - git checkout <Release Tag>
   - aarch64-linux-gnu-gcc *.c -o ptpbridge

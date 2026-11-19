@@ -2,7 +2,7 @@
 
 set -x
 BUILD=false
-WORKDIR=/nfs/site/disks/pac_release_1/github/psgpac/altera-innersource/applications.fpga.system-example-designs.agilex5-ed-ethernet/repo_check
+WORKDIR=/nfs/site/disks/pac_release_1/github/psgpac/altera-fpga/applications.fpga.system-example-designs.agilex5-ed-ethernet/repo_check
 # Hardcoded .bb file paths - adjust these to your repo structure
 kernel_bb_file=$WORKDIR/src/sw/yocto/meta-agilex5-sed/recipes-kernel/linux/linux-socfpga-lts_%.bbappend
 bb_files=(

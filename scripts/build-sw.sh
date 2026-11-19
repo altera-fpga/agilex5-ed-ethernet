@@ -3,12 +3,9 @@ set -e
 set -x
 umask 022
 
-echo "RELEASE FLAG: $RELEASE"
-echo "NIGHTLY FLAG: $NIGHTLY"
-echo "QUARTUS FLAG: $QUARTUS"
 echo "FLAG_DIR: $FLAG_DIR"
 
-# VARIANT selects the design (default mk-a5e065bb32aea/ethernet); sets ETH_DIR, REVISION, NFS_RELPATH
+# VARIANT selects the design (default mk-a5e065bb32aea/ethernet); sets ETH_DIR, REVISION
 . "$(dirname "$0")/variant_config.sh"
 echo "VARIANT: $VARIANT"
 
@@ -19,27 +16,22 @@ RBF_DEST="$YOCTO_DIR/meta-custom/recipes-fpga/fpga-bitstream/files"
 RBF_NAME="${REVISION}.core.rbf"
 # DEPLOY_DIR set after YOCTO_TMPDIR (deploy lives under BitBake TMPDIR)
 
-# Resolve NFS tree when FLAG_DIR not set (schedule / tag / upgrade)
-if [ -z "$FLAG_DIR" ]; then
-  if [ "$RELEASE" == 1 ]; then
-    BUILD_PATH="/nfs/site/disks/pac_release_1/github/psgpac/sed/build/release/${NFS_RELPATH}/${TAG}/latest"
-  elif [ "$QUARTUS" == 1 ]; then
-    BUILD_PATH="/nfs/site/disks/pac_release_1/github/psgpac/sed/quartus_upgrade/build/${NFS_RELPATH}/latest"
-  else
-    # NIGHTLY=1 or unset (manual CI): nightly NFS tree where HW publishes hardware_done
-    echo "Using nightly NFS tree for hardware_done / core.rbf"
-    BUILD_PATH="/nfs/site/disks/pac_release_1/github/psgpac/sed/build/nightly/${NFS_RELPATH}/latest"
-  fi
-  FLAG_DIR="$BUILD_PATH/build_flags"
+if [ -z "${FLAG_DIR:-}" ]; then
+  echo "ERROR: FLAG_DIR must point to a hardware build's build_flags directory." >&2
+  exit 1
 fi
+if [ ! -d "$FLAG_DIR" ]; then
+  echo "ERROR: FLAG_DIR does not exist: $FLAG_DIR" >&2
+  exit 1
+fi
+FLAG_DIR="$(cd "$FLAG_DIR" && pwd)"
 
 # Hybrid layout (required by OE + ARC):
-# - Sources / sstate on NFS (BUILD_ROOT) — survives node issues, shared sstate
-# - BitBake TMPDIR on node-local disk — OE sanity rejects TMPDIR on NFS
-# Full-tree mktemp under /tmp previously hit ARC -1004; full-tree NFS hits TMPDIR sanity.
+# - Sources / sstate under BUILD_ROOT — survives node issues, shared sstate
+# - BitBake TMPDIR on node-local disk
 if [ -n "${BUILD_ROOT:-}" ]; then
   WORKDIR="${BUILD_ROOT}/.yocto-build"
-  echo "Using NFS BUILD_ROOT workdir: $WORKDIR"
+  echo "Using BUILD_ROOT workdir: $WORKDIR"
   mkdir -vp "$WORKDIR"
 elif [ -d "$ETH_ROOT/software/yocto_linux" ]; then
   WORKDIR="$(pwd)"
@@ -62,7 +54,7 @@ mkdir -vp "$YOCTO_TMPDIR"
 export YOCTO_TMPDIR
 echo "YOCTO_TMPDIR (node-local BitBake TMPDIR)=$YOCTO_TMPDIR"
 df -h "$YOCTO_TMPDIR" /tmp 2>/dev/null || df -h /tmp || true
-# Clean only local tmp on exit; keep NFS sources for debug
+# Clean only local tmp on exit; keep build sources for debug
 trap 'rm -rf "$YOCTO_TMPDIR"' EXIT
 
 cd "$WORKDIR"
@@ -104,16 +96,7 @@ if [ -n "$SSTATE_DIR" ]; then
   ln -vsnfT "$SSTATE_DIR" "$YOCTO_DIR/sstate_cache" || true
 fi
 
-# Prefer FLAG_DIR (dated nightly/release); fall back to sibling ../latest (NFS symlink)
 HW_FLAG="$FLAG_DIR/hardware_done"
-if [[ ! -f "$HW_FLAG" ]]; then
-  LATEST_FLAG="$(dirname "$(dirname "$FLAG_DIR")")/latest/build_flags/hardware_done"
-  if [[ -f "$LATEST_FLAG" ]]; then
-    echo "No hardware_done at $FLAG_DIR; using latest: $LATEST_FLAG"
-    FLAG_DIR="$(dirname "$LATEST_FLAG")"
-    HW_FLAG="$LATEST_FLAG"
-  fi
-fi
 
 if [[ -f "$HW_FLAG" ]]; then
   echo "Hardware build is completed ($FLAG_DIR)."
@@ -122,9 +105,8 @@ if [[ -f "$HW_FLAG" ]]; then
   sha1sum "$FLAG_DIR"/../hw/*core.rbf
   sha1sum "$RBF_DEST/$RBF_NAME"
 else
-  echo "ERROR: No hardware_done at $FLAG_DIR (or latest)"
+  echo "ERROR: No hardware_done at $FLAG_DIR"
   echo "SW needs HW to publish *core.rbf + build_flags/hardware_done"
-  echo "(schedule, or workflow_dispatch with triggered_by_schedule so HW copies to NFS)."
   ls -la "$FLAG_DIR" 2>/dev/null || true
   ls -la "$(dirname "$FLAG_DIR")/hw" 2>/dev/null || true
   exit 1
@@ -214,7 +196,7 @@ done
   echo "ERROR: No console rootfs tar.gz under $DEPLOY_DIR"
   exit 1
 }
-# Legacy CI artifact name expected by upload-artifact / NFS rename
+# Legacy CI artifact name expected by upload-artifact
 cp -f "$console_src" "$DESTDIR/gsrd-console-image-agilex5.tar.gz"
 
 wic=""

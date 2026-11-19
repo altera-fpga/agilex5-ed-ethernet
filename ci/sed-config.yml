@@ -14,8 +14,6 @@ quartus:
 version_files:
   - scripts/build-hw.sh
   - src/hw/verification/env/arc_resource_list.sh
-paths:
-  nfs_relpath: ethernet/agx5/sm72/mdk/1x10g
 notify:
-  # Same recipients as nightly sed_test_report.py DEFAULT_EMAIL_ID
+  # Same recipients as sed_test_report.py DEFAULT_EMAIL_ID
   to: psse-all@altera.com,psse.cw.ba.platform.sw@altera.com,psse_hw_platform_ba@altera.com,nanditha.jayarajan@altera.com

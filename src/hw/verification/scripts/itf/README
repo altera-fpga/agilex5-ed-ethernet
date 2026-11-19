@@ -9,7 +9,7 @@
 ##### README file - Steps to run simulation for SM (Sundance Mesa) System-Example-Design ETHERNET AGX5 SM72 #####
 
       1. Git repo:  To clone a fresh repository (this step need to do once for new repo)
-      % git clone https://github.com/altera-innersource/applications.fpga.system-example-designs.agilex5-ed-ethernet
+      % git clone https://github.com/altera-fpga/agilex5-ed-ethernet.git
 
       2. ITF resources:  Get ITF resources for Makefile/ITF/SpetC (do once for new window)
       %arc shell vcs-vcsmx-lic,acdskit/<ver>,devacds/<ver>,testutils/<ver>,regutils/<ver>,itf/<ver>,ostype/suse15,synopsys_vip_common/<vip_Q-2020.03A>,p4/psgeng,perl/<ver>
