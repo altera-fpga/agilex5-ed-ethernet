@@ -1,0 +1,455 @@
+name: Regression test
+on:
+  workflow_dispatch:
+    inputs:
+      variant:
+        description: Design to regress
+        required: false
+        default: mk-a5e065bb32aea/ethernet
+        type: choice
+        options:
+          - mk-a5e065bb32aea/ethernet
+          - dk-a5e065bb32aea/ptp
+          - dk-a5e065ab32aea/ptp
+          - mk-a5e065bb32aea/tse
+  workflow_call:
+    inputs:
+      variant:
+        description: Design directory (default 1x10G Ethernet)
+        required: false
+        type: string
+        default: mk-a5e065bb32aea/ethernet
+      triggered_by_schedule:
+        type: boolean
+        required: false
+        default: false
+      triggered_by_tag_push:
+        type: boolean
+        required: false
+        default: false
+      release_tag:
+        type: string
+        required: false
+        default: ""
+      triggered_by_quartus_upgrade:
+        type: boolean
+        required: false
+        default: false
+  
+jobs:
+  regression_test:
+    runs-on: [self-hosted, psgpac]
+    env:
+      REPO: https://github.com/altera-innersource/applications.fpga.system-example-designs.test-automation.git
+      REPO_PATH: /nfs/site/disks/pac_release_1/github/psgpac/sed/regression_test/repos/applications.fpga.system-example-designs.test-automation
+      REGTEST: /nfs/site/disks/pac_release_1/github/psgpac/sed/regression_test
+      REPORT_PATH: /nfs/site/disks/pac_release_1/github/psgpac/sed/build/ethernet/agilex5/sm72/modular/1x10G/latest/reports
+      EXEC_SCRIPT_DIR: /nfs/site/disks/pac_release_1/github/psgpac/sed/regression_test/tests/scripts/ethernet
+      BRANCH: main
+      QUARTUS_BUILD_PATH: /nfs/site/disks/pac_release_1/github/psgpac/sed/quartus_upgrade/build/ethernet/agx5/sm72/mdk/1x10g/latest
+
+    steps:
+      - name: Capture start time
+        id: start
+        if: inputs.triggered_by_quartus_upgrade
+        run: echo "start_time=$(date +%s)" >> $GITHUB_OUTPUT
+
+      - name: Resolve regression design
+        run: |
+          case "${{ inputs.variant }}" in
+            ""|mk-a5e065bb32aea/ethernet)
+              REL=ethernet/agx5/sm72/mdk/1x10g
+              REPORT=/nfs/site/disks/pac_release_1/github/psgpac/sed/build/ethernet/agilex5/sm72/modular/1x10G/latest/reports
+              QUARTUS=/nfs/site/disks/pac_release_1/github/psgpac/sed/quartus_upgrade/build/ethernet/agx5/sm72/mdk/1x10g/latest
+              ;;
+            dk-a5e065bb32aea/ptp)
+              REL=1588ptp/agx5/sm72/pdk/2x10g
+              REPORT=/nfs/site/disks/pac_release_1/github/psgpac/sed/build/1588ptp/agx5/sm72/pdk/2x10g/latest/reports
+              QUARTUS=/nfs/site/disks/pac_release_1/github/psgpac/sed/quartus_upgrade/build/1588ptp/agx5/sm72/pdk/2x10g/latest
+              ;;
+            dk-a5e065ab32aea/ptp)
+              REL=1588ptp/agx5/sm7plus/pdk/2x25g
+              REPORT=/nfs/site/disks/pac_release_1/github/psgpac/sed/build/1588ptp/agx5/sm7plus/pdk/2x25g/latest/reports
+              QUARTUS=/nfs/site/disks/pac_release_1/github/psgpac/sed/quartus_upgrade/build/1588ptp/agx5/sm7plus/pdk/2x25g/latest
+              ;;
+            mk-a5e065bb32aea/tse)
+              REL=tse/agx5/sm72/mdk
+              REPORT=/nfs/site/disks/pac_release_1/github/psgpac/sed/build/tse/agx5/sm72/mdk/latest/reports
+              QUARTUS=/nfs/site/disks/pac_release_1/github/psgpac/sed/quartus_upgrade/build/tse/agx5/sm72/mdk/latest
+              ;;
+            *)
+              echo "ERROR: regression is not configured for variant ${{ inputs.variant }}"
+              exit 1
+              ;;
+          esac
+          echo "REG_RELPATH=$REL" >> "$GITHUB_ENV"
+          echo "REPORT_PATH=$REPORT" >> "$GITHUB_ENV"
+          echo "QUARTUS_BUILD_PATH=$QUARTUS" >> "$GITHUB_ENV"
+          echo "Regression variant ${{ inputs.variant }} uses $REL"
+
+      - name: setup Test path
+        run: |
+          # workflow_call from HW-SW uses inputs; bare "Run workflow" on this file
+          # is workflow_dispatch with all inputs false — default to nightly/latest.
+          if [[ "${{ inputs.triggered_by_schedule }}" == "true" ]] || [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo " Nightly/manual regression (TEST_PATH=nightly)"
+            echo "TEST_PATH=${{ env.REGTEST }}/nightly" >> $GITHUB_ENV
+            echo "REG_BUILD_TYPE=nightly" >> $GITHUB_ENV
+          elif [[ "${{ inputs.triggered_by_tag_push }}" == "true" ]]; then
+            echo " Push Tag triggered"
+            echo "TEST_PATH=${{ env.REGTEST }}/release" >> $GITHUB_ENV
+            echo "REG_BUILD_TYPE=release" >> $GITHUB_ENV
+          elif [[ "${{ inputs.triggered_by_quartus_upgrade }}" == "true" ]]; then
+            echo "quartus upgrade event triggered"
+            echo "TEST_PATH=${{ env.REGTEST }}/quartus_upgrade" >> $GITHUB_ENV
+            echo "REG_BUILD_TYPE=quartus" >> $GITHUB_ENV
+          elif [[ "${{ github.event_name }}" == "push" ]]; then
+            # Branch push: HW/SW publish to the nightly tree, so test nightly/latest.
+            echo " Branch push regression (TEST_PATH=nightly)"
+            echo "TEST_PATH=${{ env.REGTEST }}/nightly" >> $GITHUB_ENV
+            echo "REG_BUILD_TYPE=nightly" >> $GITHUB_ENV
+          else
+            echo "ERROR: no regression mode selected"
+            exit 1
+          fi
+     
+      - name: Trigger regression test
+        env:
+          CI_GITHUB_USER: ${{ secrets.GSRD_GITHUB_USER || github.actor }}
+          CI_GITHUB_TOKEN: ${{ secrets.GSRD_GITHUB_PAT || secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -pv ${{ env.TEST_PATH }}/${{ env.REG_RELPATH }}
+          cd ${{ env.TEST_PATH }}/${{ env.REG_RELPATH }}
+          # Per-run clone dir — shared automation_repo often fails rm -rf on NFS
+          # ("Directory not empty" from leftover/locked files across runners).
+          AUTO_REPO="automation_repo-${{ github.run_id }}.${{ github.run_attempt }}"
+          if [ -e automation_repo ] || [ -L automation_repo ]; then
+            chmod -R u+w automation_repo 2>/dev/null || true
+            rm -rf automation_repo 2>/dev/null || mv -f automation_repo "automation_repo.old.$$" || true
+          fi
+          rm -rf "$AUTO_REPO"
+          set +e
+          git clone -b ${{ env.BRANCH }} ${{ env.REPO }} "$AUTO_REPO"
+          clone_rc=$?
+          set -e
+          if [ "$clone_rc" -ne 0 ]; then
+            echo "Automation clone failed; retrying with CI GitHub credentials"
+            rm -rf "$AUTO_REPO"
+            set +x
+            python3 -c 'import os,sys; from pathlib import Path; t=os.environ.get("CI_GITHUB_TOKEN",""); u=os.environ.get("CI_GITHUB_USER") or "x-access-token"; p=Path("/tmp/ci-gitconfig-automation"); p.write_text("[url \"https://%s:%s@github.com/\"]\n\tinsteadOf = https://github.com/\n\tinsteadOf = git://github.com/\n" % (u,t)) if t else sys.exit("ERROR: automation repo clone failed and CI_GITHUB_TOKEN is unset"); p.chmod(0o600); print("Configured private GitHub fetch for automation repo")'
+            export GIT_CONFIG_GLOBAL=/tmp/ci-gitconfig-automation
+            git clone -b ${{ env.BRANCH }} ${{ env.REPO }} "$AUTO_REPO"
+          fi
+          ln -sfn "$AUTO_REPO" automation_repo
+          # B2B sync files are not in git. A fresh clone has none; board 1 then
+          # dies in Testing.pm sync_start when validate_2.txt is missing.
+          REGTEST_DIR="${{ env.TEST_PATH }}/${{ env.REG_RELPATH }}/$AUTO_REPO/regtest/${{ env.REG_RELPATH }}"
+          mkdir -pv "$REGTEST_DIR"
+          printf '0\n' > "$REGTEST_DIR/validate_1.txt"
+          printf '0\n' > "$REGTEST_DIR/validate_2.txt"
+          cd "$AUTO_REPO/scripts/${{ env.REG_RELPATH }}"
+          # Default ARC job timeout is 300s. arc_extract.pl must stay alive for the
+          # full farm B2B run (~15-40+ min). At 300s it is killed after writing a
+          # stub CSV header ("Test_Executed,YES,") with no Test_Name rows, and the
+          # upgrade gate false-fails while board jobs are still running.
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          p = Path("Top_execution.sh")
+          t = p.read_text()
+          # Resource must come BEFORE timeout=…; putting timeout first makes ARC
+          # treat "bundle/regtest" as the command → "Command not found" (job 1325530271).
+          # Normalize any prior wrong-order patch as well.
+          if "arc shell timeout=2h bundle/regtest" in t:
+              t = t.replace(
+                  "arc shell timeout=2h bundle/regtest",
+                  "arc shell bundle/regtest timeout=2h",
+              )
+              p.write_text(t)
+              print("Normalized Top_execution.sh: timeout after bundle/regtest")
+          elif "timeout=2h" not in t:
+              # Match the arc-shell invocation regardless of the command expression
+              # used after "--" ($COMMAND in some designs, "${RUN_CMD[@]}" in others).
+              m = re.search(r'^(\s*)arc shell bundle/regtest(\s+--.*)$', t, re.M)
+              if not m:
+                  raise SystemExit("Failed to patch Top_execution.sh for timeout=2h")
+              old_line = m.group(0)
+              new_line = f"{m.group(1)}arc shell bundle/regtest timeout=2h{m.group(2)}"
+              t2 = t.replace(old_line, new_line, 1)
+              p.write_text(t2)
+              print("Patched Top_execution.sh: arc shell bundle/regtest timeout=2h")
+          else:
+              print("Top_execution.sh already has timeout=2h")
+          # Avoid leaving a truncated CSV if extract dies mid-run: do not write the
+          # stub header when boards become available; write the full summary line later.
+          # sed_test_report.py requires SUMMARY_HEADER=22 including HW_Timing.
+          # ethernet 1x10g / TSE already emit it; PTP 2x10g/2x25g arc_extract.pl omit it
+          # (log: "stub-header pattern not found" → 20-field CSV → email Invalid data).
+          ae = Path("arc_extract.pl")
+          at = ae.read_text()
+          if "HW_Timing" not in at or "$timing_result" not in at:
+              if 'my $timing_result' not in at:
+                  at = at.replace(
+                      'my $drc_result = "FAIL";\n',
+                      'my $drc_result = "FAIL";\nmy $timing_result = "FAIL";\n',
+                      1,
+                  )
+              if 'timing_pass' not in at:
+                  at = at.replace(
+                      'my $drc = "$build_flags/drc_pass";\n',
+                      'my $drc = "$build_flags/drc_pass";\nmy $timing = "$build_flags/timing_pass";\n',
+                      1,
+                  )
+              if 'my $timing_flag=0;' not in at:
+                  at = at.replace(
+                      'my $drc_flag=0;\n',
+                      'my $drc_flag=0;\nmy $timing_flag=0;\n',
+                      1,
+                  )
+              if '$timing_result = $timing_flag' not in at:
+                  timing_block = (
+                      '$drc_result = $drc_flag ? "PASS" : "FAIL";\n'
+                      '\n'
+                      '\tif (-e $timing) {\n'
+                      '\t\t$timing_flag=1;\n'
+                      '\t\tprint "Timing\\t: PASS\\n";\n'
+                      '\t} else {\n'
+                      '\t\tprint "Timing\\t: FAIL\\n";\n'
+                      '\t}\n'
+                      '\t$timing_result = $timing_flag ? "PASS" : "FAIL";\n'
+                  )
+                  replaced = False
+                  for old in (
+                      '$drc_result = $drc_flag ? "PASS" : "FAIL";\t\t\n',
+                      '$drc_result = $drc_flag ? "PASS" : "FAIL";\n',
+                  ):
+                      if old in at:
+                          at = at.replace(old, timing_block, 1)
+                          replaced = True
+                          break
+                  if not replaced:
+                      raise SystemExit("Failed to inject timing_result assignment into arc_extract.pl")
+              # PTP uses HW_DRC,",$drc_result,",Build_SW; ethernet 1x10g uses HW_DRC,$drc_result,Build_SW
+              if 'HW_Timing' not in at:
+                  at2 = at.replace(
+                      'HW_DRC,",$drc_result,",Build_SW',
+                      'HW_DRC,",$drc_result,",HW_Timing,",$timing_result,",Build_SW',
+                  )
+                  at2 = at2.replace(
+                      'HW_DRC,$drc_result,Build_SW',
+                      'HW_DRC,$drc_result,HW_Timing,$timing_result,Build_SW',
+                  )
+                  if at2 == at:
+                      raise SystemExit("Failed to insert HW_Timing into arc_extract.pl CSV prints")
+                  at = at2
+              print("Patched arc_extract.pl: add HW_Timing (email SUMMARY_HEADER=22)")
+          else:
+              print("arc_extract.pl already has HW_Timing")
+          needle_candidates = [
+              (
+                  "\t\t$test_flag=1;\n"
+                  "\t\tprint $fh \"$project_name,$sub_name,Build_HW,\",Flag_info($hw_flag),\",HW_Duration,$hw_duration,HW_DRC,$drc_result,HW_Timing,$timing_result,Build_SW,\",Flag_info($sw_flag),\",SW_Duration,$sw_duration,Test_Executed,\",Flag_info($test_flag),\",\";\n"
+                  "\t\tlast;"
+              ),
+              (
+                  "\t\t$test_flag=1;\n"
+                  "\t\tprint $fh \"$project_name,$sub_name,Build_HW,\",Flag_info($hw_flag),\",HW_Duration,$hw_duration,HW_DRC,\",$drc_result,\",HW_Timing,\",$timing_result,\",Build_SW,\",Flag_info($sw_flag),\",SW_Duration,$sw_duration,Test_Executed,\",Flag_info($test_flag),\",\";\n"
+                  "\t\tlast;"
+              ),
+          ]
+          repl = (
+              "\t\t$test_flag=1;\n"
+              "\t\t# Defer CSV header write until tests finish (see Test_Duration print).\n"
+              "\t\tlast;"
+          )
+          deferred = False
+          for needle in needle_candidates:
+              if needle in at:
+                  at = at.replace(needle, repl, 1)
+                  deferred = True
+                  break
+          if deferred:
+              old_dur = 'print $fh "Test_Duration,$test_duration,SPeTC_Id,$spetc_id,Comments,$OK\\n";'
+              # Prefer the quote style already used in this arc_extract.pl
+              if 'HW_DRC,",$drc_result,",HW_Timing,",$timing_result,",Build_SW' in at:
+                  new_dur = (
+                      'print $fh "$project_name,$sub_name,Build_HW,",Flag_info($hw_flag),",HW_Duration,$hw_duration,HW_DRC,",$drc_result,",HW_Timing,",$timing_result,",Build_SW,",Flag_info($sw_flag),",SW_Duration,$sw_duration,Test_Executed,",Flag_info($test_flag),",Test_Duration,$test_duration,SPeTC_Id,$spetc_id,Comments,$OK\\n";'
+                  )
+              else:
+                  new_dur = (
+                      'print $fh "$project_name,$sub_name,Build_HW,",Flag_info($hw_flag),",HW_Duration,$hw_duration,HW_DRC,$drc_result,HW_Timing,$timing_result,Build_SW,",Flag_info($sw_flag),",SW_Duration,$sw_duration,Test_Executed,",Flag_info($test_flag),",Test_Duration,$test_duration,SPeTC_Id,$spetc_id,Comments,$OK\\n";'
+                  )
+              if old_dur not in at:
+                  raise SystemExit("Failed to find Test_Duration CSV write in arc_extract.pl")
+              at = at.replace(old_dur, new_dur, 1)
+              print("Patched arc_extract.pl: defer CSV header until tests complete")
+          else:
+              print("arc_extract.pl stub-header pattern not found (already patched?)")
+          # Subtests appear several minutes after the parent job. Keep the
+          # original size checks; only replace the one-shot sleep 100 query
+          # (matched via the unique "output is" print, not the parent-job wait).
+          old_wait = (
+              "\tsleep 100;\n"
+              "\t@output = `arc job-query parent=$id`;\n"
+              "\tchomp(@output);\n"
+              'print "\\noutput is \\n@output\\n";'
+          )
+          new_wait = (
+              "\t@output = ();\n"
+              "\tfor (my $w = 0; $w <= 1200 && @output != 2; $w += 30) {\n"
+              "\t\t@output = `arc job-query parent=$id`; chomp(@output);\n"
+              "\t\tprint \"\\nsubtest query after $w s: @output (count=\" . scalar(@output) . \")\\n\";\n"
+              "\t\tsleep 30 if @output != 2 && $w < 1200;\n"
+              "\t}"
+          )
+          if old_wait in at:
+              at = at.replace(old_wait, new_wait, 1)
+              print("Patched arc_extract.pl: poll up to 20min for 2 subtests")
+          else:
+              print("arc_extract.pl subtest-wait pattern not found (already patched?)")
+          old_end = "\tclose $fh;"
+          new_end = (
+              "\tprint $fh \"$project_name,$sub_name,Test_Executed,NO,SPeTC_Id,\",($spetc_id || \"None\"),\",Comments,extract exited before Test_Name rows\\n\" if defined($fh) && tell($fh) == 0;\n"
+              "\tclose $fh;"
+          )
+          if old_end in at:
+              at = at.replace(old_end, new_end, 1)
+              print("Patched arc_extract.pl: write CSV in END if extract dies early")
+          else:
+              print("arc_extract.pl END close pattern not found (already patched?)")
+          old_cat = "$out=`cat $build_path/reports/*.csv`;"
+          new_cat = "$out=`cat $mail_name`;"
+          if old_cat in at:
+              at = at.replace(old_cat, new_cat, 1)
+              print("Patched arc_extract.pl: cat only today's CSV")
+          else:
+              print("arc_extract.pl CSV cat pattern not found (already patched?)")
+          ae.write_text(at)
+          PY
+          # sw/ holds both <design>.kernel.itb and kernel.itb. TSE subtest.pl uses
+          # `ls *.itb | awk '{print $1}'`, which yields both paths joined by a
+          # newline; -e then fails with "[DIE] kernel itb file NOT FOUND".
+          if [[ "${{ env.REG_RELPATH }}" == tse/* ]]; then
+            SUBTEST_PL="$REGTEST_DIR/subtest.pl" python3 - <<'PY'
+          import os, re
+          from pathlib import Path
+          sp = Path(os.environ["SUBTEST_PL"])
+          s = sp.read_text()
+          s, n = re.subn(r"(`ls \$\w+/[^`|]+) \| awk '\{print \\\$1\}'`", r"\1 | head -n1`", s)
+          if n:
+              sp.write_text(s)
+              print(f"Patched TSE subtest.pl: single artifact per ls ({n} sites)")
+          else:
+              print("TSE subtest.pl artifact pattern not found (already patched?)")
+          PY
+          fi
+          # TSE Top_execution.sh accepts only --param-build-type / --param-build-id.
+          # PTP 10G, PTP 25G, and Ethernet scripts accept the underscore form.
+          if [[ "${{ env.REG_RELPATH }}" == tse/* ]]; then
+            BUILD_TYPE_OPT=--param-build-type
+            BUILD_ID_OPT=--param-build-id
+          else
+            BUILD_TYPE_OPT=--param_build_type
+            BUILD_ID_OPT=--param_build_id
+          fi
+          if [[ "${{ env.REG_BUILD_TYPE }}" == "nightly" ]]; then
+            echo " Nightly/manual testing triggered"
+            bash Top_execution.sh "$BUILD_TYPE_OPT=nightly" "$BUILD_ID_OPT=latest"
+          elif [[ "${{ env.REG_BUILD_TYPE }}" == "release" ]]; then
+            echo " Release testing triggered"
+            bash Top_execution.sh "$BUILD_TYPE_OPT=release" "$BUILD_ID_OPT=${{ inputs.release_tag }}"
+          elif [[ "${{ env.REG_BUILD_TYPE }}" == "quartus" ]]; then
+            echo "quartus upgrade testing triggered"
+            bash Top_execution.sh "$BUILD_TYPE_OPT=local" "$BUILD_ID_OPT=${{ env.QUARTUS_BUILD_PATH }}"
+          else
+            echo "ERROR: REG_BUILD_TYPE unset — Top_execution not started"
+            exit 1
+          fi
+
+      - name: Upgrade-path regression gate + status
+        if: always() && inputs.triggered_by_quartus_upgrade
+        run: |
+          set -euo pipefail
+          STATUS_ROOT=/nfs/site/disks/pac_release_1/github/psgpac/sed/quartus_upgrade/${{ env.REG_RELPATH }}/${{ github.run_id }}.${{ github.run_attempt }}/status
+          mkdir -pv "$STATUS_ROOT"
+          # arc_extract.pl writes SED_*.csv under the local build's reports/ dir
+          # (QUARTUS_BUILD_PATH/reports), not under TEST_PATH or the nightly modular path.
+          CSV=""
+          for dir in \
+            "${{ env.QUARTUS_BUILD_PATH }}/reports" \
+            "${{ env.TEST_PATH }}/${{ env.REG_RELPATH }}/reports" \
+            "${{ env.REPORT_PATH }}"
+          do
+            [ -d "$dir" ] || continue
+            if ls "$dir"/SED_*.csv >/dev/null 2>&1; then
+              CSV=$(ls -1t "$dir"/SED_*.csv | head -1)
+              break
+            elif ls "$dir"/*.csv >/dev/null 2>&1; then
+              CSV=$(ls -1t "$dir"/*.csv | head -1)
+              break
+            fi
+          done
+          RESULT=fail
+          REASON="no summary CSV found"
+          if [ -n "$CSV" ]; then
+            echo "Found summary CSV: $CSV"
+            cat "$CSV"
+            if [ ! -s "$CSV" ]; then
+              echo "CSV is empty (arc_extract likely died after farm submit, before writing Test_Name rows)"
+            fi
+            # Prefer summary-line fields when tests never ran (no Test_Name rows).
+            # Example: Test_Executed,NO ... Comments,Unable to claim board resource
+            SUMMARY_REASON=$(python3 -c 'import re,sys; t=open(sys.argv[1],encoding="utf-8",errors="replace").read(); line=t.splitlines()[0] if t.strip() else ""; field=lambda k,rest=False: (m.group(1).strip() if (m:=re.search((r"(?:^|,)"+re.escape(k)+(r",(.*)$" if rest else r",([^,]*)")), line)) else ""); ex=field("Test_Executed").upper(); c=field("Comments",True); print(("tests not executed"+(": "+c if c and c.lower()!="none" else "")) if ex in ("NO","N","FALSE","0") else (("board claim failed: "+c) if c and "unable to claim" in c.lower() else ""))' "$CSV")
+            # Use Test_Name Result fields only — do not grep bare "PASS"
+            # (summary line has HW_Timing,PASS and would false-pass).
+            FAIL_N=$(grep -cE 'Test_Name,.*,Result,(FAIL|NOT RUN)' "$CSV" || true)
+            PASS_N=$(grep -cE 'Test_Name,.*,Result,PASS' "$CSV" || true)
+            echo "Test results: PASS=$PASS_N FAIL_OR_NOT_RUN=$FAIL_N"
+            if [ "$PASS_N" -gt 0 ] && [ "$FAIL_N" -eq 0 ]; then
+              RESULT=pass
+              REASON=""
+            elif [ ! -s "$CSV" ]; then
+              REASON="summary CSV is empty (arc_extract died after farm submit, before Test_Name rows; check SPeTC) ($CSV)"
+            elif [ -n "$SUMMARY_REASON" ]; then
+              REASON="$SUMMARY_REASON ($CSV)"
+            elif [ "$PASS_N" -eq 0 ] && [ "$FAIL_N" -eq 0 ]; then
+              # Stub left when arc_extract is killed mid-run (historically at 300s timeout)
+              if grep -qE 'Test_Executed,YES,[[:space:]]*$' "$CSV" && ! grep -q 'Test_Duration,' "$CSV"; then
+                REASON="summary CSV incomplete/truncated (arc_extract likely timed out before Test_Name rows) ($CSV)"
+              else
+                REASON="summary CSV has no Test_Name Result rows ($CSV)"
+              fi
+            else
+              REASON="tests not clean: PASS=$PASS_N FAIL_OR_NOT_RUN=$FAIL_N ($CSV)"
+            fi
+          fi
+          # Prefer CSV Test_Duration; fall back to job wall-clock.
+          DUR=""
+          if [ -n "$CSV" ]; then
+            DUR=$(python3 -c "import re,sys; t=open(sys.argv[1]).read(); m=re.search(r'Test_Duration,([0-9]{2}:[0-9]{2}:[0-9]{2})', t); print(m.group(1) if m else '')" "$CSV" || true)
+          fi
+          if [ -z "$DUR" ] && [ -n "${{ steps.start.outputs.start_time }}" ]; then
+            start=${{ steps.start.outputs.start_time }}
+            end=$(date +%s)
+            duration=$((end - start))
+            DUR=$(printf "%02d:%02d:%02d" $((duration / 3600)) $(((duration % 3600) / 60)) $((duration % 60)))
+          fi
+          export STATUS_ROOT RESULT REASON DUR
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          reasons = [os.environ["REASON"]] if os.environ.get("REASON") else []
+          payload = {
+            "stage": "hw_regression",
+            "result": os.environ["RESULT"],
+            "reasons": reasons,
+            "log": "",
+            "duration": os.environ.get("DUR", ""),
+          }
+          Path(os.environ["STATUS_ROOT"], "hw_regression.json").write_text(json.dumps(payload, indent=2) + "\n")
+          print("Wrote hw_regression status", payload)
+          PY
+          if [ "$RESULT" != "pass" ]; then
+            echo "::error::Quartus upgrade regression gate failed: ${REASON}"
+            exit 1
+          fi

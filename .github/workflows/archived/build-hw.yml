@@ -1,0 +1,123 @@
+name: build hardware
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+    paths:
+      - '.github/workflows/build-hw.yml'
+      - 'scripts/build-hw.sh'
+      - 'src/hw/**'
+  # pull_request:
+  #   branches:
+  #     - master
+  #   tags:
+  #     - '*'
+  #   paths:
+  #     - '.github/workflows/build-hw.yml'
+  #     - 'scripts/build-hw.sh'
+  #     - 'src/hw/**'
+  schedule:
+    - cron: '30 07 * * *'
+jobs:
+  build:
+    runs-on: altera-innersource.prod.amr.dind
+    container: cache-registry.altera.com/cache/library/alpine:3.21
+    env:
+      SSH_HOST: ascycron2.sc.altera.com
+      SSH_HOST_KEY: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHfGQUE5qmzx8TP3gqlv1KFDi4trlxlziThuHEMVLpvE'
+      WORKDIR: /nfs/site/disks/pac_release_1/github/psgpac/${{ github.repository }}/${{ github.run_id }}.${{ github.run_attempt }}
+      SED_NIGHTLY_PATH: /nfs/site/disks/pac_release_1/github/psgpac/sed/build/nightly
+      SED_RELEASE_PATH: /nfs/site/disks/pac_release_1/github/psgpac/sed/build/release
+      SED_ETH_1x10G_SM72_MODDEV_HW_PATH: ethernet/agilex5/sm72/modular/1x10G
+      SED_REGRESSION_PATH: /nfs/site/disks/pac_release_1/github/psgpac/sed/regression_test/tests
+      ARTIFACT_NAME_PREFIX: agilex5-sm72-ed-ethernet-1x10G
+
+    steps:
+      - name: Install packages
+        run: |
+          apk update
+          apk add git openssh-client rsync
+
+      - name: Setup ssh
+        run: |
+          umask 077
+          mkdir -p /root/.ssh
+          echo '${{ secrets.PSGPAC_SSH_KEY }}' > /root/.ssh/id_ed25519
+          echo '${{ env.SSH_HOST }} ${{ env.SSH_HOST_KEY }}' >> /root/.ssh/known_hosts
+          echo ServerAliveInterval 30 >> /root/.ssh/config
+          echo User psgpac >> /root/.ssh/config
+
+      - name: Create workdir
+        id: workdir
+        run: |
+          ssh "$SSH_HOST" "mkdir -pv $WORKDIR"
+          echo "SED_NIGHTLY_PATH=${{ env.SED_NIGHTLY_PATH }}" >> $GITHUB_ENV
+          echo "SED_RELEASE_PATH=${{ env.SED_RELEASE_PATH }}" >> $GITHUB_ENV
+          echo "SED_REGRESSION_PATH=${{env.SED_REGRESSION_PATH}}" >> $GITHUB_ENV
+      
+      - name: Get date
+        id: date
+        run: echo "DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Copy inputs
+        run: |
+          rsync -rl --exclude=.git "$GITHUB_WORKSPACE"/. "$SSH_HOST":"$WORKDIR"
+
+      - name: Build design
+        run: |
+          ssh "$SSH_HOST" "arc submit --watch ostype/suse15 priority=99 timeout=2h iwd=$WORKDIR -- scripts/build-hw.sh"
+
+      - name: Copy outputs
+        run: |
+          rsync -ri "$SSH_HOST":"$WORKDIR"/src/hw/synth/output_files/. .
+
+      - name: Upload design
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME_PREFIX }}-${{ github.run_id }}
+          if-no-files-found: error
+          path: |
+            *.rbf
+            *.sof
+            !*_hps_auto.sof
+      
+      - name: Copy artifacts to psg 
+        if: github.event_name == 'schedule'
+        run: |
+          ssh "$SSH_HOST" "mkdir -pv  $SED_NIGHTLY_PATH/${{ env.DATE }}/${{ env.SED_ETH_1x10G_SM72_MODDEV_HW_PATH }}/hw && \
+          cd $WORKDIR/src/hw/synth/output_files/;cp -rf *.sof *.rbf $SED_NIGHTLY_PATH/${{ env.DATE }}/${{ env.SED_ETH_1x10G_SM72_MODDEV_HW_PATH }}/hw && \
+          rm -rf $SED_NIGHTLY_PATH/${{ env.DATE }}/${{ env.SED_ETH_1x10G_SM72_MODDEV_HW_PATH }}/hw/*_hps_auto.sof && \
+          cd $SED_NIGHTLY_PATH/${{ env.DATE }}/${{ env.SED_ETH_1x10G_SM72_MODDEV_HW_PATH }}/hw/ && \
+          mv top.core.rbf $ARTIFACT_NAME_PREFIX-${{ env.DATE }}.ghrd.core.rbf && \
+          mv top.hps.rbf $ARTIFACT_NAME_PREFIX-${{ env.DATE }}.ghrd.hps.rbf && \
+          mv top.sof $ARTIFACT_NAME_PREFIX-${{ env.DATE }}.ghrd.sof && \
+          cd $SED_NIGHTLY_PATH && [ -L latest ] && rm -rf latest && ln -s ${{ env.DATE }} latest && \
+          mkdir -pv $SED_NIGHTLY_PATH/${{ env.DATE }}/${{ env.SED_ETH_1x10G_SM72_MODDEV_HW_PATH }}/build_flags && \
+          touch $SED_NIGHTLY_PATH/${{ env.DATE }}/${{ env.SED_ETH_1x10G_SM72_MODDEV_HW_PATH }}/build_flags/hardware_done"
+          echo "FLAG_DIR=$SED_NIGHTLY_PATH/${{ env.DATE }}/${{ env.SED_ETH_1x10G_SM72_MODDEV_HW_PATH }}/build_flags" >> $GITHUB_ENV
+
+      - name: Copy artifacts to psg release folder
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          ssh "$SSH_HOST" "mkdir -pv  $SED_RELEASE_PATH/${{ env.SED_ETH_1x10G_SM72_MODDEV_HW_PATH }}/${{ github.ref_name }}/${{ env.DATE }}/hw && \
+          cd $WORKDIR/src/hw/synth/output_files/;cp -rf *.sof *.rbf $SED_RELEASE_PATH/${{ env.SED_ETH_1x10G_SM72_MODDEV_HW_PATH }}/${{ github.ref_name }}/${{ env.DATE }}/hw && \
+          rm -rf $SED_RELEASE_PATH/${{ env.SED_ETH_1x10G_SM72_MODDEV_HW_PATH }}/${{ github.ref_name }}/${{ env.DATE }}/hw/*_hps_auto.sof && \
+          cd $SED_RELEASE_PATH/${{ env.SED_ETH_1x10G_SM72_MODDEV_HW_PATH }}/${{ github.ref_name }}/${{ env.DATE }}/hw && \ 
+          mv top.core.rbf $ARTIFACT_NAME_PREFIX-${{ github.ref_name }}-${{ env.DATE }}.ghrd.core.rbf && \
+          mv top.hps.rbf $ARTIFACT_NAME_PREFIX-${{ github.ref_name }}-${{ env.DATE }}.ghrd.hps.rbf && \
+          mv top.sof $ARTIFACT_NAME_PREFIX-${{ github.ref_name }}-${{ env.DATE }}.ghrd.sof && \
+          cd $SED_RELEASE_PATH/${{ env.SED_ETH_1x10G_SM72_MODDEV_HW_PATH }}/${{ github.ref_name }} && [ -L latest ] && rm -rf latest;ln -s ${{ env.DATE }} latest && \
+          mkdir -pv $SED_RELEASE_PATH/${{ env.SED_ETH_1x10G_SM72_MODDEV_HW_PATH }}/${{ github.ref_name }}/${{ env.DATE }}/build_flags && \
+          touch $SED_RELEASE_PATH/${{ env.SED_ETH_1x10G_SM72_MODDEV_HW_PATH }}/${{ github.ref_name }}/${{ env.DATE }}/build_flags/hardware_done"
+          echo "FLAG_DIR=$SED_RELEASE_PATH/${{ env.SED_ETH_1x10G_SM72_MODDEV_HW_PATH }}/${{ github.ref_name }}/${{ env.DATE }}/build_flags" >> $GITHUB_ENV
+
+      - name: Purge workdir
+        if: always()
+        run: |
+          ssh "$SSH_HOST" "rm -rf $WORKDIR"

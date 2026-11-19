@@ -1,0 +1,54 @@
+name: BDBA scan 
+on:
+  workflow_dispatch:
+    inputs:
+      artifact_path:
+        description: 'Enter SED ethernet artifact path'
+        required: false
+        default: " "
+        type: string
+  workflow_call:
+    secrets:
+        PSGPAC_SSH_KEY:
+          required: true
+        SSH_HOST_KEY:
+          required: true
+ 
+jobs:
+  bdba_scan:
+    runs-on: [self-hosted, psgpac]
+    env:
+      COMMIT_SHA: /nfs/site/disks/pac_release_1/github/psgpac/util/build/commit_sha
+      CODE_PATH: /p/psg/pac/release/main/github/psgpac/sed/sdl_scans/bdba/ethernet/agilex5/sm72/modular/1x10G
+      REPO_PATH: /p/psg/pac/release/main/github/psgpac/sed/sdl_scans/bdba/ethernet/agilex5/sm72/modular/1x10G/applications.fpga.system-example-designs.test-automation
+      REPO: https://github.com/altera-innersource/applications.fpga.system-example-designs.test-automation.git
+      BRANCH: main
+      REPORT_PATH: /p/psg/pac/release/main/github/psgpac/sed/sdl_scans/bdba/ethernet/agilex5/sm72/modular/1x10G/reports/latest
+      EXEC_SCRIPT_DIR: /p/psg/pac/release/main/github/psgpac/sed/sdl_scans/bdba/ethernet/agilex5/sm72/modular/1x10G/bin
+      SCRIPT_PATH: scripts/sdl_scans/bdba/ethernet/agilex5/sm72/modular/1x10G/bin
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Env setup
+        run: |
+          echo "Artifact_path:${{ github.event.inputs.artifact_path }}"
+          mkdir -p ${{ env.CODE_PATH }} && \
+          rm -rf ${{ env.CODE_PATH }}/bin && mkdir -p ${{ env.CODE_PATH }}/bin && \
+          mkdir -p ${{ env.CODE_PATH }}/reports && \
+          rm -rf ${{ env.CODE_PATH }}/shared_files && mkdir -p ${{ env.CODE_PATH }}/shared_files
+                 
+      - name: Run BDBA scan
+        run: |
+          cd ${{ env.CODE_PATH }} && rm -rf ${{ env.REPO_PATH }} && \
+          git clone ${{ env.REPO }} && cd ${{ env.REPO_PATH }} &&  git checkout ${{ env.BRANCH }}  && \
+          cd ${{ env.REPO_PATH }}/${{ env.SCRIPT_PATH }} && cp * ${{ env.EXEC_SCRIPT_DIR }} && cd ${{ env.EXEC_SCRIPT_DIR }} && \
+          source sed_agilex5_ethernet_1x10G_bdba_env && \
+          ./sed_agilex5_ethernet_1x10G_bdba_scan.sh ${{ github.event.inputs.artifact_path }} && \
+          ./sed_agilex5_ethernet_1x10G_bdba_report.sh
+
+      - name: Display reports 
+        run: |
+          cd ${{ env.REPORT_PATH }}
+          ls

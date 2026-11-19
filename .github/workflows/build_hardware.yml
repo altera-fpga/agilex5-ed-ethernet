@@ -1,0 +1,348 @@
+
+name: Build Hardware
+on:
+  workflow_dispatch:
+    inputs:
+      variant:
+        description: "Design directory (see scripts/variant_config.sh)"
+        type: choice
+        default: "mk-a5e065bb32aea/ethernet"
+        options:
+          - mk-a5e065bb32aea/ethernet
+          - dk-a5e065ab32aea/ptp
+          - dk-a5e065bb32aea/ptp
+          - mk-a5e065ab32aea/ethernet
+          - mk-a5e065bb32aea/tse
+  workflow_call:
+    inputs:
+      triggered_by_schedule:
+        type: boolean
+        required: false
+        default: false
+      triggered_by_tag_push:
+        type: boolean
+        required: false
+        default: false
+      release_tag:
+        type: string
+        required: false
+        default: ""
+      branch_name:
+        required: false
+        type: string
+      triggered_by_quartus_upgrade:
+        type: boolean
+        required: false
+        default: false
+      quartus_upgrade_branch:
+        required: false
+        type: string
+      variant:
+        description: "Design directory (see scripts/variant_config.sh)"
+        type: string
+        required: false
+        default: "mk-a5e065bb32aea/ethernet"
+
+jobs:
+  hardware-build:
+    runs-on: [self-hosted, psgpac]
+    env:
+      WORKDIR: /nfs/site/disks/pac_release_1/github/psgpac/${{ github.repository }}/${{ github.run_id }}.${{ github.run_attempt }}
+      REPO: https://github.com/altera-innersource/applications.fpga.system-example-designs.test-automation.git
+      SED_ARTIFACT_PATH: /nfs/site/disks/pac_release_1/github/psgpac/sed/build
+      SED_REGRESSION_PATH: /nfs/site/disks/pac_release_1/github/psgpac/sed/regression_test/tests
+      QUARTUS_UPGRADE_PATH: /nfs/site/disks/pac_release_1/github/psgpac/sed/quartus_upgrade/build
+
+    steps:
+      - name: Capture start time
+        id: start
+        run: |
+          sleep 2
+          echo "start_time=$(date +%s)" >> $GITHUB_OUTPUT
+          echo "nano_time=$(date +%s%N)" >> $GITHUB_OUTPUT
+
+      - name: Create workdir
+        id: workdir
+        run: |
+          WORKDIR=${{ env.WORKDIR }}_${{ steps.start.outputs.nano_time }}
+          echo "WORKDIR=$WORKDIR" >> $GITHUB_ENV
+          mkdir -pv $WORKDIR
+          echo "SED_ARTIFACT_PATH=${{ env.SED_ARTIFACT_PATH }}" >> $GITHUB_ENV
+          echo "SED_REGRESSION_PATH=${{env.SED_REGRESSION_PATH}}" >> $GITHUB_ENV
+      
+      - name: Get date
+        id: date
+        # UTC date — same as agx5_ethernet_ori
+        run: echo "DATE=$(date -u +'%Y%m%d')" >> $GITHUB_ENV
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch_name || inputs.quartus_upgrade_branch || github.ref_name || 'master' }}
+
+      - name: Copy inputs
+        run: |
+          rsync -rl --exclude=.git "$GITHUB_WORKSPACE"/. "$WORKDIR"
+
+      - name: Resolve variant
+        run: |
+          VARIANT="${{ inputs.variant || 'mk-a5e065bb32aea/ethernet' }}"
+          . scripts/variant_config.sh
+          echo "VARIANT=$VARIANT" >> $GITHUB_ENV
+          echo "ETH_DIR=$ETH_DIR" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME_PREFIX=$ARTIFACT_NAME_PREFIX_BASE" >> $GITHUB_ENV
+          echo "ETH_HW_OUT=$ETH_DIR/synth/output_files" >> $GITHUB_ENV
+          echo "SED_HW_PATH=$NFS_RELPATH" >> $GITHUB_ENV
+          echo "Resolved VARIANT=$VARIANT NFS_RELPATH=$NFS_RELPATH"
+
+      - name: Create BUILD PATH DIR
+        if: ${{ inputs.triggered_by_schedule || inputs.triggered_by_tag_push || inputs.triggered_by_quartus_upgrade }}
+        run: |
+          set -x
+          if [[ ${{ inputs.triggered_by_schedule }} == "true" ]]; then
+            echo " Scheduled event triggered"
+            echo "ARTIFACT_NAME_PREFIX=${{ env.ARTIFACT_NAME_PREFIX }}-${{ env.DATE }}" >> $GITHUB_ENV
+            echo "BUILD_PATH=${{ env.SED_ARTIFACT_PATH }}/nightly/${{ env.SED_HW_PATH }}/${{ env.DATE }}" >> $GITHUB_ENV
+            echo "TIME_DIR=${{ env.SED_ARTIFACT_PATH }}/nightly/${{ env.SED_HW_PATH }}/${{ env.DATE }}/timing" >> $GITHUB_ENV
+          elif [[ ${{ inputs.triggered_by_tag_push }} == "true" ]]; then
+            echo " Push Tag triggered"
+            echo "ARTIFACT_NAME_PREFIX=${{ env.ARTIFACT_NAME_PREFIX }}-${{ inputs.release_tag }}-${{ env.DATE }}" >> $GITHUB_ENV
+            echo "BUILD_PATH=${{ env.SED_ARTIFACT_PATH }}/release/${{ env.SED_HW_PATH }}/${{ inputs.release_tag }}/${{ env.DATE }}" >> $GITHUB_ENV
+            echo "TIME_DIR=${{ env.SED_ARTIFACT_PATH }}/release/${{ env.SED_HW_PATH }}/${{ inputs.release_tag }}/${{ env.DATE }}/timing" >> $GITHUB_ENV
+          elif [[ ${{ inputs.triggered_by_quartus_upgrade }} == "true" ]]; then
+            echo "quartus upgrade event triggered"
+            echo "ARTIFACT_NAME_PREFIX=${{ env.ARTIFACT_NAME_PREFIX }}-PR-${{ env.DATE }}" >> $GITHUB_ENV
+            echo "BUILD_PATH=${{ env.QUARTUS_UPGRADE_PATH }}/${{ env.SED_HW_PATH }}/${{ env.DATE }}" >> $GITHUB_ENV
+            echo "TIME_DIR=${{ env.QUARTUS_UPGRADE_PATH }}/${{ env.SED_HW_PATH }}/${{ env.DATE }}/timing" >> $GITHUB_ENV
+          fi
+
+      - name: store run id
+        if: ${{ inputs.triggered_by_schedule || inputs.triggered_by_tag_push || inputs.triggered_by_quartus_upgrade }}
+        run: |
+          mkdir -pv ${{ env.BUILD_PATH }}
+          echo "${{ github.run_id }}" > ${{ env.BUILD_PATH }}/run_id
+
+      - name: Build design
+        id: build
+        run: |
+          if [[ ${{ inputs.triggered_by_schedule }} == "true" || ${{ inputs.triggered_by_tag_push }} == "true" || ${{ inputs.triggered_by_quartus_upgrade }} == "true" ]] ; then
+            mkdir -pv  ${{ env.BUILD_PATH }}/reports
+            arc submit --watch ostype/suse15 ncpus=4 mem=48G priority=99 timeout=4h iwd=$WORKDIR -- VARIANT=${{ env.VARIANT }} BUILD_PATH=${{ env.BUILD_PATH }} scripts/build-hw.sh
+          else
+            echo "Triggered Manually (no NFS publish)"
+            arc submit --watch ostype/suse15 ncpus=4 mem=48G priority=99 timeout=4h iwd=$WORKDIR -- VARIANT=${{ env.VARIANT }} scripts/build-hw.sh
+          fi
+
+      - name: DRC check
+        id: drc
+        if: ${{ inputs.triggered_by_schedule || inputs.triggered_by_tag_push || inputs.triggered_by_quartus_upgrade}}
+        env:
+          CI_GITHUB_USER: ${{ secrets.GSRD_GITHUB_USER || github.actor }}
+          CI_GITHUB_TOKEN: ${{ secrets.GSRD_GITHUB_PAT || secrets.GITHUB_TOKEN }}
+        run: |
+          set -x
+          mkdir -pv ${{ env.BUILD_PATH }}/build_flags
+          mkdir -pv ${{ env.BUILD_PATH }}/reports
+          cd ${{ env.WORKDIR }}
+          set +e
+          git clone ${{ env.REPO }}
+          clone_rc=$?
+          set -e
+          if [ "$clone_rc" -ne 0 ]; then
+            echo "Automation clone failed; retrying with CI GitHub credentials"
+            rm -rf applications.fpga.system-example-designs.test-automation
+            set +x
+            python3 -c 'import os,sys; from pathlib import Path; t=os.environ.get("CI_GITHUB_TOKEN",""); u=os.environ.get("CI_GITHUB_USER") or "x-access-token"; p=Path("/tmp/ci-gitconfig-automation"); p.write_text("[url \"https://%s:%s@github.com/\"]\n\tinsteadOf = https://github.com/\n\tinsteadOf = git://github.com/\n" % (u,t)) if t else sys.exit("ERROR: automation repo clone failed and CI_GITHUB_TOKEN is unset"); p.chmod(0o600); print("Configured private GitHub fetch for automation repo")'
+            export GIT_CONFIG_GLOBAL=/tmp/ci-gitconfig-automation
+            git clone ${{ env.REPO }}
+            set -x
+          fi
+          cd applications.fpga.system-example-designs.test-automation/scripts/drc
+          python3 extract_warnings.py --drc  ${{ env.WORKDIR }}/${{ env.ETH_HW_OUT }}/top.tq.drc.signoff.rpt
+          sleep 2
+          cp -rf drc_output.txt ${{ env.BUILD_PATH }}/reports
+          if [ -f drc_output.txt ] && [ ! -s drc_output.txt ]; then
+            echo "drc_output.txt File exists and is empty"
+            touch ${{ env.BUILD_PATH }}/build_flags/drc_pass
+          else
+            echo "drc_output.txt File exists and is non empty"
+            touch ${{ env.BUILD_PATH }}/build_flags/drc_fail
+          fi
+          
+      - name: Timing check
+        id: timing
+        if: ${{ inputs.triggered_by_schedule || inputs.triggered_by_tag_push || inputs.triggered_by_quartus_upgrade }}
+        run: |
+          set -x
+          cd  ${{ env.WORKDIR }}/applications.fpga.system-example-designs.test-automation/scripts/timing
+          python3 check_sta_timing.py ${{ env.WORKDIR }}/${{ env.ETH_DIR }}/
+          cp -rf timing_check.txt ${{ env.BUILD_PATH }}/reports
+          if [ -f timing_check.txt ] && [ ! -s timing_check.txt ]; then
+            echo "timing_check.txt File exists and is empty"
+            touch ${{ env.BUILD_PATH }}/build_flags/timing_pass
+          else
+            echo "timing_check.txt File exists and is non empty"
+            touch ${{ env.BUILD_PATH }}/build_flags/timing_fail
+          fi
+
+      - name: Upgrade-path DRC/timing status (non-blocking)
+        if: always() && inputs.triggered_by_quartus_upgrade
+        run: |
+          set -euo pipefail
+          STATUS_ROOT=/nfs/site/disks/pac_release_1/github/psgpac/sed/quartus_upgrade/ethernet/agx5/sm72/mdk/1x10g/${{ github.run_id }}.${{ github.run_attempt }}/status
+          mkdir -pv "$STATUS_ROOT" ${{ env.BUILD_PATH }}/build_flags
+          start=${{ steps.start.outputs.start_time }}
+          end=$(date +%s)
+          duration=$((end - start))
+          DUR=$(printf "%02d:%02d:%02d" $((duration / 3600)) $(((duration % 3600) / 60)) $((duration % 60)))
+
+          BUILD_OUTCOME='${{ steps.build.outcome }}'
+          DRC_OUTCOME='${{ steps.drc.outcome }}'
+          TIMING_OUTCOME='${{ steps.timing.outcome }}'
+          REASONS=""
+          if [ "$BUILD_OUTCOME" = "success" ]; then
+            HW_RESULT=pass
+          else
+            HW_RESULT=fail
+            REASONS="${REASONS}hardware compile failed (Build design ${BUILD_OUTCOME})"$'\n'
+          fi
+
+          if [ "$DRC_OUTCOME" = "success" ]; then
+            if [ -f ${{ env.BUILD_PATH }}/build_flags/drc_fail ]; then
+              DRC_RESULT=fail
+              REASONS="${REASONS}drc_fail"$'\n'
+            else
+              DRC_RESULT=pass
+            fi
+          elif [ "$DRC_OUTCOME" = "skipped" ] || [ -z "$DRC_OUTCOME" ]; then
+            DRC_RESULT=skipped
+          else
+            DRC_RESULT=fail
+            REASONS="${REASONS}drc step ${DRC_OUTCOME}"$'\n'
+          fi
+
+          if [ "$TIMING_OUTCOME" = "success" ]; then
+            if [ -f ${{ env.BUILD_PATH }}/build_flags/timing_fail ]; then
+              TIMING_RESULT=fail
+              if [ -f ${{ env.BUILD_PATH }}/reports/timing_check.txt ]; then
+                REASONS="${REASONS}timing: $(head -c 200 ${{ env.BUILD_PATH }}/reports/timing_check.txt | tr '\n' ' ')"$'\n'
+              else
+                REASONS="${REASONS}timing_fail"$'\n'
+              fi
+            else
+              TIMING_RESULT=pass
+            fi
+          elif [ "$TIMING_OUTCOME" = "skipped" ] || [ -z "$TIMING_OUTCOME" ]; then
+            TIMING_RESULT=skipped
+          else
+            TIMING_RESULT=fail
+            REASONS="${REASONS}timing step ${TIMING_OUTCOME}"$'\n'
+          fi
+
+          export STATUS_ROOT HW_RESULT DRC_RESULT TIMING_RESULT REASONS DUR
+          export BUILD_PATH='${{ env.BUILD_PATH }}'
+          export RUN_URL='${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          status_root = Path(os.environ["STATUS_ROOT"])
+          hw, drc, timing = os.environ["HW_RESULT"], os.environ["DRC_RESULT"], os.environ["TIMING_RESULT"]
+          reasons = [r for r in os.environ.get("REASONS", "").splitlines() if r]
+          dur = os.environ.get("DUR", "")
+          build_path = os.environ.get("BUILD_PATH", "")
+          run_url = os.environ.get("RUN_URL", "")
+          arc = "https://psg-sc-arc.sc.intel.com"
+
+          def report_url(filename):
+              if not build_path:
+                  return ""
+              path = Path(build_path) / "reports" / filename
+              if path.is_file():
+                  return f"{arc}{path.resolve()}"
+              return ""
+
+          def write(stage, result, extra, duration="", log=""):
+              payload = {"stage": stage, "result": result, "reasons": list(extra), "log": log, "duration": duration}
+              (status_root / f"{stage}.json").write_text(json.dumps(payload, indent=2) + "\n")
+          hw_reasons = [r for r in reasons if r.startswith("hardware")]
+          write("hardware_build", hw, hw_reasons, dur, run_url if hw == "fail" else "")
+          write(
+              "drc_check",
+              drc,
+              [r for r in reasons if r.startswith("drc")] or ([] if drc in ("pass", "skipped") else ["drc_fail"]),
+              log=report_url("drc_output.txt") if drc == "fail" else "",
+          )
+          write(
+              "timing_check",
+              timing,
+              [r for r in reasons if r.startswith("timing")] or ([] if timing in ("pass", "skipped") else ["timing_fail"]),
+              log=report_url("timing_check.txt") if timing == "fail" else "",
+          )
+          print(f"Wrote status under {status_root} hw={hw} drc={drc} timing={timing} duration={dur}")
+          PY
+          if [ "$DRC_RESULT" = "fail" ] || [ "$TIMING_RESULT" = "fail" ]; then
+            echo "::warning::DRC/timing reported failures (drc=$DRC_RESULT timing=$TIMING_RESULT) — recorded for email; not blocking PR"
+          fi
+          if [ "$HW_RESULT" = "fail" ]; then
+            echo "::error::Hardware compile did not succeed (Build design ${BUILD_OUTCOME})"
+          fi
+
+      - name: Copy outputs
+        run: |
+          set -x
+          ls -la "$WORKDIR"/${{ env.ETH_HW_OUT }}/ || true
+          rsync -ri "$WORKDIR"/${{ env.ETH_HW_OUT }}/. .
+          if [[ ${{ inputs.triggered_by_schedule }} == "true" || ${{ inputs.triggered_by_tag_push }} == "true" ]] ; then
+            rsync -ri ${{ env.BUILD_PATH }}/reports/drc_output.txt . || true
+          fi
+          ls -la *.sof *.rbf 2>/dev/null || true
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME_PREFIX }}-hw-${{ github.run_id }}
+          if-no-files-found: error
+          path: |
+            *.rbf
+            *.sof
+            !*_hps_auto.sof
+            drc_output.txt
+      
+      - name: Copy artifacts to psg 
+        if: ${{ always() && steps.build.outcome == 'success' && (inputs.triggered_by_schedule || inputs.triggered_by_tag_push || inputs.triggered_by_quartus_upgrade) }}
+        run: |
+          mkdir -pv  ${{ env.BUILD_PATH }}/hw && \
+          cd $WORKDIR/${{ env.ETH_HW_OUT }}/ && \
+          cp -rf *.sof *.rbf ${{ env.BUILD_PATH }}/hw && \
+          rm -rf ${{ env.BUILD_PATH }}/hw/*_hps_auto.sof && \
+          cd ${{ env.BUILD_PATH }}/hw/ && \
+          mv top.core.rbf ${{ env.ARTIFACT_NAME_PREFIX }}.ghrd.core.rbf && \
+          if [ -f top.hps.rbf ]; then \
+            mv top.hps.rbf ${{ env.ARTIFACT_NAME_PREFIX }}.ghrd.hps.rbf; \
+          else \
+            echo "WARNING: top.hps.rbf missing after HW (SW step may add *.ghrd.hps.rbf)"; \
+          fi && \
+          mv top.sof ${{ env.ARTIFACT_NAME_PREFIX }}.ghrd.sof && \
+          cd ${{ env.BUILD_PATH }}/../ && [ -L latest ] && rm -rf latest;ln -s ${{ env.DATE }} latest && \
+          mkdir -pv ${{ env.BUILD_PATH }}/build_flags ${{ env.TIME_DIR }} && \
+          touch ${{ env.BUILD_PATH }}/build_flags/hardware_done
+
+      - name: Capture end time and calculate duration
+        if: always() && (inputs.triggered_by_schedule || inputs.triggered_by_tag_push || inputs.triggered_by_quartus_upgrade )
+        run: |
+          start=${{ steps.start.outputs.start_time }}
+          end=$(date +%s)
+          duration=$((end - start))
+          hours=$((duration / 3600))
+          minutes=$(((duration % 3600) / 60))
+          seconds=$((duration % 60))
+          formatted_duration=$(printf "%02d:%02d:%02d" $hours $minutes $seconds)
+          echo "Workflow duration: $formatted_duration"
+          mkdir -pv ${{ env.TIME_DIR }}
+          echo "$formatted_duration" > ${{ env.TIME_DIR }}/hw_time
+          cd ${{ env.BUILD_PATH }}/../ && [ -L latest ] && rm -rf latest;ln -s ${{ env.DATE }} latest
+
+      - name: Purge workdir
+        if: always()
+        run: |
+          rm -rf $WORKDIR

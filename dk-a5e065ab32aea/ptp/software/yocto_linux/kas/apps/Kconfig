@@ -1,0 +1,11 @@
+menu "Example applications"
+
+config PACKET_GENERATOR_APP
+	bool "Packet Generator"
+    default y
+
+config PACKET_SWITCH_APP
+	bool "Packet Switch Application"
+    default y
+
+endmenu

@@ -1,0 +1,94 @@
+header:
+  version: 17
+  includes:
+    - kas/machine.yml
+    - kas/bsp.yml
+
+# From environment: ETH_DESIGN=ETH_1P25G kas shell kas.yml ...
+# YOCTO_TMPDIR: node-local path for BitBake TMPDIR (OE sanity rejects NFS TMPDIR)
+env:
+  ETH_DESIGN: null
+  YOCTO_TMPDIR: null
+  GITHUB_ACTIONS: null
+
+repos:
+  bitbake:
+    url: https://github.com/openembedded/bitbake.git
+    branch: "2.18"
+    layers:
+      .: disabled
+  openembedded-core:
+    url: https://github.com/openembedded/openembedded-core.git
+    branch: wrynose
+    layers:
+      meta:
+  meta-yocto:
+    url: https://git.yoctoproject.org/meta-yocto
+    branch: wrynose
+    layers:
+      meta-poky:
+      meta-yocto-bsp:
+  meta-openembedded:
+    url: https://github.com/openembedded/meta-openembedded
+    branch: wrynose
+    layers:
+      meta-oe:
+      meta-python:
+      meta-networking:
+  meta-clang:
+    url: https://github.com/kraj/meta-clang.git
+    branch: wrynose
+  meta-altera-fpga:
+    url: https://github.com/altera-innersource/applications.fpga.soc.meta-altera-fpga.git
+    branch: wrynose
+    layers:
+      meta-altera-bsp:
+      meta-altera-platform:
+  meta-custom:
+    path: meta-custom
+
+local_conf_header:
+  boot-source: |
+    SSBL_BOOT_SOURCE ?= "mmc0"
+    KERNEL_BOOTARGS_SD_MMC ?= ""
+
+  device-tree: |
+    CUSTOM_UBOOT_DEVICE_TREE = "0"
+    CUSTOM_LINUX_DEVICE_TREE = "1"
+    # FPGA_LINUX_DTB_FILE set by meta-custom/conf/eth-solution.inc from ETH_DESIGN
+
+  # RBF files in meta-custom/recipes-fpga/fpga-bitstream/files/
+  # FPGA_RBF_FILE set by eth-solution.inc from ETH_DESIGN
+  fpga-bitstream: |
+    FPGA_ENABLE_CORE_PGM ?= "1"
+
+  solution: |
+    # SOLUTION set by eth-solution.inc from ETH_DESIGN
+    IMAGE_TYPE = "gsrd"
+
+  eth-design: |
+    # Default if ETH_DESIGN is not exported
+    ETH_DESIGN ??= "ETH_1P25G"
+    require ${LAYERDIR_meta_custom}/conf/eth-solution.inc
+
+  kernel-modules: |
+    KERNEL_MODULE_PROBECONF = "cfg80211"
+    module_conf_cfg80211 = "blacklist cfg80211"
+
+  distro: |
+    DISTRO_FEATURES:append = " systemd usrmerge"
+    VIRTUAL-RUNTIME_init_manager = "systemd"
+
+  build-params: |
+    # ARC SW job is constrained — -j 32 OOMs / gets -1004; keep 32 for local/dev
+    PARALLEL_MAKE = "${@'-j 8' if d.getVar('GITHUB_ACTIONS') == 'true' else '-j 32'}"
+    BB_NUMBER_THREADS = "${@'8' if d.getVar('GITHUB_ACTIONS') == 'true' else '32'}"
+
+  ci-tmpdir: |
+    # CI sets YOCTO_TMPDIR to node-local scratch; leave default under build/ for local builds
+    TMPDIR = "${@d.getVar('YOCTO_TMPDIR') or '${TOPDIR}/tmp'}"
+
+  ci-disk: |
+    # Shrink TMPDIR footprint (ARC local scratch); stop before disk-kill (-1004)
+    INHERIT += "rm_work"
+    BB_DISKMON_DIRS = "STOPTASKS,${TMPDIR},2G,100K HALT,${TMPDIR},1G,10K"

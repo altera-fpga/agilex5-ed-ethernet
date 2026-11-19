@@ -1,0 +1,182 @@
+name: Build HW-SW and regression test
+on:
+  workflow_dispatch:
+  # pull_request:
+  push:
+    # branches:
+    # - check_ext_repo_change 
+    tags:
+      - '*'
+    # paths:
+    #   - '.github/workflows/build_hw_sw.yml'
+
+  schedule:
+    # Same cadence as agx5_ethernet_ori
+    - cron: '00 07 * * 0,1,2,3,4,5'    # Daily at 01.00 AM IST (Sun–Fri)
+
+jobs:
+  check_changes:
+    runs-on: [self-hosted, psgpac]
+    outputs:
+      commit_run: ${{ steps.changes_check.outputs.run_jobs }}
+      test_run: ${{ steps.changes_check.outputs.test_run }}
+      resolved_branch: ${{ steps.branch.outputs.value }}
+    env:
+      WORKDIR: /nfs/site/disks/pac_release_1/github/psgpac/${{ github.repository }}/repo_check
+      FORCE_BUILD_FILE: /nfs/site/disks/pac_release_1/github/psgpac/sed/build/nightly/ethernet/agx5/sm72/mdk/1x10g/.last_forced_build
+      RERUN_BUILD: /nfs/site/disks/pac_release_1/github/psgpac/sed/build/nightly/ethernet/agx5/sm72/mdk/1x10g/latest/reports/re-run
+
+    steps:
+      - name: Set branch
+        id: branch
+        run: echo "value=${{ github.ref_name || 'master' }}" >> $GITHUB_OUTPUT
+
+      - name: Create workdir
+        id: workdir
+        run: |
+          mkdir -pv $WORKDIR
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.branch.outputs.value }}
+          fetch-depth: 0
+
+      - name: Copy inputs
+        run: |
+          rsync -rl --exclude=.git "$GITHUB_WORKSPACE"/. "$WORKDIR"
+            
+      - name: Check for changes since last build
+        id: changes_check
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            echo "Tag push detected, forcing build..."
+            echo "run_jobs=true" >> $GITHUB_OUTPUT
+            echo "test_run=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          # Manual dispatch: always run full HW+SW pipeline (and treat as schedule for NFS publish)
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "workflow_dispatch detected, forcing full build..."
+            echo "run_jobs=true" >> $GITHUB_OUTPUT
+            echo "test_run=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          # schedule / other: check for changes
+          changed_1d=$(git log --since="1 day ago" --oneline | wc -l)
+          echo "Changed code since 1 day: $changed_1d"
+
+          changed_7d=$(git log --since="7 days ago" --oneline | wc -l)
+          echo "Changed code since 7 days ago: $changed_7d"
+
+          BUILD=false
+          TEST_RUN=true
+
+          check_repo_out=$(cd $WORKDIR && ./scripts/check_repo.sh | tail -n 1)
+          echo "after parse $check_repo_out"
+          if [ "$check_repo_out" == true ]; then
+              BUILD=$check_repo_out
+              echo " Changes in external repo (hps,ptpbridge or kernel) -- triggering build"
+              rm -rf ${{ env.FORCE_BUILD_FILE }}
+          fi
+
+          RE_BUILD=$(if [ -f "${{ env.RERUN_BUILD }}" ]; then rm -f "${{ env.FORCE_BUILD_FILE }}";echo true; else echo false; fi )
+          if [ "${RE_BUILD}" == true ]; then
+            echo "Last build failed <$BUILD> - Force rerun builds"
+            BUILD=true
+          else
+            echo "Last build passed - No need to rerun builds"
+          fi
+
+          last_forced_ts=$(if [ -f "${{ env.FORCE_BUILD_FILE }}" ]; then date -r "${{ env.FORCE_BUILD_FILE }}" +%s; fi 2>/dev/null)
+          now_ts=$(date +%s)
+
+          if [ "$changed_1d" -gt 0 ]; then
+              echo "Changes in last 1 day — triggering build."
+              rm -f ${{ env.FORCE_BUILD_FILE }}
+              BUILD=true
+          elif [ "$changed_7d" -eq 0 ]; then
+              if [ -z "$last_forced_ts" ]; then
+                  echo "No record of forced build — forcing first inactivity build."
+                  touch ${{ env.FORCE_BUILD_FILE }}
+                  BUILD=true
+              else
+                  diff_days=$(( (now_ts - last_forced_ts) / 86400 ))
+                  if [ "$diff_days" -ge 7 ]; then
+                      echo "No changes for $diff_days days — forcing recurring inactivity build."
+                      touch ${{ env.FORCE_BUILD_FILE }}
+                      BUILD=true
+                  else
+                      echo "No changes, but only $diff_days days since last forced build — skipping."
+                  fi
+              fi
+          else
+              echo "No changes today, but not 7 days of inactivity — skipping build."
+          fi
+
+          if [ "$BUILD" == false ]; then TEST_RUN=false; fi
+         
+          echo "run_jobs=$BUILD" >> $GITHUB_OUTPUT
+          echo "test_run=$TEST_RUN" >> $GITHUB_OUTPUT
+
+
+  build_hardware:
+    # Also force on workflow_dispatch/tags so a missed check_changes output cannot skip HW
+    if: |
+      always() && (
+        needs.check_changes.outputs.commit_run == 'true' ||
+        github.event_name == 'workflow_dispatch' ||
+        startsWith(github.ref, 'refs/tags/')
+      )
+    needs: check_changes
+    uses: ./.github/workflows/build_hardware.yml
+    with:
+       # Treat manual dispatch like schedule so HW publishes to NFS and SW can find RBFs
+       triggered_by_schedule: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+       triggered_by_tag_push: ${{ startsWith(github.ref, 'refs/tags/') }}
+       release_tag: ${{ github.ref_name || '' }}
+       branch_name: ${{ needs.check_changes.outputs.resolved_branch || 'master' }}
+
+  build_software:
+    if: |
+      always() && (
+        needs.check_changes.outputs.commit_run == 'true' ||
+        github.event_name == 'workflow_dispatch' ||
+        startsWith(github.ref, 'refs/tags/')
+      )
+    needs: [check_changes, build_hardware]
+    uses: ./.github/workflows/build_software.yml
+    secrets: inherit
+    with:
+       triggered_by_schedule: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+       triggered_by_tag_push: ${{ startsWith(github.ref, 'refs/tags/') }}
+       release_tag: ${{ github.ref_name || '' }}
+       branch_name: ${{ needs.check_changes.outputs.resolved_branch || 'master' }}
+
+  regression_test:
+    if: |
+      always() && (
+        needs.check_changes.outputs.test_run == 'true' ||
+        github.event_name == 'workflow_dispatch' ||
+        startsWith(github.ref, 'refs/tags/')
+      )
+    needs: [check_changes, build_hardware, build_software]
+    uses: ./.github/workflows/test_execution.yml
+    with:
+       triggered_by_schedule: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+       triggered_by_tag_push: ${{ startsWith(github.ref, 'refs/tags/') }}
+       release_tag: ${{ github.ref_name || '' }}
+
+  email_reporting:
+    if: |
+      always() && (
+        needs.check_changes.outputs.test_run == 'true' ||
+        github.event_name == 'workflow_dispatch' ||
+        startsWith(github.ref, 'refs/tags/')
+      )
+    needs: [check_changes, build_hardware, build_software, regression_test]
+    uses: ./.github/workflows/email_reporting.yml
+    with:
+       triggered_by_schedule: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+       triggered_by_tag_push: ${{ startsWith(github.ref, 'refs/tags/') }}
+       release_tag: ${{ github.ref_name || '' }}

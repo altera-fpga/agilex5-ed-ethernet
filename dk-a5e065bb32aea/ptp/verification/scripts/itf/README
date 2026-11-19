@@ -1,0 +1,121 @@
+#---------------------------------------------------------------------------------------------
+# AGX5 SM72 PTP (Sundance Mesa) SED 
+# applications.fpga.system-example-designs.agilex5-ed-pcie-rp
+#
+#The SED AGX5 SM72 PTP is a system level application to showcase Altera IPs.
+#This folder contains Design, Verification, Build/Synthesis files for deloping this system design
+#---------------------------------------------------------------------------------------------
+
+##### README file - Steps to run simulation for SM (Sundance Mesa) System-Example-Design PCIe Rootport #####
+
+      1. Git repo:  To clone a fresh repository (this step need to do once for new repo)
+      % git clone https://github.com/altera-innersource/applications.fpga.system-example-designs.agilex5-ed-ptp 
+
+      2. ITF resources:  Get ITF resources for Makefile/ITF/SpetC (do once for new window)
+      %arc shell vcs-vcsmx-lic,acdskit/<ver>,devacds/<ver>,testutils/<ver>,regutils/<ver>,itf/<ver>,ostype/suse15,synopsys_vip_common/<vip_Q-2020.03A>,p4/psgeng,perl/<ver>
+      Ex: arc shell vcs-vcsmx-lic,acds/26.1,devacds/23.4,testutils/23.4/79,regutils/23.4,itf/23.4,ostype/suse15,synopsys_vip_common/vip_W-2025.03C,p4/psgeng,perl/5.8.8
+
+      3. Makefile :  Get Makefile env and set up
+      %setenv REG_LOCAL_ROOT_DIR_PATH <working directory>
+
+          bash use export:
+          %export REG_LOCAL_ROOT_DIR_PATH=<working directory>
+
+      %cd $REG_LOCAL_ROOT_DIR_PATH/../env/sm_4x4
+      (Note: need to use bash mode (/usr/intel/bin/bash) while sourcing the env.sh and setup.sh)
+      %source env.sh
+      %source setup.sh
+  
+      4. Run regression with Makefile/ITF/Spetc Manually or cronjob:
+         4a. Run regression manually with Makefile/ITF/SpetC. (Note: Update the regr_launch.sh to your working directory)
+             %cd  $REG_LOCAL_ROOT_DIR_PATH/scripts/itf
+             Manually follow step by step in regr_launch.sh
+
+      //====================================================================
+      FYI, here are the details of Makefile/ITF/Spetc
+
+      A. The following ITF files are needed under .../verification/scripts/itf in order to run regression in ITF/Spetc
+            sanity_regr
+            SetEnv.pm
+            RegressionList.pm
+            itf_common.pm
+            prev //directory
+            reg_test.pl
+            reg_info
+            flow.txt
+            itf_regtest_local.pl
+            regr_launch.sh
+
+
+      B. Makefile/ITF/Spetc flow:
+         MK: Makefile
+         ITF: reg_test/reg_exe
+                                                                             MK: run sim: gmake -f Makefile.mk run TESTNAME=<test>
+      MK:env,setup                MK: qsys              MK: build           /
+      GET RESOURCES --------------GEN RTL files---------BUILD SIMV ------- RUN SIM/REGR
+      ITF resources                                                         \
+                                                                             ITF: regr_launch.sh
+      %more regr_launch.sh
+        #1. Git pull to get the latest files from git repo (TBA)
+	#2 source env.sh and setup.sh for Makefile qsys/rtl and build
+        /usr/intel/bin/bash
+        export REG_LOCAL_ROOT_DIR_PATH=<current working dir till itf>
+	source $REG_LOCAL_ROOT_DIR_PATH/../env/env.sh
+	/usr/intel/bin/bash 
+	source $REG_LOCAL_ROOT_DIR_PATH/../env/setup.sh
+	cd $REG_LOCAL_ROOT_DIR_PATH/scripts && /p/psg/flows/sw/make_altera/4.3/linux64/gmake -f Makefile.mk cmplib && /p/psg/flows/sw/make_altera/4.3/linux64/gmake -f Makefile.mk build
+	cd $REG_LOCAL_ROOT_DIR_PATH/scripts/itf
+	/p/psg/flows/sw/regutils/23.4/5/linux64/bin/reg_reset
+	/p/psg/flows/sw/regutils/23.4/5/linux64/bin/reg_exe --local --title="SIM-AGX7-FTILEPTP" --regr_cfg=sanity_regr | tee t.log
+	/p/psg/flows/sw/regutils/23.4/5/linux64/bin/reg_exe --farm --title="SIM-AGX7-FTILEPTP" --regr_cfg=sanity_regr | tee t.log
+
+
+# SM7PTP — How to run ITF
+
+ITF directory (from clone root):
+  <clone>/src/hw/verification/scripts/itf
+
+<clone> = top of this git clone (the directory that contains src/).
+
+------------------------------------------------
+1. Go to ITF directory
+------------------------------------------------
+cd <clone>/src/hw/verification/scripts/itf
+
+------------------------------------------------
+2. Load ARC / ITF resources (once per window)
+------------------------------------------------
+arc shell vcs-vcsmx-lic,acds/26.1,devacds/23.4,testutils/23.4/79,regutils/23.4,itf/23.4,ostype/suse15,synopsys_vip_common/vip_W-2025.03C,p4/psgeng,perl/5.8.8,python/3.7.7/1,vcsmx/X-2025.06-SP1-1,synopsys_verdi/U-2023.03-SP2-1
+
+If versions change, copy the resource list from the arc submit line in sim_script_part1.sh.
+
+------------------------------------------------
+3. Launch farm regression
+------------------------------------------------
+  sh sim_script_part1.sh 
+
+Wait until all sequence__* tests finish.
+
+Logs:
+  SIM_SED_SM7PTP_PDK_STDOUT.out
+  SIM_SED_SM7PTP_PDK_STDOUT.out
+
+------------------------------------------------
+4. HTML / email report
+------------------------------------------------
+  python3 sim_part2.py 
+
+Report file:
+  sm7_simulation_test.html
+
+------------------------------------------------
+5. Check results
+------------------------------------------------
+ls sequence__*.sem.pass
+cat SIM_SED_SM7PTP_PDK_STDOUT.out
+cat SIM_SED_SM7PTP_PDK_STDOUT.out
+
+SPeTC and ARC job links are available in the mail. Click the SPeTC Id and ARC Job Id in the report email.
+
+Pass marker: sequence__<test>.sem.pass
+

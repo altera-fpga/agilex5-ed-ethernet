@@ -1,0 +1,278 @@
+name: Build Software
+on:
+  workflow_dispatch:
+    inputs:
+      variant:
+        description: "Design directory (see scripts/variant_config.sh)"
+        type: choice
+        default: "mk-a5e065bb32aea/ethernet"
+        options:
+          - mk-a5e065bb32aea/ethernet
+          - dk-a5e065ab32aea/ptp
+          - dk-a5e065bb32aea/ptp
+          - mk-a5e065ab32aea/ethernet
+          - mk-a5e065bb32aea/tse
+  workflow_call:
+    inputs:
+      triggered_by_schedule:
+        type: boolean
+        required: false
+        default: false
+      triggered_by_tag_push:
+        type: boolean
+        required: false
+        default: false
+      release_tag:
+        type: string
+        required: false
+        default: ""
+      branch_name:
+        required: false
+        type: string
+      triggered_by_quartus_upgrade:
+        type: boolean
+        required: false
+        default: false
+      quartus_upgrade_branch:
+        required: false
+        type: string
+      variant:
+        description: "Design directory (see scripts/variant_config.sh)"
+        type: string
+        required: false
+        default: "mk-a5e065bb32aea/ethernet"
+
+
+jobs:
+  software-build:
+    runs-on: [self-hosted, psgpac]
+    env:
+      TARGET_BRANCH: ${{ inputs.branch_name || inputs.quartus_upgrade_branch || github.ref_name || 'master' }}
+      WORKDIR: /nfs/site/disks/pac_release_1/github/psgpac/${{ github.repository }}/${{ github.run_id }}.${{ github.run_attempt }}
+      CONTAINER: /nfs/site/disks/pac_release_1/github/psgpac/${{ github.repository }}/container/ubuntu2204.sif
+      SSTATE_DIR: /nfs/site/disks/pac_release_1/github/psgpac/${{ github.repository }}/sstate_cache/ubuntu2204
+      SED_ARTIFACT_PATH: /nfs/site/disks/pac_release_1/github/psgpac/sed/build
+      QUARTUS_UPGRADE_PATH: /nfs/site/disks/pac_release_1/github/psgpac/sed/quartus_upgrade/build
+
+    steps:
+      - name: Capture start time
+        id: start
+        run: echo "start_time=$(date +%s)" >> $GITHUB_OUTPUT
+
+      - name: Create workdir
+        id: workdir
+        run: |
+          mkdir -pv $WORKDIR
+          echo "SED_ARTIFACT_PATH=${{ env.SED_ARTIFACT_PATH }}" >> $GITHUB_ENV
+      
+      - name: Get date
+        id: date
+        # UTC date — same as agx5_ethernet_ori
+        run: echo "DATE=$(date -u +'%Y%m%d')" >> $GITHUB_ENV
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch_name || inputs.quartus_upgrade_branch || github.ref_name || 'master' }}
+
+      - name: Copy inputs
+        run: |
+          rsync -rl --exclude=.git "$GITHUB_WORKSPACE"/. "$WORKDIR"
+
+      - name: Resolve variant
+        run: |
+          VARIANT="${{ inputs.variant || 'mk-a5e065bb32aea/ethernet' }}"
+          . scripts/variant_config.sh
+          echo "VARIANT=$VARIANT" >> $GITHUB_ENV
+          echo "ETH_DIR=$ETH_DIR" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME_PREFIX=$ARTIFACT_NAME_PREFIX_BASE" >> $GITHUB_ENV
+          echo "SED_SW_PATH=$NFS_RELPATH" >> $GITHUB_ENV
+          echo "DESTDIR=$WORKDIR/$ETH_DIR/software/output_files" >> $GITHUB_ENV
+          echo "Resolved VARIANT=$VARIANT NFS_RELPATH=$NFS_RELPATH"
+
+      - name: Create BUILD PATH and BUILD FLAG DIR
+        run: |
+          if [[ "${{ inputs.triggered_by_tag_push }}" == "true" ]]; then
+            echo "Push Tag triggered"
+            echo "RELEASE=1" >> $GITHUB_ENV
+            echo "TAG=${{ inputs.release_tag }}" >> $GITHUB_ENV
+            echo "ARTIFACT_NAME_PREFIX=${{ env.ARTIFACT_NAME_PREFIX }}-${{ inputs.release_tag }}-${{ env.DATE }}" >> $GITHUB_ENV
+            echo "FLAG_DIR=${{ env.SED_ARTIFACT_PATH }}/release/${{ env.SED_SW_PATH }}/${{ inputs.release_tag }}/${{ env.DATE }}/build_flags" >> $GITHUB_ENV
+            echo "TIME_DIR=${{ env.SED_ARTIFACT_PATH }}/release/${{ env.SED_SW_PATH }}/${{ inputs.release_tag }}/${{ env.DATE }}/timing" >> $GITHUB_ENV
+            echo "BUILD_PATH=${{ env.SED_ARTIFACT_PATH }}/release/${{ env.SED_SW_PATH }}/${{ inputs.release_tag }}/${{ env.DATE }}" >> $GITHUB_ENV
+          elif [[ "${{ inputs.triggered_by_quartus_upgrade }}" == "true" ]]; then
+            echo "Quartus upgrade triggered"
+            echo "QUARTUS=1" >> $GITHUB_ENV
+            echo "ARTIFACT_NAME_PREFIX=${{ env.ARTIFACT_NAME_PREFIX }}-PR-${{ env.DATE }}" >> $GITHUB_ENV
+            echo "BUILD_PATH=${{ env.QUARTUS_UPGRADE_PATH }}/${{ env.SED_SW_PATH }}/${{ env.DATE }}" >> $GITHUB_ENV
+            echo "TIME_DIR=${{ env.QUARTUS_UPGRADE_PATH }}/${{ env.SED_SW_PATH }}/${{ env.DATE }}/timing" >> $GITHUB_ENV
+            echo "FLAG_DIR=${{ env.QUARTUS_UPGRADE_PATH }}/${{ env.SED_SW_PATH }}/${{ env.DATE }}/build_flags" >> $GITHUB_ENV
+          else
+            # schedule, workflow_dispatch, or workflow_call without flags → nightly NFS tree
+            echo "Nightly/manual SW build (NIGHTLY=1)"
+            echo "NIGHTLY=1" >> $GITHUB_ENV
+            echo "ARTIFACT_NAME_PREFIX=${{ env.ARTIFACT_NAME_PREFIX }}-${{ env.DATE }}" >> $GITHUB_ENV
+            echo "FLAG_DIR=${{ env.SED_ARTIFACT_PATH }}/nightly/${{ env.SED_SW_PATH }}/${{ env.DATE }}/build_flags" >> $GITHUB_ENV
+            echo "TIME_DIR=${{ env.SED_ARTIFACT_PATH }}/nightly/${{ env.SED_SW_PATH }}/${{ env.DATE }}/timing" >> $GITHUB_ENV
+            echo "BUILD_PATH=${{ env.SED_ARTIFACT_PATH }}/nightly/${{ env.SED_SW_PATH }}/${{ env.DATE }}" >> $GITHUB_ENV
+          fi
+
+      - name: Debug FLAG_DIR before build
+        run: |
+          echo "DESTDIR=$DESTDIR"
+          echo "FLAG_DIR=${{ env.FLAG_DIR }}"
+          ls -la "${{ env.FLAG_DIR }}" 2>/dev/null || echo "FLAG_DIR missing"
+          ls -la "${{ env.FLAG_DIR }}/../hw" 2>/dev/null || echo "hw dir missing"
+
+      - name: Build Yocto image
+        run: |
+          set -eo pipefail
+          # Optional flags unset on workflow_dispatch nightly — default empty for env pass-through
+          RELEASE="${RELEASE:-}"
+          NIGHTLY="${NIGHTLY:-}"
+          QUARTUS="${QUARTUS:-}"
+          TAG="${TAG:-}"
+          echo "Building software for $TARGET_BRANCH"
+          # arc submit often returns 0 even when the job exits -1004 — parse status line
+          ARC_LOG=$(mktemp)
+          # Unquoted -I tokens (quoted string broke class → only tfds>85000 and ARC -303).
+          # ncpus/mem as separate resources like ori; rm_work in kas.yml reduces /tmp pressure.
+          arc submit -I ostype/ubuntu22 ncpus=8 mem=96G priority=99 timeout=8h iwd=$WORKDIR nb_container=$CONTAINER -- env VARIANT=$VARIANT http_proxy=$http_proxy https_proxy=$https_proxy GITHUB_SERVER_URL=$GITHUB_SERVER_URL GITHUB_REPOSITORY=$GITHUB_REPOSITORY GITHUB_REF=$TARGET_BRANCH GITHUB_USER=${{ secrets.GSRD_GITHUB_USER || github.actor }} GITHUB_TOKEN=${{ secrets.GSRD_GITHUB_PAT || secrets.GITHUB_TOKEN }} GITHUB_ACTIONS=true SSTATE_DIR=$SSTATE_DIR DESTDIR=$DESTDIR BUILD_ROOT=$WORKDIR FLAG_DIR=${{ env.FLAG_DIR }} RELEASE="$RELEASE" NIGHTLY="$NIGHTLY" QUARTUS="$QUARTUS" TAG="$TAG" ARTIFACT_NAME_PREFIX=$ARTIFACT_NAME_PREFIX scripts/build-sw.sh 2>&1 | tee "$ARC_LOG"
+          ARC_RC=${PIPESTATUS[0]}
+          STATUS=$(grep -oE 'finished with exit status -?[0-9]+' "$ARC_LOG" | tail -1 | awk '{print $NF}' || true)
+          echo "arc submit rc=$ARC_RC parsed_job_status=${STATUS:-missing}"
+          if [ "$ARC_RC" -ne 0 ]; then
+            echo "ERROR: arc submit exited $ARC_RC"
+            exit 1
+          fi
+          # Require explicit success — arc often returns 0 even on -1004; missing line = fail
+          if [ "$STATUS" != "0" ]; then
+            echo "ERROR: ARC job did not finish with status 0 (got '${STATUS:-missing}')"
+            exit 1
+          fi
+          test -f "$DESTDIR/.sw_build_ok" || {
+            echo "ERROR: build-sw.sh did not write .sw_build_ok — Yocto did not finish publishing"
+            ls -la "$DESTDIR" 2>/dev/null || true
+            exit 1
+          }
+
+      - name: Copy outputs
+        if: success()
+        run: |
+          set -e
+          echo "=== DESTDIR after build: $DESTDIR ==="
+          ls -la "$DESTDIR"
+          test -f "$DESTDIR/.sw_build_ok" || { echo "ERROR: SW build did not complete successfully"; exit 1; }
+          for req in kernel_sed.itb gsrd-console-image-agilex5.tar.gz sdimage.tar.gz u-boot-spl-dtb.hex; do
+            test -f "$DESTDIR/$req" || { echo "ERROR: missing $DESTDIR/$req"; exit 1; }
+          done
+          # Stage into GITHUB_WORKSPACE for upload-artifact relative paths
+          rsync -ri --exclude=.sw_build_ok "$DESTDIR"/. .
+          ls -la kernel_sed.itb gsrd-console-image-agilex5.tar.gz sdimage.tar.gz u-boot-spl-dtb.hex
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME_PREFIX }}-sw-${{ github.run_id }}
+          if-no-files-found: error
+          path: |
+            gsrd-console-image-agilex5.tar.gz
+            kernel_sed.itb
+            sdimage.tar.gz
+            u-boot-spl-dtb.hex
+      
+      - name: Copy artifacts to psg 
+        if: ${{ inputs.triggered_by_schedule || inputs.triggered_by_tag_push || inputs.triggered_by_quartus_upgrade  }}
+        run: |
+            mkdir -pv  ${{ env.BUILD_PATH }}/sw && \
+            cp -rf $DESTDIR/* ${{ env.BUILD_PATH }}/sw && \
+            cd ${{ env.BUILD_PATH }}/sw && \
+            if [ -f gsrd-console-image-agilex5.tar.gz ]; then \
+              mv gsrd-console-image-agilex5.tar.gz ${{ env.ARTIFACT_NAME_PREFIX }}.gsrd-console-image.tar.gz; \
+            fi && \
+            # NFS publish name matches agx5_ethernet_ori (.kernel.itb)
+            if [ -f kernel_sed.itb ]; then \
+              mv kernel_sed.itb ${{ env.ARTIFACT_NAME_PREFIX }}.kernel.itb; \
+            fi && \
+            if [ -f sdimage.tar.gz ]; then \
+              mv sdimage.tar.gz ${{ env.ARTIFACT_NAME_PREFIX }}.sdimage.tar.gz; \
+            fi && \
+            cd ${{ env.BUILD_PATH }}/../ && [ -L latest ] && rm -rf latest; ln -s ${{ env.DATE }} latest && \
+            mkdir -pv ${{ env.BUILD_PATH }}/build_flags ${{ env.TIME_DIR }} && \
+            touch ${{ env.BUILD_PATH }}/build_flags/software_done
+
+      # Regression looks for latest/hw/*.hps.rbf — produce it once SW has published the SPL hex
+      - name: Generate HPS RBF for regression
+        if: ${{ inputs.triggered_by_schedule || inputs.triggered_by_tag_push || inputs.triggered_by_quartus_upgrade }}
+        run: |
+          set -e
+          QUARTUS_VERSION=acds/26.3
+          HW_DIR="${{ env.BUILD_PATH }}/hw"
+          SW_DIR="${{ env.BUILD_PATH }}/sw"
+          HEX="$SW_DIR/u-boot-spl-dtb.hex"
+          SOF=$(ls "$HW_DIR"/*.ghrd.sof 2>/dev/null | head -1)
+          test -f "$HEX" || { echo "ERROR: missing $HEX"; ls -la "$SW_DIR" || true; exit 1; }
+          test -n "$SOF" && test -f "$SOF" || { echo "ERROR: missing *.ghrd.sof under $HW_DIR"; ls -la "$HW_DIR" || true; exit 1; }
+          OUT_BASE="$HW_DIR/ghrd_hps_gen"
+          echo "PFG: sof=$SOF hex=$HEX -> ${OUT_BASE}.hps.rbf"
+          arc shell $QUARTUS_VERSION -- \
+            "quartus_pfg -c -o hps=on -o hps_path=$HEX $SOF ${OUT_BASE}.rbf"
+          test -f "${OUT_BASE}.hps.rbf" || { echo "ERROR: PFG did not create ${OUT_BASE}.hps.rbf"; ls -la "$HW_DIR"; exit 1; }
+          mv -f "${OUT_BASE}.hps.rbf" "${{ env.BUILD_PATH }}/hw/${{ env.ARTIFACT_NAME_PREFIX }}.ghrd.hps.rbf"
+          rm -f "${OUT_BASE}.rbf" "${OUT_BASE}.core.rbf" 2>/dev/null || true
+          ls -la "$HW_DIR"/*.hps.rbf
+
+      - name: Capture end time and calculate duration
+        if: always() && (inputs.triggered_by_schedule || inputs.triggered_by_tag_push || inputs.triggered_by_quartus_upgrade )
+        run: |
+          start=${{ steps.start.outputs.start_time }}
+          end=$(date +%s)
+          duration=$((end - start))
+          hours=$((duration / 3600))
+          minutes=$(((duration % 3600) / 60))
+          seconds=$((duration % 60))
+          formatted_duration=$(printf "%02d:%02d:%02d" $hours $minutes $seconds)
+          echo "Workflow duration: $formatted_duration "
+          mkdir -pv ${{ env.TIME_DIR }}
+          echo "$formatted_duration" > ${{ env.TIME_DIR }}/sw_time
+          cd ${{ env.BUILD_PATH }}/../ && [ -L latest ] && rm -rf latest;ln -s ${{ env.DATE }} latest
+
+      - name: Upgrade-path software status
+        if: always() && inputs.triggered_by_quartus_upgrade
+        run: |
+          set -euo pipefail
+          STATUS_ROOT=/nfs/site/disks/pac_release_1/github/psgpac/sed/quartus_upgrade/ethernet/agx5/sm72/mdk/1x10g/${{ github.run_id }}.${{ github.run_attempt }}/status
+          mkdir -pv "$STATUS_ROOT"
+          RESULT=pass
+          REASON=""
+          if [ ! -f ${{ env.BUILD_PATH }}/build_flags/software_done ]; then
+            RESULT=fail
+            REASON="software_done flag missing"
+          fi
+          DUR=""
+          if [ -f ${{ env.TIME_DIR }}/sw_time ]; then
+            DUR=$(cat ${{ env.TIME_DIR }}/sw_time)
+          fi
+          export STATUS_ROOT RESULT REASON DUR
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          reasons = [os.environ["REASON"]] if os.environ.get("REASON") else []
+          payload = {
+            "stage": "software_build",
+            "result": os.environ["RESULT"],
+            "reasons": reasons,
+            "log": "",
+            "duration": os.environ.get("DUR", ""),
+          }
+          Path(os.environ["STATUS_ROOT"], "software_build.json").write_text(json.dumps(payload, indent=2) + "\n")
+          print("Wrote software_build status", payload)
+          PY
+          if [ "$RESULT" = "fail" ]; then
+            exit 1
+          fi
+
+      - name: Purge workdir
+        if: always()
+        run: |
+          rm -rf $WORKDIR

@@ -1,0 +1,21 @@
+design: ethernet
+display_name: SED Ethernet-1x10G-AGX5-SM72-MDK
+family: agx5
+board: sm72-mdk
+config: 1x10g
+base_branch: master
+quartus:
+  qpf: src/hw/synth/top.qpf
+  revision: top
+  # .ip/.qsys live under src/hw/src, not beside the QPF in synth/
+  design_root: src/hw
+  # Phase 1 qsys-script uses absolute --search-path from IP_SEARCH_PATHS + custom_ip
+  skip_source_upgrade: false
+version_files:
+  - scripts/build-hw.sh
+  - src/hw/verification/env/arc_resource_list.sh
+paths:
+  nfs_relpath: ethernet/agx5/sm72/mdk/1x10g
+notify:
+  # Same recipients as nightly sed_test_report.py DEFAULT_EMAIL_ID
+  to: psse-all@altera.com,psse.cw.ba.platform.sw@altera.com,psse_hw_platform_ba@altera.com,nanditha.jayarajan@altera.com

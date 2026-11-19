@@ -1,0 +1,20 @@
+
+::drc::add_waiver \
+	-description {Waiver for sfp input and output ports} \
+	-rule_id {TMC-20011} \
+	-query_string {Port =~ 'sfp_'} \
+	-stages {{Timing Signoff}} \
+	-tag {TMC-20011_sfp_waiver} \
+	-timestamp {2025-07-03*11:13:58} \
+	-owner {ayerramr} \
+	-no_warn
+
+::drc::add_waiver \
+	-description {Waiver for SFP output ports} \
+	-rule_id {TMC-20012} \
+	-query_string {Port =~ 'sfp_'} \
+	-stages {{Timing Signoff}} \
+	-tag {TMC-20012_sfp_waiver} \
+	-timestamp {2025-07-03*11:15:02} \
+	-owner {ayerramr} \
+	-no_warn

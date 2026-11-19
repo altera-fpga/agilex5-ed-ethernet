@@ -1,0 +1,127 @@
+name: sim verification
+on:
+  workflow_dispatch:
+    inputs:
+      run_hw:
+        description: 'Run HW job - (true/false)'
+        required: true
+        default: 'true'
+
+  workflow_call:
+    secrets:
+      PSGPAC_SSH_KEY:
+        required: true
+      SSH_HOST_KEY:
+          required: true
+    inputs:
+      run_hw:
+        required: true
+        type: string
+ 
+  # schedule:
+  #   - cron: '00 07 * * *'
+
+jobs:
+  sim_verification:
+    if: inputs.run_hw == 'true'
+    # runs-on: altera-innersource.prod.amr.dind
+    # container: cache-registry.altera.com/cache/library/alpine:3.21
+    runs-on: self-hosted
+    env:
+      SSH_HOST: psgpac@ascycron2.sc.altera.com
+      WORKDIR: /nfs/site/disks/pac_release_1/github/psgpac/${{ github.repository }}/${{ github.run_id }}.${{ github.run_attempt }}
+      LOGDIR: /nfs/site/disks/pac_release_1/github/psgpac/${{ github.repository }}/${{ github.run_id }}.${{ github.run_attempt }}/src/hw/verification/log_files
+      LOG_PREFIX: agilex5-sm72-ed-1588ptp-10G-sim-test
+
+    steps:
+      # - name: Exit early if no hw changes
+      #   if: inputs.run_hw == 'false'
+      #   run: |
+      #     echo "No hw changes detected, skipping entire job."
+      #     exit 0
+
+      # - name: Install packages
+      #   run: |
+      #     apk update
+      #     apk add git openssh-client rsync
+
+      # - name: Setup ssh
+      #   run: |
+      #     umask 077
+      #     mkdir -p /root/.ssh
+      #     echo '${{ secrets.PSGPAC_SSH_KEY }}' > /root/.ssh/id_ed25519
+      #     echo '${{ env.SSH_HOST }} ${{ secrets.SSH_HOST_KEY }}' >> /root/.ssh/known_hosts
+      #     echo ServerAliveInterval 30 >> /root/.ssh/config
+      #     echo User psgpac >> /root/.ssh/config
+
+      - name: Create workdir
+        id: workdir
+        run: |
+          ssh "$SSH_HOST" "mkdir -pv $WORKDIR"
+          ssh "$SSH_HOST" "mkdir -pv $LOGDIR"
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Copy inputs
+        run: |
+          rsync -rl --exclude=.git "$GITHUB_WORKSPACE"/. "$SSH_HOST":"$WORKDIR"
+      
+      - name: compile and build 
+        run: |
+          ssh -t "$SSH_HOST" << 'EOF'
+          cd ${{ env.WORKDIR }}/scripts
+          chmod +x sim_compile_build.sh
+          ./sim_compile_build.sh
+          TEST_EXIT_CODE=$?
+          if [ $TEST_EXIT_CODE -ne 0 ]; then
+              echo "--- compile or build FAILED ($TEST_EXIT_CODE) ---"
+              exit 1
+          else
+              echo "--- compile and build PASSED  ---"
+          fi
+          EOF
+      
+      - name: TEST sequence sm_eth_h2d0_path_seq
+        id: sm_eth_h2d0_path_seq
+        run: |
+          ssh -t "$SSH_HOST" << 'EOF'
+          cd ${{ env.WORKDIR }}/scripts
+          chmod +x verification.sh
+          ./verification.sh sm_eth_h2d0_path_seq
+          cp -rf ${{env.WORKDIR}}/src/hw/verification/sim/sm_eth_h2d0_path_seq/simulate_sm_eth_h2d0_path_seq.log ${{ env.LOGDIR }}
+          if grep "SvtTestEpilog: Passed" ${{env.WORKDIR}}/src/hw/verification/sim/sm_eth_h2d0_path_seq/simulate_sm_eth_h2d0_path_seq.log ; then
+              echo "--- Sequence: sm_eth_h2d0_path_seq verification PASSED ---"
+          else
+              echo "--- Sequence: sm_eth_h2d0_path_seq verification FAILED  ---"
+              exit 1
+          fi
+          EOF
+        continue-on-error: true
+
+      - name: Copy logs
+        run: |
+          rsync -ri "$SSH_HOST":"$LOGDIR"/. .
+          
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.LOG_PREFIX }}-${{ github.run_id }}
+          if-no-files-found: error
+          path: |
+            *.log
+    
+      - name: Purge workdir
+        run: |
+          ssh "$SSH_HOST" "rm -rf $WORKDIR"
+      
+      - name: check for any above test failure and report
+        if: steps.sm_eth_h2d0_path_seq.outcome == 'failure'
+        run: | 
+          echo "--- Test Summary ---"
+          if [[ "${{ steps.sm_eth_h2d0_path_seq.outcome }}" == "failure" ]]; then
+            echo "❌ Sequence: sm_eth_h2d0_path_seq  failed."
+          fi
+          echo "--------------------"
+          echo "One or more Sequence tests failed. Failing the Job"
+          exit 1
