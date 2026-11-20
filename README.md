@@ -1,9 +1,8 @@
-# Intel® Agilex™ 5 Ethernet System Example Design
+# Intel® Agilex™ 5 Ethernet based System Example Designs
 
 ## Description
 
-The Ethernet System Example Design demonstrates Ethernet functionality of the Altera Agilex 5 FPGA 
-supporting FTile transceivers. It provides 1-Port 10GbE and 25GbE Ethernet designs and 2-Port 10GbE / 25GbE PTP (IEEE 1588) designs leveraging the Ethernet Intel® FPGA IP
+The Ethernet based System Example Design demonstrates Ethernet functionality of the Altera Agilex 5 FPGA supporting multiple MACs along with providing other ethernet related features like 1588PTP. This repo contains designs that showcase 1-Port 10GbE and 25GbE Ethernet designs on Agilex 5 onboard transceivers and 2-Port 10GbE / 25GbE PTP (IEEE 1588) designs on Agilex 5 onboard transceivers leveraging the Ethernet Altera® FPGA IP. A Soft MAC based Triple speed ethernet design is also available in the repo that closely resembles the generic ethernet design but provides ethernet functionality through the TripleSpeed Ethernet (TSE) soft MAC.
 
 The primary components in the design are
 
@@ -13,12 +12,14 @@ The primary components in the design are
 - Packet Generator
 - Ethernet MAC IP
 
+Given below is a generic ethernet based System example design whcih is leveraged across all ethernet designs on Altera Agilex 5 FPGAs. Additional blocks are enabled (like PTP) as required for the specific designs.
+
 ![Intel® Agilex™ 5 EthernetvSystem Example Design block diagram](doc/SM_Ethernet_block_diagram.png)
 
 Important features of the design include
 
-- Ethernet Software stack running on the HPS that handles the generation of iperf traffic
-- Programmable packet routing functionality handled within the Packet Switch module
+- Ethernet Software stack running on the HPS that handles control/management along with data generation.
+- Programmable packet routing functionality handled within the Packet Switch module. Some designs do not support this functionality.
 - DMA engines to efficiently transfer data between the HPS and Ethernet MAC
 
 For more information, refer to the [insert link here].
@@ -31,12 +32,12 @@ Directory structure used in this example design (every design directory has the 
 .
 ├── doc
 ├── dk-a5e065ab32aea
-│   └── ptp                   # 2x25G PTP (IEEE 1588), Premium Development Kit
+│   └── ptp                   # 2x25G PTP (IEEE 1588) on Agilex™ 5 FPGA E-Series 065A Premium Development Kit (DK-A5E065AB32AEA) 
 ├── dk-a5e065bb32aea
-│   └── ptp                   # 2x10G PTP (IEEE 1588), Premium Development Kit
+│   └── ptp                   # 2x10G PTP (IEEE 1588) on Agilex™ 5 FPGA and SoC E-Series Premium Development Kit (ES) (DK-A5E065BB32AES1)
 ├── mk-a5e065bb32aea
-│   ├── ethernet              # 1x10G Ethernet, Modular Development Kit
-│   └── tse                   # 1-port Triple Speed Ethernet, Modular Development Kit
+│   ├── ethernet              # 1x10G Ethernet on Altera® Agilex™ 5 FPGA and SoC E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)
+│   └── tse                   # 1-port Triple Speed Ethernet on Altera® Agilex™ 5 FPGA and SoC E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)
 ```
 
 
@@ -44,10 +45,10 @@ Directory structure used in this example design (every design directory has the 
 ## Project Details
 
 - **Family**: Intel® Agilex™ 5
-- **Quartus Version**: 25.1
-- **Development Kit**: [Agilex™ 5 FPGA E-Series 065B Modular Development Kit](https://www.intel.com/content/www/us/en/products/details/fpga/development-kits/agilex/a5e065b-modular.html)
-- **Device Part**: A5ED065BB32AE6SR0
-- **Yocto MACHINE**: `agilex5e`
+- **Quartus Version**: 26.3
+- **Development Kit**: Multiple (Refer to individual designs for more details)
+- **Device Part**: Multiple
+- **Yocto MACHINE**: `agilex5`
 
 
 
