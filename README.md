@@ -22,7 +22,7 @@ Important features of the design include
 - Programmable packet routing functionality handled within the Packet Switch module. Some designs do not support this functionality.
 - DMA engines to efficiently transfer data between the HPS and Ethernet MAC
 
-For more information, refer to the [insert link here].
+For more information, refer to the [documentation](https://altera-fpga.github.io/rel-25.3/ed-demo-list/ed-list/) site.
 
 ## Repository Structure
 
