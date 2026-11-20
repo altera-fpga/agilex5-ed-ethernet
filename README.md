@@ -48,9 +48,6 @@ Directory structure used in this example design (every design directory has the 
 - **Quartus Version**: 26.3
 - **Development Kit**: Multiple (Refer to individual designs for more details)
 - **Device Part**: Multiple
-- **Yocto MACHINE**: `agilex5`
-
-
 
 ## Getting Started
 
