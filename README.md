@@ -66,7 +66,7 @@ Follow the below procedure to build the hardware and the software.
 | --------------------- | ------------------------------------------ | --------------------------------------------- | ----------------------------------------------------------------- |
 | 1x10G Ethernet        | E-Series 065B Modular (`mk-a5e065bb32aea`) | [README](mk-a5e065bb32aea/ethernet/README.md) | [Yocto](mk-a5e065bb32aea/ethernet/software/yocto_linux/README.md) |
 | Triple Speed Ethernet | E-Series 065B Modular (`mk-a5e065bb32aea`) | [README](mk-a5e065bb32aea/tse/README.md)      | [Yocto](mk-a5e065bb32aea/tse/software/yocto_linux/README.md)      |
-| 2x25G PTP (IEEE 1588) | E-Series 065B Premium (`dk-a5e065ab32aea`) | [README](dk-a5e065ab32aea/ptp/README.md)      | [Yocto](dk-a5e065ab32aea/ptp/software/yocto_linux/README.md)      |
+| 2x25G PTP (IEEE 1588) | E-Series 065A Premium (`dk-a5e065ab32aea`) | [README](dk-a5e065ab32aea/ptp/README.md)      | [Yocto](dk-a5e065ab32aea/ptp/software/yocto_linux/README.md)      |
 | 2x10G PTP (IEEE 1588) | E-Series 065B Premium (`dk-a5e065bb32aea`) | [README](dk-a5e065bb32aea/ptp/README.md)      | [Yocto](dk-a5e065bb32aea/ptp/software/yocto_linux/README.md)      |
 
 
