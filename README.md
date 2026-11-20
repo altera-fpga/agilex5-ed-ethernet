@@ -1,22 +1,22 @@
-# Altera® Agilex™ 5 Ethernet based System Example Designs
+# Altera® Agilex™ 5 Ethernet-based System Example Designs
 
 ## Description
 
-The Ethernet based System Example Design demonstrates Ethernet functionality of the Altera Agilex 5 FPGA supporting multiple MACs along with providing other ethernet related features like 1588PTP. This repo contains designs that showcase 1-Port 10GbE and 25GbE Ethernet designs on Agilex 5 onboard transceivers and 2-Port 10GbE / 25GbE PTP (IEEE 1588) designs on Agilex 5 onboard transceivers leveraging the Ethernet Altera® FPGA IP. A Soft MAC based Triple speed ethernet design is also available in the repo that closely resembles the generic ethernet design but provides ethernet functionality through the TripleSpeed Ethernet (TSE) soft MAC.
+The Ethernet-based System Example Design demonstrates Ethernet functionality of the Altera Agilex 5 FPGA supporting multiple MACs along with providing other ethernet-related features like 1588PTP. This repo contains designs that showcase 1-Port 10GbE and 25GbE Ethernet designs on Agilex 5 onboard transceivers and 2-Port 10GbE / 25GbE PTP (IEEE 1588) designs on Agilex 5 onboard transceivers leveraging the Ethernet Altera® FPGA IP. A soft-MAC-based Triple-Speed Ethernet (TSE) design is also available in the repo that closely resembles the generic Ethernet design but provides Ethernet functionality through the TSE soft MAC.
 
-The primary components in the design are
+The primary components in the design are:
 
 - Hard Processor Subsystem (HPS)
-- Channelized Modular scatter-Gather Direct Memory Access (MSGDMA) Subsystem
+- Channelized Modular Scatter-Gather Direct Memory Access (MSGDMA)
 - Packet Switch module
 - Packet Generator
 - Ethernet MAC IP
 
-Given below is a generic ethernet based System example design which is leveraged across all ethernet designs on Altera Agilex 5 FPGAs. Additional blocks are enabled (like PTP) as required for the specific designs.
+The diagram below shows a generic Ethernet-based System Example Design which is leveraged across all designs on Altera Agilex 5 FPGAs. Additional blocks are enabled (PTP) as required for the specific designs.
 
 ![Altera® Agilex™ 5 Ethernet System Example Design block diagram](doc/SM_Ethernet_block_diagram.png)
 
-Important features of the design include
+Important features of the design include:
 
 - Ethernet Software stack running on the HPS that handles control/management along with data generation.
 - Programmable packet routing functionality handled within the Packet Switch module. Some designs do not support this functionality.
@@ -26,7 +26,7 @@ For more information, refer to the [documentation](https://altera-fpga.github.io
 
 ## Repository Structure
 
-Directory structure used in this example design (every design directory has the same layout as `mk-a5e065bb32aea/ethernet`):
+Directory structure used in this example design:
 
 ```bash
 .
