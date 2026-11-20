@@ -1,7 +1,0 @@
-Email: dinesh.babu.rajarathinam@altera.com
-Official: true
-Platform: LINUX
-Timeout: 8h
-Description: Compilation tests
-ReturnFiles: *.rpt,*.summary,*report.txt,synopsys/vcs/*.log,synopsys/vcs/simv.vdb/**/*
-

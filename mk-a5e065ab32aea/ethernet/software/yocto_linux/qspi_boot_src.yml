@@ -1,7 +1,0 @@
-header:
-  version: 17
-
-local_conf_header:
-  boot-source: |
-    SSBL_BOOT_SOURCE = "qspi"
-    KERNEL_BOOTARGS_QSPI = ""
