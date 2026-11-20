@@ -8,18 +8,18 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
  
 SRC_URI = "file://packetswitch_v1.1.tar.gz"
 SRC_URI[sha256sum] = "ece0060952a433923b64145a8daf0aafee3f767c1688b8cc3680eaeb2b0c3410"
-S = "${WORKDIR}/packetswitch_v1.1"
+S = "${UNPACKDIR}/packetswitch_v1.1"
 
 #do_compile () {
-#	#bbnote "PacketSwitch Executing compile... - ${S}. Workdir: ${WORKDIR}"
-#	#echo -n "Source Dir - ${S}. Workdir: ${WORKDIR}"
+#	#bbnote "PacketSwitch Executing compile... - ${S}. Workdir: ${UNPACKDIR}"
+#	#echo -n "Source Dir - ${S}. Workdir: ${UNPACKDIR}"
 #	#cd ${S}
 #	oe_runmake
 #}
 
 #do_install () {
-#	#bbnote "PacketSwitch Executing install... - ${S}. Workdir: ${WORKDIR}"
-#	#echo -n "Source Dir - ${S}. Workdir: ${WORKDIR}"
+#	#bbnote "PacketSwitch Executing install... - ${S}. Workdir: ${UNPACKDIR}"
+#	#echo -n "Source Dir - ${S}. Workdir: ${UNPACKDIR}"
 #	install -d ${D}/${bindir}
 #	install -p ${S}/packetswitch ${D}/${bindir}
 #}

@@ -6,7 +6,7 @@ DTS/DTSI live **in the kernel** branch used by this design:
 
 | | |
 |---|---|
-| Repo | `applications.fpga.soc.linux-socfpga` |
+| Repo | `linux-socfpga` |
 | Branch | `socfpga-6.12.19-lts-ethernet-sed` |
 | Path | `arch/arm64/boot/dts/intel/` |
 | Files | `socfpga_agilex5_ptp_2p10g.dts`, `socfpga_agilex5_ptp_2p10g.dtsi` |
