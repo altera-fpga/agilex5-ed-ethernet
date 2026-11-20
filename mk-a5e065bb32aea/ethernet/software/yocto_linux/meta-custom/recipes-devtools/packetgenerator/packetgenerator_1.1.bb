@@ -1,11 +1,13 @@
 SUMMARY = "Packet Generator configurator for Linux on ARM"
 DESCRIPTION = "Packet Generator configurator executable for Linux to control pktgen module"
+HOMEPAGE = "https://github.com/altera-fpga/agilex5-ed-ethernet"
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=7c6367005511b6ea56cf4966d5ba33fb"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
  
 SRC_URI = "file://packetgenerator_v1.1.tgz"
+SRC_URI[sha256sum] = "01db0f7fb40e393cb2f8ba2848466f3f1dbd32fe95c45b3c5a34503148935869"
 S = "${WORKDIR}/packetgenerator_v1.1"
 
 

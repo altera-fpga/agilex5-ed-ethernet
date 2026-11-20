@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=7c6367005511b6ea56cf4966d5ba33fb"
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
  
 SRC_URI = "file://packetgenerator_v1.1.tgz"
-SRC_URI[sha256sum] = "b46af10f5c80cbff705b13869c1e25dfce3ad63248ff02b5d39c5c6f0d262835"
+SRC_URI[sha256sum] = "01db0f7fb40e393cb2f8ba2848466f3f1dbd32fe95c45b3c5a34503148935869"
 S = "${WORKDIR}/packetgenerator_v1.1"
 
 
