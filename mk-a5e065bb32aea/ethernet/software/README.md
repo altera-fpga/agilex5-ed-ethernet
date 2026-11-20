@@ -157,19 +157,3 @@ $ cd u-boot-socfpga
 $ make socfpga_agilex5_defconfig
 $ make -j32
 ```
-
-### Building extra packages (optional)
-
-```text
-Packetgenerator application
-  - git clone https://github.com/altera-fpga/applications.fpga.hps.packetgenerator.git
-  - cd applications.fpga.hps.packetgenerator
-  - git checkout <Release Tag>
-  - aarch64-linux-gnu-gcc *.c -o packetgenerator
-
-PacketSwitch application
-  - git clone https://github.com/altera-fpga/applications.fpga.hps.ptpbridge.git -b SM_PTPBridge
-  - cd applications.fpga.hps.ptpbridge
-  - git checkout <Release Tag>
-  - aarch64-linux-gnu-gcc *.c -o ptpbridge
-```
