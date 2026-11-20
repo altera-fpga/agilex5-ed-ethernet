@@ -34,8 +34,6 @@ Directory structure used in this example design (every design directory has the 
 │   └── ptp                   # 2x25G PTP (IEEE 1588), Premium Development Kit
 ├── dk-a5e065bb32aea
 │   └── ptp                   # 2x10G PTP (IEEE 1588), Premium Development Kit
-├── mk-a5e065ab32aea
-│   └── ethernet              # 1x25G Ethernet, Modular Development Kit
 ├── mk-a5e065bb32aea
 │   ├── ethernet              # 1x10G Ethernet, Modular Development Kit
 │   └── tse                   # 1-port Triple Speed Ethernet, Modular Development Kit
@@ -72,7 +70,6 @@ Follow the below procedure to build the hardware and the software.
 |--------|-----------------|---------------------|----------|
 | 1x10G Ethernet | E-Series 065B Modular (`mk-a5e065bb32aea`) | [README](mk-a5e065bb32aea/ethernet/README.md) | [Yocto](mk-a5e065bb32aea/ethernet/software/yocto_linux/README.md) |
 | Triple Speed Ethernet | E-Series 065B Modular (`mk-a5e065bb32aea`) | [README](mk-a5e065bb32aea/tse/README.md) | [Yocto](mk-a5e065bb32aea/tse/software/yocto_linux/README.md) |
-| 1x25G Ethernet | E-Series 065B Modular (`mk-a5e065ab32aea`) | [README](mk-a5e065ab32aea/ethernet/README.md) | [Yocto](mk-a5e065ab32aea/ethernet/software/yocto_linux/README.md) |
 | 2x25G PTP (IEEE 1588) | E-Series 065B Premium (`dk-a5e065ab32aea`) | [README](dk-a5e065ab32aea/ptp/README.md) | [Yocto](dk-a5e065ab32aea/ptp/software/yocto_linux/README.md) |
 | 2x10G PTP (IEEE 1588) | E-Series 065B Premium (`dk-a5e065bb32aea`) | [README](dk-a5e065bb32aea/ptp/README.md) | [Yocto](dk-a5e065bb32aea/ptp/software/yocto_linux/README.md) |
 
@@ -85,7 +82,6 @@ Run the targets from the design directory. Software-only builds need `output_fil
 |------------------|---------------------|--------------------------|
 | `mk-a5e065bb32aea/ethernet` | `make mk-a5e065bb32aea-baseline-ethernet-all` | `make mk-a5e065bb32aea-baseline-ethernet-software-yocto_linux_sd-build-sw` |
 | `mk-a5e065bb32aea/tse` | `make mk-a5e065bb32aea-baseline-tse-all` | `make mk-a5e065bb32aea-baseline-tse-software-yocto_linux_sd-build-sw` |
-| `mk-a5e065ab32aea/ethernet` | `make mk-a5e065ab32aea-baseline-ethernet25G-all` | `make mk-a5e065ab32aea-baseline-ethernet25G-software-yocto_linux_sd-build-sw` |
 | `dk-a5e065ab32aea/ptp` | `make dk-a5e065ab32aea-baseline-ptp25G-all` | `make dk-a5e065ab32aea-baseline-ptp25G-software-yocto_linux_sd-build-sw` |
 | `dk-a5e065bb32aea/ptp` | `make dk-a5e065bb32aea-baseline-ptp10G-all` | `make dk-a5e065bb32aea-baseline-ptp10G-software-yocto_linux_sd-build-sw` |
 
