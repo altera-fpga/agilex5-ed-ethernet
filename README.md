@@ -12,7 +12,7 @@ The primary components in the design are
 - Packet Generator
 - Ethernet MAC IP
 
-Given below is a generic ethernet based System example design whcih is leveraged across all ethernet designs on Altera Agilex 5 FPGAs. Additional blocks are enabled (like PTP) as required for the specific designs.
+Given below is a generic ethernet based System example design which is leveraged across all ethernet designs on Altera Agilex 5 FPGAs. Additional blocks are enabled (like PTP) as required for the specific designs.
 
 ![Intel® Agilex™ 5 EthernetvSystem Example Design block diagram](doc/SM_Ethernet_block_diagram.png)
 
