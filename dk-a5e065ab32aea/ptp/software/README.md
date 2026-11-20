@@ -19,12 +19,12 @@ Hardware (RTL, Quartus, verification) lives next to this folder — not under `s
 
 See [README.md](../README.md) for the hardware build and programming-file steps.
 
-**Note:** There is **no** `software/artifacts/` directory. FSBL hex and other binaries are produced by Yocto under `yocto_linux/build/tmp/deploy/images/agilex5e/`.
+**Note:** FSBL hex and other binaries are produced by Yocto under `yocto_linux/build/tmp/deploy/images/agilex5e/`.
 
 ## Directory structure
 
 ```bash
-ethernet/
+ptp/
 ├── src/                 # Hardware
 ├── synth/               # Hardware
 ├── verification/        # Hardware
@@ -49,13 +49,13 @@ ethernet/
 Valid values: `PTP_2P25G` (default). Maps to RBF / DTB / `SOLUTION` via
 `yocto_linux/meta-custom/conf/eth-solution.inc`.
 
-Makefile compile targets (HW / SW / both): [../README.md](../README.md).
+Makefile compile targets (HW / SW / both): [README.md](../README.md).
 
 ### Configuring the Board
-Please refer to https://altera-fpga.github.io/rel-25.1/embedded-designs/agilex-5/e-series/modular/gsrd/ug-gsrd-agx5e-modular/#booting-from-sd-card for board setup (HPS-first boot and SD card programming).
+Please refer to [GSRD User guide](https://altera-fpga.github.io/rel-25.1/embedded-designs/agilex-5/e-series/premium/gsrd/ug-gsrd-agx5e-premium/#booting-from-sd-card) for board setup (HPS-first boot and SD card programming).
 
 ### Prepare FPGA bitstream (RBF)
-1. Build the hardware design (see [../README.md](../README.md)), or use top-level Make which builds HW then SW.
+1. Build the hardware design (see [README.md](../README.md)), or use top-level Make which builds HW then SW.
 2. Place the core RBF under `yocto_linux/meta-custom/recipes-fpga/fpga-bitstream/files/`.
 
 **Preferred:** top-level Make generates the core RBF and `kas_build.sh` copies it:
@@ -76,8 +76,6 @@ REVISION=agilex5-dk-a5e065ab32aea_gsrd_ghrd_PTP_2P25G
 cp ../../output_files/${REVISION}.core.rbf \
   meta-custom/recipes-fpga/fpga-bitstream/files/${REVISION}.core.rbf
 ```
-
-Do not hard-code `FPGA_RBF_FILE` in `kas.yml`; `eth-solution.inc` sets it.
 
 ### Yocto Build (KAS)
 
@@ -104,9 +102,9 @@ Key outputs:
 | File | Description |
 |------|-------------|
 | `console-image-minimal-agilex5e.rootfs.wic` | SD card image |
-| `u-boot-spl-dtb.hex` | FSBL / U-Boot SPL (hex) — use this with `quartus_pfg` (replaces old `artifacts/u-boot-spl-dtb.hex`) |
+| `u-boot-spl-dtb.hex` | FSBL / U-Boot SPL (hex) — use this with `quartus_pfg` |
 | `u-boot.itb` | U-Boot proper |
-| `kernel_sed.itb` | Kernel FIT (includes RBF when enabled) |
+| `kernel_sed.itb` | Kernel FIT |
 
 #### Using FSBL hex with Quartus (no artifacts folder)
 
@@ -119,8 +117,6 @@ quartus_pfg -c -o hps=on \
   output_files/<design>.sof \
   output_files/<design>.rbf
 ```
-
-Do **not** use `../../sw/artifacts/u-boot-spl-dtb.hex` — that path no longer exists.
 
 For full KAS options, binaries list, QSPI, and eSDK steps, see [yocto_linux/README.md](yocto_linux/README.md).
 
@@ -159,6 +155,4 @@ $ make -j32
 
 ### Building extra packages (optional)
 
-The Packetgenerator and PTP bridge source repositories are not published under
-the `altera-fpga` GitHub organization. Their Yocto recipes remain the supported
-build path for these packages.
+The Packetgenerator and PTP bridge sources are included in this repository directly. They can be independently compiled and built.
