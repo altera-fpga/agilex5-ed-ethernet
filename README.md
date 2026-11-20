@@ -34,10 +34,10 @@ Directory structure used in this example design (every design directory has the 
 ├── dk-a5e065ab32aea
 │   └── ptp                   # 2x25G PTP (IEEE 1588) on Agilex™ 5 FPGA E-Series 065A Premium Development Kit (DK-A5E065AB32AEA) 
 ├── dk-a5e065bb32aea
-│   └── ptp                   # 2x10G PTP (IEEE 1588) on Agilex™ 5 FPGA and SoC E-Series Premium Development Kit (ES) (DK-A5E065BB32AES1)
+│   └── ptp                   # 2x10G PTP (IEEE 1588) on Agilex™ 5 FPGA SoC E-Series Premium Development Kit (ES) (DK-A5E065BB32AES1)
 ├── mk-a5e065bb32aea
-│   ├── ethernet              # 1x10G Ethernet on Altera® Agilex™ 5 FPGA and SoC E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)
-│   └── tse                   # 1-port Triple Speed Ethernet on Altera® Agilex™ 5 FPGA and SoC E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)
+│   ├── ethernet              # 1x10G Ethernet on Altera® Agilex™ 5 FPGA SoC E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)
+│   └── tse                   # 1-port Triple Speed Ethernet on Altera® Agilex™ 5 FPGA SoC E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)
 ```
 
 
