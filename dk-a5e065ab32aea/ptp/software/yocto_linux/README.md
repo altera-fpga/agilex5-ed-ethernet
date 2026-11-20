@@ -2,12 +2,11 @@
 
 Yocto / KAS BSP for the Agilex™ 5 Ethernet SED (`MACHINE=agilex5e`).
 Select the design with **`ETH_DESIGN`** (see `meta-custom/conf/eth-solution.inc`; default `PTP_2P25G`).
-Hardware compile (`src` / `synth` / `verification`): [../../README.md](../../README.md).
+Hardware compile (`src` / `synth` / `verification`): [README.md](../../README.md).
 
 The base layer is `meta-altera-fpga` / `meta-altera-bsp`. Configure and build with KAS and BitBake.
 
-This `yocto_linux/` tree is the **software** BSP. Hardware for this Ethernet design lives
-alongside it under `dk-a5e065ab32aea/ptp/`:
+This `yocto_linux/` tree is the **software** BSP. Hardware for this Ethernet design lives alongside it under `dk-a5e065ab32aea/ptp/`:
 
 | Path | Role |
 |------|------|
@@ -17,11 +16,8 @@ alongside it under `dk-a5e065ab32aea/ptp/`:
 | `../` (`software/`) | Software parent |
 | `.` (`yocto_linux/`) | KAS / Yocto (this README) |
 
-See [../../README.md](../../README.md) for hardware build and programming-file steps, and
-[../README.md](../README.md) for the software overview.
-
-**Note:** There is **no** `software/artifacts/` directory. `u-boot-spl-dtb.hex` and other
-boot binaries are generated under `build/tmp/deploy/images/agilex5e/` after a Yocto build.
+See [README.md](../../README.md) for hardware build and programming-file steps, and
+[README.md](../README.md) for the software overview.
 
 Following is the top level view of the yocto_linux framework.
 
@@ -203,7 +199,7 @@ $ pip install --upgrade pip
 $ pip install kas
 $ pip install kconfiglib
 ```
-Reference, https://kas.readthedocs.io/en/latest/userguide/getting-started.html#dependencies-installation
+Reference: [KAS](https://kas.readthedocs.io/en/latest/userguide/getting-started.html#dependencies-installation)
 
 ## How to build
 
@@ -219,7 +215,7 @@ Default: `PTP_2P25G`
 ### From design root (`ptp/`) — top-level make
 
 ```bash
-cd ../..   # ethernet/
+cd ../..   # ptp/
 make dk-a5e065ab32aea-baseline-ptp25G-all
 # Hardware only:
 make dk-a5e065ab32aea-baseline-ptp25G-build
@@ -292,14 +288,7 @@ There is **no** checked-in `artifacts/` folder under `software/`. Use the deploy
 
 ### Programming files with FSBL (quartus_pfg)
 
-**Obsolete (do not use):**
-```bash
-# software/artifacts/ no longer exists
-quartus_pfg -c -o hps=on -o hps_path=../../sw/artifacts/u-boot-spl-dtb.hex \
-  output_files/top.sof output_files/top.rbf
-```
-
-**Current** — after Yocto has produced `u-boot-spl-dtb.hex`, run from `synth/` (or pass absolute paths):
+After Yocto has produced `u-boot-spl-dtb.hex`, run from `synth/` (or pass absolute paths):
 
 ```bash
 # From dk-a5e065ab32aea/ptp/synth/
@@ -322,7 +311,7 @@ quartus_pfg -c -o hps_path=${DEPLOY}/u-boot-spl-dtb.hex \
   ${DEPLOY}/${REVISION}_yocto_linux_sd.sof
 ```
 
-Hardware compile details: [../../README.md](../../README.md).
+Hardware compile details: [README.md](../../README.md).
 ### How to simulate binaries on Simics
 
 Navigate to the Simics linux directory for this design (if present in your workspace), then:
