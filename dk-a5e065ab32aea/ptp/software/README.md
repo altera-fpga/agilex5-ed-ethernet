@@ -17,7 +17,7 @@ Hardware (RTL, Quartus, verification) lives next to this folder — not under `s
 | `../synth/` | Quartus project and Makefile |
 | `../verification/` | Testbench / verification |
 
-See [../README.md](../README.md) for the hardware build and programming-file steps.
+See [README.md](../README.md) for the hardware build and programming-file steps.
 
 **Note:** There is **no** `software/artifacts/` directory. FSBL hex and other binaries are produced by Yocto under `yocto_linux/build/tmp/deploy/images/agilex5e/`.
 
