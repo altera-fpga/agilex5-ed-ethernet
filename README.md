@@ -1,4 +1,4 @@
-# Intel® Agilex™ 5 Ethernet based System Example Designs
+# Altera® Agilex™ 5 Ethernet based System Example Designs
 
 ## Description
 
@@ -44,7 +44,7 @@ Directory structure used in this example design (every design directory has the 
 
 ## Project Details
 
-- **Family**: Intel® Agilex™ 5
+- **Family**: Altera® Agilex™ 5
 - **Quartus Version**: 26.3
 - **Development Kit**: Multiple (Refer to individual designs for more details)
 - **Device Part**: Multiple
