@@ -14,7 +14,7 @@ The primary components in the design are
 
 Given below is a generic ethernet based System example design which is leveraged across all ethernet designs on Altera Agilex 5 FPGAs. Additional blocks are enabled (like PTP) as required for the specific designs.
 
-![Intel® Agilex™ 5 EthernetvSystem Example Design block diagram](doc/SM_Ethernet_block_diagram.png)
+![Altera® Agilex™ 5 Ethernet System Example Design block diagram](doc/SM_Ethernet_block_diagram.png)
 
 Important features of the design include
 
