@@ -22,7 +22,7 @@ Important features of the design include:
 - Programmable packet routing functionality handled within the Packet Switch module. Some designs do not support this functionality.
 - DMA engines to efficiently transfer data between the HPS and Ethernet MAC
 
-For more information, refer to the [documentation](https://altera-fpga.github.io/rel-25.3/ed-demo-list/ed-list/) site.
+For more information, refer to the [documentation](https://altera-fpga.github.io/rel-26.3/ed-demo-list/ed-list/) site.
 
 ## Repository Structure
 
@@ -34,20 +34,13 @@ Directory structure used in this example design:
 ├── dk-a5e065ab32aea
 │   └── ptp                   # 2x25G PTP (IEEE 1588) on Agilex™ 5 FPGA E-Series 065A Premium Development Kit (DK-A5E065AB32AEA) 
 ├── dk-a5e065bb32aea
-│   └── ptp                   # 2x10G PTP (IEEE 1588) on Agilex™ 5 FPGA SoC E-Series Premium Development Kit (ES) (DK-A5E065BB32AES1)
+│   └── ptp                   # 2x10G PTP (IEEE 1588) on Agilex™ 5 FPGA E-Series 065B Premium Development Kit (DK-A5E065BB32AEA)
 ├── mk-a5e065bb32aea
 │   ├── ethernet              # 1x10G Ethernet on Altera® Agilex™ 5 FPGA SoC E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)
 │   └── tse                   # 1-port Triple Speed Ethernet on Altera® Agilex™ 5 FPGA SoC E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)
 ```
 
 
-
-## Project Details
-
-- **Family**: Altera® Agilex™ 5
-- **Quartus Version**: 26.3
-- **Development Kit**: Multiple (Refer to individual designs for more details)
-- **Device Part**: Multiple
 
 ## Getting Started
 
@@ -62,12 +55,12 @@ $ git checkout <Release tag>
 Follow the below procedure to build the hardware and the software.
 
 
-| Design                | Development kit                            | Hardware / Makefile                           | Software                                                          |
-| --------------------- | ------------------------------------------ | --------------------------------------------- | ----------------------------------------------------------------- |
-| 1x10G Ethernet        | E-Series 065B Modular (`mk-a5e065bb32aea`) | [README](mk-a5e065bb32aea/ethernet/README.md) | [Yocto](mk-a5e065bb32aea/ethernet/software/yocto_linux/README.md) |
-| Triple Speed Ethernet | E-Series 065B Modular (`mk-a5e065bb32aea`) | [README](mk-a5e065bb32aea/tse/README.md)      | [Yocto](mk-a5e065bb32aea/tse/software/yocto_linux/README.md)      |
-| 2x25G PTP (IEEE 1588) | E-Series 065A Premium (`dk-a5e065ab32aea`) | [README](dk-a5e065ab32aea/ptp/README.md)      | [Yocto](dk-a5e065ab32aea/ptp/software/yocto_linux/README.md)      |
-| 2x10G PTP (IEEE 1588) | E-Series 065B Premium (`dk-a5e065bb32aea`) | [README](dk-a5e065bb32aea/ptp/README.md)      | [Yocto](dk-a5e065bb32aea/ptp/software/yocto_linux/README.md)      |
+| Design                | Development kit                                                                                                                                           | Hardware / Makefile                           | Software                                                          |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- | ----------------------------------------------------------------- |
+| 1x10G Ethernet        | [E-Series 065B Modular (`MK-A5E065BB32AEA`)](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit) | [README](mk-a5e065bb32aea/ethernet/README.md) | [Yocto](mk-a5e065bb32aea/ethernet/software/yocto_linux/README.md) |
+| Triple Speed Ethernet | [E-Series 065B Modular (`MK-A5E065BB32AEA`)](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit) | [README](mk-a5e065bb32aea/tse/README.md)      | [Yocto](mk-a5e065bb32aea/tse/software/yocto_linux/README.md)      |
+| 2x25G PTP (IEEE 1588) | [E-Series 065A Premium (`DK-A5E065AB32AEA`)](https://www.altera.com/products/devkit/po-3285/agilex-5-fpga-e-series-065a-premium-development-kit)          | [README](dk-a5e065ab32aea/ptp/README.md)      | [Yocto](dk-a5e065ab32aea/ptp/software/yocto_linux/README.md)      |
+| 2x10G PTP (IEEE 1588) | [E-Series 065B Premium (`DK-A5E065BB32AEA`)](https://www.altera.com/products/devkit/po-3284/agilex-5-fpga-e-series-065b-premium-development-kit)          | [README](dk-a5e065bb32aea/ptp/README.md)      | [Yocto](dk-a5e065bb32aea/ptp/software/yocto_linux/README.md)      |
 
 
 
