@@ -16,7 +16,7 @@ serv_req_info.txt
 *.rpt
 
 # IP generated subdirectories (top-level custom IP)
-/src/ip/*
+#/src/ip/*
 !/src/ip/*.ip
 
 # VDS subsystem generated outputs (keep source .vds and checked-in .ip)
