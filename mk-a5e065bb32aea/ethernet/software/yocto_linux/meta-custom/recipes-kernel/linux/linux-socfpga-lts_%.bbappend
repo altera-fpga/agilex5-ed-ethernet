@@ -1,5 +1,5 @@
-KERNEL_REPO = "git://github.com/altera-fpga/applications.fpga.soc.linux-socfpga.git"
-SRCREV = "SED-Ethernet-PTP-Agilex5-Quartus-26.3-Rel-D1.1"
+KERNEL_REPO = "git://github.com/altera-fpga/linux-socfpga.git"
+SRCREV = "${AUTOREV}"
 LINUX_VERSION = "6.18.37"
 KBRANCH = "socfpga-6.18.37-lts-ethernet-sed"
 LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
