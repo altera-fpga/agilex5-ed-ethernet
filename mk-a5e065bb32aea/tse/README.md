@@ -77,7 +77,7 @@ The top level Makefile is in the design root (`tse/`). The Quartus project (`top
 
 Run `make help` from `tse/` for the full target list.
 
-**Design selection (`TSE_DESIGN`):** default / supported value is `TSE_1P` (see `software/yocto_linux/meta-custom/conf/tse-solution.inc`). The hardware revision name is `baseline_a55` (`REVISION_NAMES` in `project_config.mk`). The core RBF filename must stay `baseline_a55.core.rbf`.
+**Design selection (`TSE_DESIGN`):** default / supported value is `TSE_1P` (see `software/yocto_linux/meta-custom/conf/tse-solution.inc`). The hardware revision name is `agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P` (`REVISION_NAMES` in `project_config.mk`). The core RBF filename is `agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P.core.rbf`.
 
 Public stem: `mk-a5e065bb32aea-baseline-tse`
 
@@ -96,7 +96,7 @@ make mk-a5e065bb32aea-baseline-tse-build
 ```
 
 This calls `synth/Makefile` (`make -C synth all`) and then copies `synth/output_files/top.sof`
-to `output_files/baseline_a55.sof` for the install and software targets.
+to `output_files/agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P.sof` for the install and software targets.
 
 **Software build only**, after the hardware build generates the required SOF (core RBF is produced automatically):
 
@@ -106,7 +106,7 @@ make mk-a5e065bb32aea-baseline-tse-software-yocto_linux_sd-build-sw
 
 This runs `quartus_pfg` to create the core RBF, then
 `software/yocto_linux/build.sh <core.rbf> sd` (Make supplies the RBF path).
-`kas_build.sh` copies it to `fpga-bitstream/files/baseline_a55.core.rbf`
+`kas_build.sh` copies it to `fpga-bitstream/files/agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P.core.rbf`
 (`REVISION` from `project_config.mk` `REVISION_NAMES`). That name must match
 `FPGA_RBF_FILE` from `TSE_DESIGN` / `tse-solution.inc`.
 

@@ -28,7 +28,7 @@
    Outputs are under `output_files/` (SOF name is `top.sof`).
 
    The top-level Makefile in `tse/` copies that SOF to
-   `output_files/baseline_a55.sof` and generates the matching
+   `output_files/agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P.sof` and generates the matching
    `.core.rbf` for Yocto (`REVISION_NAMES` in `project_config.mk`; must match
    `FPGA_RBF_FILE` from `tse-solution.inc`).
    Details: [software/yocto_linux/README.md](../software/yocto_linux/README.md).

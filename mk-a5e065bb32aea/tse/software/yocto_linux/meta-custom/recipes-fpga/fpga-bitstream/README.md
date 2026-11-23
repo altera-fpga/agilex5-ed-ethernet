@@ -12,7 +12,7 @@ Use the **exact** filename for the design you will build (`TSE_DESIGN` → `FPGA
 
 | `TSE_DESIGN` | Filename |
 |--------------|----------|
-| `TSE_1P` | `baseline_a55.core.rbf` |
+| `TSE_1P` | `agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P.core.rbf` |
 
 **Preferred:** top-level Make does this for you. After HW:
 
@@ -30,7 +30,7 @@ That name must match the table above (`FPGA_RBF_FILE` from `tse-solution.inc`).
 
 ```bash
 # From software/yocto_linux/
-REVISION=baseline_a55
+REVISION=agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P
 cp ../../output_files/${REVISION}.core.rbf \
   meta-custom/recipes-fpga/fpga-bitstream/files/${REVISION}.core.rbf
 ```
@@ -50,8 +50,9 @@ kas shell kas.yml -c "bitbake fpga-bitstream"
 ## What the recipe installs
 
 - Input: `${FPGA_RBF_FILE}` from `files/` (name from `tse-solution.inc`)
-- Deployed for HPS-first boot when `FPGA_ENABLE_CORE_PGM` is enabled
-- Kernel FIT can stage the core RBF inside the ITB
+- Deployed to `tmp/deploy/images/<MACHINE>/` as `${FPGA_RBF_FILE}` when `FPGA_ENABLE_CORE_PGM` is enabled
+- Also creates a `top.core.rbf` symlink to that file so meta-altera-fpga FIT generation still works
+- Kernel FIT stages the core RBF inside the ITB
 
 ## Optional: kas menu
 

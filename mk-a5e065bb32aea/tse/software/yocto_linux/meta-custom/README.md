@@ -49,7 +49,7 @@ For details on FPGA bitstream handling, refer to:
 
 - Place the design `.core.rbf` under `recipes-fpga/fpga-bitstream/files/`
 - Filename comes from `TSE_DESIGN` → `FPGA_RBF_FILE` in `conf/tse-solution.inc`
-  (default `TSE_1P` → `baseline_a55.core.rbf`)
+  (default `TSE_1P` → `agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P.core.rbf`)
 - Top-level Make / `kas_build.sh` copies the HW-generated core RBF there automatically
 
 ## Other recipes in this layer

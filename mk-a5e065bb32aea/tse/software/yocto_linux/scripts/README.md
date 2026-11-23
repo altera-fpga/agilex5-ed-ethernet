@@ -39,7 +39,7 @@ Paths below are from `mk-a5e065bb32aea/tse/software/yocto_linux/`.
 1. Copy the design SOF from the hardware build into the Yocto deploy directory:
    ```bash
    # Example design name — use the SOF produced under synth/output_files/
-   REVISION=baseline_a55
+   REVISION=agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P
    cp ../../synth/output_files/${REVISION}.sof \
      build/tmp/deploy/images/agilex5e/
    ```
@@ -62,7 +62,7 @@ The PFG files in this folder expect the input SOF to be named `ghrd.sof`, so ren
 ```bash
 # Use the SOF copied from synth/output_files/
 cp <sof_name>.sof ghrd.sof
-# e.g. cp baseline_a55.sof ghrd.sof
+# e.g. cp agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P.sof ghrd.sof
 ```
 
 ### Option 1: Core RBF without bootloader (Quartus 26.1+)

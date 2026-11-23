@@ -50,8 +50,9 @@ kas shell kas.yml -c "bitbake fpga-bitstream"
 ## What the recipe installs
 
 - Input: `${FPGA_RBF_FILE}` from `files/` (name from `eth-solution.inc`)
-- Deployed for HPS-first boot when `FPGA_ENABLE_CORE_PGM` is enabled
-- Kernel FIT can stage the core RBF inside the ITB
+- Deployed to `tmp/deploy/images/<MACHINE>/` as `${FPGA_RBF_FILE}` when `FPGA_ENABLE_CORE_PGM` is enabled
+- Also creates a `top.core.rbf` symlink to that file so meta-altera-fpga FIT generation still works
+- Kernel FIT stages the core RBF inside the ITB
 
 ## Optional: kas menu
 

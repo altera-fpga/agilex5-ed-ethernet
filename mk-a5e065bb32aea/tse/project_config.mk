@@ -5,7 +5,7 @@ PROJECT_NAME := top
 # kas_build.sh stages the core RBF as ${REVISION_NAME}.core.rbf, which must
 # match FPGA_RBF_FILE in software/yocto_linux/meta-custom/conf/tse-solution.inc.
 REVISION_NAMES := \
-	baseline_a55 \
+	agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P \
 
 # Define the base revision
 BASE_REVISION := $(firstword $(REVISION_NAMES))
