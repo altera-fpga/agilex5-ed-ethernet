@@ -1,2 +1,13 @@
-**/yocto_linux/*.patch
-**/yocto_linux/build/*
+# GSRD 2.0 Yocto/KAS (dk-si-agi027fd-oobe and similar)
+**/yocto_linux/bitbake/
+**/yocto_linux/openembedded-core/
+**/yocto_linux/meta-yocto/
+**/yocto_linux/meta-openembedded/
+**/yocto_linux/meta-clang/
+**/yocto_linux/meta-altera-fpga/
+**/yocto_linux/build/
+**/yocto_linux/venv/
+**/yocto_linux/.config.yaml
+**/yocto_linux/.kas_shell_history
+**/sstate-cache/
+**/downloads/
