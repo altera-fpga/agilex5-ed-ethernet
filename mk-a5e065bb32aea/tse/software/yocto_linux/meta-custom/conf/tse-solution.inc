@@ -6,7 +6,7 @@ TSE_DESIGN ??= "TSE_1P"
 python () {
     design = (d.getVar("TSE_DESIGN") or "TSE_1P").strip().upper()
     rbf_map = {
-        "TSE_1P": "baseline_a55.core.rbf",
+        "TSE_1P": "agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P.core.rbf",
     }
     dtb_map = {
         "TSE_1P": "socfpga_agilex5_eth_tse.dtb",

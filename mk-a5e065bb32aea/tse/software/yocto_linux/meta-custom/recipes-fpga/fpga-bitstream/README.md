@@ -12,7 +12,7 @@ Use the **exact** filename for the design you will build (`TSE_DESIGN` → `FPGA
 
 | `TSE_DESIGN` | Filename |
 |--------------|----------|
-| `TSE_1P` | `baseline_a55.core.rbf` |
+| `TSE_1P` | `agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P.core.rbf` |
 
 **Preferred:** top-level Make does this for you. After HW:
 
@@ -30,7 +30,7 @@ That name must match the table above (`FPGA_RBF_FILE` from `tse-solution.inc`).
 
 ```bash
 # From software/yocto_linux/
-REVISION=baseline_a55
+REVISION=agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P
 cp ../../output_files/${REVISION}.core.rbf \
   meta-custom/recipes-fpga/fpga-bitstream/files/${REVISION}.core.rbf
 ```

@@ -149,7 +149,7 @@ Refer to ```scripts/README.md``` for detailed instructions on creating bootable 
 
 | `TSE_DESIGN` | Filename under `fpga-bitstream/files/` |
 |--------------|----------------------------------------|
-| `TSE_1P` | `baseline_a55.core.rbf` |
+| `TSE_1P` | `agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P.core.rbf` |
 
 **Preferred (top-level Make):** HW + SW together — Make creates the core RBF and
 `kas_build.sh` copies it to `fpga-bitstream/files/<REVISION>.core.rbf`
@@ -164,7 +164,7 @@ make mk-a5e065bb32aea-baseline-tse-all
 
 ```bash
 # From software/yocto_linux/
-REVISION=baseline_a55
+REVISION=agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P
 cp ../../output_files/${REVISION}.core.rbf \
   meta-custom/recipes-fpga/fpga-bitstream/files/${REVISION}.core.rbf
 ```
@@ -226,7 +226,7 @@ make mk-a5e065bb32aea-baseline-tse-software-yocto_linux_sd-build-sw
 Make supplies the core RBF path. Manual equivalent from `yocto_linux/`:
 
 ```bash
-./build.sh ../../output_files/baseline_a55.core.rbf sd
+./build.sh ../../output_files/agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P.core.rbf sd
 # Usage: ./build.sh <RBF_FILE> <BOOT_SOURCE>
 # BOOT_SOURCE: sd | qspi | emmc | nand
 ```
@@ -301,7 +301,7 @@ Optional: write an SOF with FSBL into the Yocto deploy directory:
 ```bash
 # From software/yocto_linux/
 DEPLOY=build/tmp/deploy/images/agilex5e
-REVISION=baseline_a55
+REVISION=agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P
 SOF_IN=../../synth/output_files/${REVISION}.sof   # adjust if needed
 
 quartus_pfg -c -o hps_path=${DEPLOY}/u-boot-spl-dtb.hex \
