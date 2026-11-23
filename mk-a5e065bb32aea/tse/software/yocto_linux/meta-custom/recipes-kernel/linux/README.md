@@ -54,12 +54,12 @@ $ bitbake -c build linux-socfpga-lts
 Follow below steps to create the patch & build Linux Kernel.
 
 ### Clone Linux Kernel repo
-For this design, the bbappend uses the innersource ethernet SED branch (see `linux-socfpga-lts_%.bbappend`). Example:
+For this design, the bbappend uses the public Ethernet SED branch (see `linux-socfpga-lts_%.bbappend`). Example:
 
 ```bash
-$ git clone https://github.com/altera-fpga/applications.fpga.soc.linux-socfpga.git
-$ cd applications.fpga.soc.linux-socfpga
-$ git checkout socfpga-6.12.19-lts-ethernet-sed
+$ git clone https://github.com/altera-fpga/linux-socfpga.git
+$ cd linux-socfpga
+$ git checkout socfpga-6.18.37-lts-ethernet-sed
 ```
 
 Do your source code changes.
