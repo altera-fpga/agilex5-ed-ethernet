@@ -5,8 +5,8 @@ local_conf_header:
   bsp: |
     PREFERRED_PROVIDER_virtual/kernel = "linux-socfpga-lts"
     PREFERRED_VERSION_linux-socfpga-lts = "6.18.37%"
-    KBRANCH = "socfpga-6.18.37-lts"
-    LINUX_SRCREV = "SED-Ethernet-PTP-Agilex5-Quartus-26.3-Rel-D1.1"
+    KBRANCH = "socfpga-6.18.37-lts-ethernet-sed"
+    LINUX_SRCREV = "${AUTOREV}"
     PREFERRED_PROVIDER_virtual/bootloader = "u-boot-socfpga"
     PREFERRED_VERSION_u-boot-socfpga = "v2026.07%%"
     UBOOT_REPO = "git://github.com/altera-fpga/u-boot-socfpga.git"
