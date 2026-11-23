@@ -1,14 +1,30 @@
-# Altera Agilex 5 Triple Speed Ethernet System Example Design
+# 1-Port Triple Speed Ethernet Agilex™ 5 System Example Design
 
-System Example Design for the [Agilex 5 FPGA E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit)
-(`mk-a5e065bb32aea`) demonstrating 1-port Triple Speed Ethernet (10/100/1000) with HPS,
-MSGDMA, and GTS PCS/PMA.
-
-
+The 1-Port Triple Speed Ethernet Agilex™ 5 System Example Design targets the [Agilex™ 5 FPGA E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit) with HPS, MSGDMA, and Triple Speed Ethernet IP with GTS PCS/PMA.
 
 ## Description
 
-The Triple Speed Ethernet System Example Design demonstrates 1-port 10/100/1000 Ethernet on the Agilex™ 5 Modular Development Kit with HPS, MSGDMA, and GTS PCS/PMA.
+The Triple Speed Ethernet System Example Design demonstrates 10M/100M/1GbE Ethernet functionality of the Altera Agilex™ 5 FPGA. It provides a 1-port design using the Triple Speed Ethernet Intel® FPGA IP with an integrated GTS PCS/PMA (SGMII) link to the board PHY, managed over MDIO.
+
+The Hard Processor Subsystem (HPS) runs Linux with the Altera TSE kernel driver. Packet traffic moves between HPS DDR and the MAC through a Channelized Modular Scatter-Gather DMA (MSGDMA) subsystem.
+
+The primary components in the design are:
+
+- Hard Processor Subsystem (HPS)
+- Channelized Modular Scatter-Gather Direct Memory Access (MSGDMA) Subsystem
+- Triple Speed Ethernet Intel® FPGA IP (MAC)
+- GTS PCS/PMA (SGMII)
+- GTS reset sequencing (`gts_reset_sequencer`, `srd_rst_ctrl`) and IOPLL clocking
+- User CSR space
+
+![Intel Agilex 5 TSE Ethernet System Example Design block diagram](./SM_TSE_Ethernet_block_diagram.png)
+
+Important features of the design include:
+
+- 1-port 10M/100M/1GbE via Triple Speed Ethernet MAC + GTS PCS (SGMII)
+- Ethernet software stack running on the HPS (Linux + TSE driver) that handles the generation of iperf traffic
+- MSGDMA datapath to efficiently transfer data between HPS DDR and the Ethernet MAC
+- GTS reset sequencing and IOPLL clocking
 
 ## Project Details
 
@@ -24,16 +40,36 @@ The Triple Speed Ethernet System Example Design demonstrates 1-port 10/100/1000 
 ## Documentations
 
 - **Title**: Design and Build Readme  
-  **URL**: [./README.md](./README.md)
+  **URL**: [README.md](./README.md)
 - **Title**: Hardware Build (synth)  
-  **URL**: [./synth/README.md](./synth/README.md)
+  **URL**: [synth/README.md](./synth/README.md)
 - **Title**: Software / Yocto Build Readme  
-  **URL**: [./software/yocto_linux/README.md](./software/yocto_linux/README.md)
+  **URL**: [software/yocto_linux/README.md](./software/yocto_linux/README.md)
 
 ## Dependency
 
-- Altera Quartus Prime Pro (see Release Notes for the supported version)
+- Altera Quartus Prime Pro (see Project Details for the supported version)
 - Software / Yocto: [software/yocto_linux/README.md](software/yocto_linux/README.md)
+
+## Directory structure
+
+```text
+tse/
++-- Makefile / project_config.mk / swbuild_config.mk
++-- src/                        # HARDWARE - RTL / Qsys / custom IP
++-- synth/                      # HARDWARE - Quartus project + Makefile
+|   +-- output_files/
++-- verification/               # HARDWARE - UVM TB
++-- software/
+    +-- yocto_linux/            # SOFTWARE - see software/yocto_linux/README.md
+```
+
+| Path | Role |
+|------|------|
+| `src/` | RTL, Qsys, custom IP |
+| `synth/` | Quartus project and compile `Makefile` |
+| `verification/` | UVM testbench and regressions |
+| `software/yocto_linux/` | Yocto / KAS BSP |
 
 ## Compiling via Makefile (hardware and software)
 
@@ -42,6 +78,8 @@ The top level Makefile is in the design root (`tse/`). The Quartus project (`top
 Run `make help` from `tse/` for the full target list.
 
 **Design selection (`TSE_DESIGN`):** default / supported value is `TSE_1P` (see `software/yocto_linux/meta-custom/conf/tse-solution.inc`). The hardware revision name is `baseline_a55` (`REVISION_NAMES` in `project_config.mk`). The core RBF filename must stay `baseline_a55.core.rbf`.
+
+Public stem: `mk-a5e065bb32aea-baseline-tse`
 
 **Full build (hardware and software):**
 
@@ -80,41 +118,9 @@ make mk-a5e065bb32aea-baseline-tse-install-core-rbf
 
 RBF/DTB placement, `TSE_DESIGN`, and Yocto details: [software/yocto_linux/README.md](software/yocto_linux/README.md).
 
-## Directory structure
+## Building the Hardware only
 
-```text
-tse/
-+-- Makefile / project_config.mk / swbuild_config.mk
-+-- src/                        # HARDWARE - RTL / Qsys / custom IP
-+-- synth/                      # HARDWARE - Quartus project + Makefile
-|   +-- output_files/
-+-- verification/               # HARDWARE - UVM TB
-+-- software/
-    +-- yocto_linux/            # SOFTWARE - see software/yocto_linux/README.md
-```
-
-| Path | Role |
-|------|------|
-| `src/` | RTL, Qsys, custom IP |
-| `synth/` | Quartus project and compile `Makefile` |
-| `verification/` | UVM testbench and regressions |
-| `software/yocto_linux/` | Yocto / KAS BSP |
-
-## Hardware compile only from synth folder (`synth/Makefile`)
-
-From `tse/synth/`:
-
-```bash
-make all
-```
-
-Also available: `make synth`, `make compile`, `make asm`, `make clean`. Outputs under `synth/output_files/` (SOF name is `top.sof`).
-
-The top-level Makefile copies that SOF to
-`output_files/baseline_a55.sof` and generates the matching
-`.core.rbf` for Yocto (`REVISION_NAMES` in `project_config.mk`; must match
-`FPGA_RBF_FILE` from `tse-solution.inc`).
-Details: [software/yocto_linux/README.md](software/yocto_linux/README.md).
+See [synth/README.md](./synth/README.md).
 
 ## Programming files (SOF + FSBL)
 

@@ -1,34 +1,34 @@
-# Agilex 5 TSE System Reference Design
+# Building the Hardware
 
-This directory contains the Quartus Project for the Agilex 5 TSE System Design with 10/100/1000 Ethernet MAC and PCS with Embedded PMA (GTS)
+# Dependency
 
----
+- Altera® Quartus® Prime Pro software suite (see [Project Details](../README.md#project-details) for the supported version)
 
-## Dependency
+# Build Steps
 
-- Quartus® Prime 26.3
-- Supported Board:
-  - [Agilex™ 5 FPGA E-Series 065B Modular Development Kit](https://www.intel.com/content/www/us/en/products/details/fpga/development-kits/agilex/a5e065b-modular.html)
+1. Compile the design and generate the configuration (SOF) file.
 
----
+   This `synth/` folder contains a Makefile and the Quartus project (`top.qpf` / `top.qsf`). The Makefile supports various compile options such as:
 
-## Build Steps
+   - `make compile` — runs the compile stage of Quartus
+   - `make synth` — runs the synthesis stage of Quartus
+   - `make all` — runs a full Quartus compile including the Assembler
+   - `make asm` — runs the Assembler
+   - `make clean` — cleans build outputs
 
-1. Compile design and generate configuration file:
+   Running `make` (or `make help`) prints the options supported.
 
-```bash
-    make all
-    ```
+   Alternatively, if using the GUI is preferred, open `top.qpf` in Quartus and select compile options there.
 
-## Programming Files Generation Steps
+   ```bash
+   cd synth/
+   make all
+   ```
 
-1. Get your boot loader .hex file
-2. Generate binary file including boot loader files using following commands:
+   Outputs are under `output_files/` (SOF name is `top.sof`).
 
-```bash
-    quartus_pfg -c -o hps_path=../../sw/artifacts/u-boot-spl-dtb.hex ./output_files/top.sof ./output_files/top.sof
-    quartus_pfg -c -o hps=on ./output_files/top.sof ./output_files/top.rbf
-    ```
-
----
-
+   The top-level Makefile in `tse/` copies that SOF to
+   `output_files/baseline_a55.sof` and generates the matching
+   `.core.rbf` for Yocto (`REVISION_NAMES` in `project_config.mk`; must match
+   `FPGA_RBF_FILE` from `tse-solution.inc`).
+   Details: [software/yocto_linux/README.md](../software/yocto_linux/README.md).
