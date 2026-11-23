@@ -102,12 +102,7 @@ From `ptp/synth/`:
 
 ```bash
 make all
-# optional rate config (writes config.txt):
-# make all CONFIG=25G_NON_ANLT
-# make all CONFIG=10G_NON_ANLT
 ```
-
-If `CONFIG` is omitted, the value currently in `config.txt` is used.
 
 Also available: `make synth`, `make compile`, `make asm`, `make clean`. Outputs under `synth/output_files/` (SOF name is `top.sof`).
 

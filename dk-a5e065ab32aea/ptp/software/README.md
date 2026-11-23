@@ -138,7 +138,7 @@ $ make -j32
 ### Building ATF from source (optional)
 
 ```bash
-$ git clone https://github.com/altera-fpga/arm-trusted-firmware.git -b socfpga_v2.14.0
+$ git clone https://github.com/altera-fpga/arm-trusted-firmware.git -b socfpga_v2.15.0
 $ cd arm-trusted-firmware
 $ make bl31 CROSS_COMPILE=$CROSS_COMPILE PLAT=agilex5 DEPRECATED=1
 ```

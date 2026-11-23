@@ -124,7 +124,6 @@ See [synth/README.md](./synth/README.md).
 
 ## Programming files (SOF + FSBL)
 
-There is **no** `software/artifacts/` directory in this repository.
 `u-boot-spl-dtb.hex` comes from the Yocto deploy images after a Yocto build.
 
 After a Yocto build:

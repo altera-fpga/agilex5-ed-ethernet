@@ -1,9 +1,6 @@
 # Altera Agilex 5 Precision Time Protocol (IEEE 1588) System Example Design
 
-System Example Design for the [Agilex 5 FPGA E-Series 065B Premium Development Kit (DK-A5E065BB32AEA)](https://www.altera.com/products/devkit/po-3284/agilex-5-fpga-e-series-065b-premium-development-kit)
-(`dk-a5e065bb32aea`) demonstrating 2-port 10G PTP (IEEE 1588) with HPS, MSGDMA, and packet switch.
-
-
+System Example Design for the [Agilex 5 FPGA E-Series 065B Premium Development Kit (DK-A5E065BB32AEA)](https://www.altera.com/products/devkit/po-3284/agilex-5-fpga-e-series-065b-premium-development-kit) demonstrating 2-port 10G PTP (IEEE 1588) with HPS, MSGDMA, and packet switch.
 
 ## Description
 
@@ -112,7 +109,6 @@ The top-level Makefile copies that SOF to
 
 ## Programming files (SOF + FSBL)
 
-There is **no** `software/artifacts/` directory in this repository.
 `u-boot-spl-dtb.hex` comes from the Yocto deploy images after a Yocto build.
 
 After a Yocto build:

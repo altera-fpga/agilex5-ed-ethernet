@@ -17,9 +17,9 @@ Hardware (RTL, Quartus, verification) lives next to this folder — not under `s
 | `../synth/` | Quartus project and Makefile |
 | `../verification/` | Testbench / verification |
 
-See [../README.md](../README.md) for the hardware build and programming-file steps.
+See [README.md](../README.md) for the hardware build and programming-file steps.
 
-**Note:** There is **no** `software/artifacts/` directory. FSBL hex and other binaries are produced by Yocto under `yocto_linux/build/tmp/deploy/images/agilex5e/`.
+**Note:** FSBL hex and other binaries are produced by Yocto under `yocto_linux/build/tmp/deploy/images/agilex5e/`.
 
 ## Directory structure
 
@@ -53,21 +53,21 @@ Valid values: `TSE_1P` (default). Maps to RBF / DTB / `SOLUTION` via
 |--------------|----------|-----------|
 | `TSE_1P` | `baseline_a55.core.rbf` | `socfpga_agilex5_eth_tse.dtb` |
 
-Makefile compile targets (HW / SW / both): [../README.md](../README.md).
+Makefile compile targets (HW / SW / both): [README.md](../README.md).
 
 ### Configuring the Board
 Please refer to https://altera-fpga.github.io/rel-25.1/embedded-designs/agilex-5/e-series/modular/gsrd/ug-gsrd-agx5e-modular/#booting-from-sd-card for board setup (HPS-first boot and SD card programming).
 
 ### Prepare FPGA bitstream (RBF)
-1. Build the hardware design (see [../README.md](../README.md)), or use top-level Make which builds HW then SW.
-2. The file BitBake fetches is `yocto_linux/meta-custom/recipes-fpga/fpga-bitstream/files/baseline_a55.core.rbf`.
+1. Build the hardware design (see [README.md](../README.md)), or use top-level Make which builds HW then SW.
+2. Place the core RBF under `yocto_linux/meta-custom/recipes-fpga/fpga-bitstream/files/`.
 
 **Preferred:** top-level Make generates the core RBF and `kas_build.sh` copies it:
 
 ```bash
 # from mk-a5e065bb32aea/tse/
 make mk-a5e065bb32aea-baseline-tse-all
-# Software only (requires the SOF so Quartus can build the core RBF):
+# Software only:
 make mk-a5e065bb32aea-baseline-tse-software-yocto_linux_sd-build-sw
 ```
 
@@ -80,9 +80,6 @@ REVISION=baseline_a55
 cp ../../output_files/${REVISION}.core.rbf \
   meta-custom/recipes-fpga/fpga-bitstream/files/${REVISION}.core.rbf
 ```
-
-Do not hard-code `FPGA_RBF_FILE` in `kas.yml`; `tse-solution.inc` sets it.
-A direct `kas shell` / `bitbake` run does not copy the RBF. `files/baseline_a55.core.rbf` must already be there, or `fpga-bitstream` fails.
 
 ### Yocto Build (KAS)
 
@@ -133,9 +130,8 @@ You can build the Linux kernel alone for debugging. Download the Arm GNU toolcha
 ```bash
 $ export ARCH=arm64
 $ export CROSS_COMPILE=`pwd`/arm-gnu-toolchain-11.3.rel1-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-
-$ git clone https://github.com/altera-fpga/applications.fpga.soc.linux-socfpga.git -b socfpga-6.12.19-lts-ethernet-sed
-$ cd applications.fpga.soc.linux-socfpga
-$ git checkout <Release Tag>
+$ git clone https://github.com/altera-fpga/linux-socfpga.git -b socfpga-6.18.37-lts-ethernet-sed
+$ cd linux-socfpga
 $ make defconfig
 $ make menuconfig
   Enable the configs listed under:
@@ -146,8 +142,8 @@ $ make -j32
 ### Building ATF from source (optional)
 
 ```bash
-$ git clone https://github.com/altera-fpga/applications.fpga.soc.arm-trusted-firmware-dev.git -b socfpga_v2.14.0
-$ cd applications.fpga.soc.arm-trusted-firmware-dev
+$ git clone https://github.com/altera-fpga/arm-trusted-firmware.git -b socfpga_v2.15.0
+$ cd arm-trusted-firmware
 $ make bl31 CROSS_COMPILE=$CROSS_COMPILE PLAT=agilex5 DEPRECATED=1
 ```
 
@@ -160,7 +156,3 @@ $ cd u-boot-socfpga
 $ make socfpga_agilex5_defconfig
 $ make -j32
 ```
-
-### Board helper scripts
-
-`1Port.sh`, `ping.sh`, and `linkupdown.sh` are installed to `/home/root/scripts` by the `rootfs-files` recipe.

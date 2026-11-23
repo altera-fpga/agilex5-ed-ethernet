@@ -46,7 +46,7 @@ Run `make help` from `ethernet/` for the full target list.
 make mk-a5e065bb32aea-baseline-ethernet-all
 ```
 
-This runs the hardware build, generates the core RBF from the SOF, then runs the Yocto SD software build. If `ETH_DESIGN` is omitted, the default `ETH_1P10G` is used.
+This runs the hardware build, generates the core RBF from the SOF, then runs the Yocto SD software build.
 
 **Hardware build only:**
 
@@ -115,7 +115,6 @@ Details: [software/yocto_linux/README.md](software/yocto_linux/README.md).
 
 ## Programming files (SOF + FSBL)
 
-There is **no** `software/artifacts/` directory in this repository.
 `u-boot-spl-dtb.hex` comes from the Yocto deploy images after a Yocto build.
 
 After a Yocto build:
