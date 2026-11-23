@@ -1,7 +1,31 @@
 # Altera Agilex 5 Precision Time Protocol (IEEE 1588) System Example Design
 
-System Example Design for the Agilex 5 FPGA E-Series 065B Modular Development Kit
+System Example Design for the [Agilex 5 FPGA E-Series 065B Premium Development Kit (DK-A5E065BB32AEA)](https://www.altera.com/products/devkit/po-3284/agilex-5-fpga-e-series-065b-premium-development-kit)
 (`dk-a5e065bb32aea`) demonstrating 2-port 10G PTP (IEEE 1588) with HPS, MSGDMA, and packet switch.
+
+
+
+## Description
+
+The 2-port 10G PTP System Example Design demonstrates IEEE 1588v2 with hardware timestamping on the Agilex™ 5 065B Premium Development Kit, with an HPS-hosted PTP software stack.
+
+## Project Details
+
+- **Family**: Agilex 5
+- **Quartus Version**: 26.3
+- **Patch Number**: Unknown
+- **Development Kit**: [DK-A5E065BB32AEA](https://www.altera.com/products/devkit/po-3284/agilex-5-fpga-e-series-065b-premium-development-kit)
+- **Device Part**: A5ED065BB32AE4S
+- **Category**: HPS, Ethernet
+- **URL**: https://github.com/altera-fpga/agilex5-ed-ethernet
+- **Design Package**: dk-a5e065bb32aea-ptp-2p10g.zip
+
+## Documentations
+
+- **Title**: Design and Build Readme  
+  **URL**: [./README.md](./README.md)
+- **Title**: Software / Yocto Build Readme  
+  **URL**: [./software/yocto_linux/README.md](./software/yocto_linux/README.md)
 
 ## Dependency
 

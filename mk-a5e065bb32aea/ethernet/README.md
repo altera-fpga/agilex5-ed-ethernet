@@ -1,7 +1,31 @@
 # Altera Agilex 5 Ethernet System Example Design
 
-System Example Design for the Agilex 5 FPGA E-Series 065B Modular Development Kit
+System Example Design for the [Agilex 5 FPGA E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit)
 (`mk-a5e065bb32aea`) demonstrating 1-port Ethernet with HPS, MSGDMA, and packet switch.
+
+
+
+## Description
+
+The Ethernet System Example Design demonstrates 1-port 10GbE on the Agilex™ 5 Modular Development Kit with HPS, MSGDMA, packet switch, and GTS Ethernet Hard IP.
+
+## Project Details
+
+- **Family**: Agilex 5
+- **Quartus Version**: 26.3
+- **Patch Number**: Unknown
+- **Development Kit**: [MK-A5E065BB32AEA](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit)
+- **Device Part**: A5ED065BB32AE4S
+- **Category**: HPS, Ethernet
+- **URL**: https://github.com/altera-fpga/agilex5-ed-ethernet
+- **Design Package**: mk-a5e065bb32aea-ethernet-10g.zip
+
+## Documentations
+
+- **Title**: Design and Build Readme  
+  **URL**: [./README.md](./README.md)
+- **Title**: Software / Yocto Build Readme  
+  **URL**: [./software/yocto_linux/README.md](./software/yocto_linux/README.md)
 
 ## Dependency
 
