@@ -13,12 +13,12 @@ S = "${UNPACKDIR}"
 
 do_install() {
     install -d ${D}${FILE_DIR}
-    install -m 0644 ${S}/${FILE_NAME} ${D}${FILE_DIR}/${FILE_NAME}
+    install -m 0744 ${S}/${FILE_NAME} ${D}${FILE_DIR}/${FILE_NAME}
 
     install -d ${D}${FILE_DIR}/scripts
-    install -m 0644 ${S}/1Port.sh ${D}${FILE_DIR}/scripts/1Port.sh
-    install -m 0644 ${S}/linkupdown.sh ${D}${FILE_DIR}/scripts/linkupdown.sh
-    install -m 0644 ${S}/ping.sh ${D}${FILE_DIR}/scripts/ping.sh
+    install -m 0744 ${S}/1Port.sh ${D}${FILE_DIR}/scripts/1Port.sh
+    install -m 0744 ${S}/linkupdown.sh ${D}${FILE_DIR}/scripts/linkupdown.sh
+    install -m 0744 ${S}/ping.sh ${D}${FILE_DIR}/scripts/ping.sh
 
 }
 FILES:${PN} += "${FILE_DIR}/${FILE_NAME} ${FILE_DIR}/scripts/1Port.sh ${FILE_DIR}/scripts/linkupdown.sh ${FILE_DIR}/scripts/ping.sh"

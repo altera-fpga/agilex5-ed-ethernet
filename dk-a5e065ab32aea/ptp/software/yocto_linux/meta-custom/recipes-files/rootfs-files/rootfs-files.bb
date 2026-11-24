@@ -14,7 +14,7 @@ S = "${UNPACKDIR}"
 
 do_install() {
     install -d ${D}${FILE_DIR}
-    install -m 0644 ${S}/${FILE_NAME} ${D}${FILE_DIR}/${FILE_NAME}
+    install -m 0744 ${S}/${FILE_NAME} ${D}${FILE_DIR}/${FILE_NAME}
 
     install -d ${D}${FILE_DIR}/scripts
     for f in ${SCRIPT_FILES}; do
