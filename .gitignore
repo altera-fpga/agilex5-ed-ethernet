@@ -11,3 +11,23 @@
 **/yocto_linux/.kas_shell_history
 **/sstate-cache/
 **/downloads/
+
+# Platform Designer generated Qsys outputs
+**/src/qsys/axi_to_avmm_qsfp_cntlr/
+**/src/qsys/csr_bridges/
+**/src/qsys/hps_subsys/
+**/src/qsys/qsfp_ctrl/
+**/src/qsys/qsys_top/
+**/src/qsys/qsys_top_0/
+**/src/qsys/reset_req/
+**/src/qsys/subsys_msgdma/
+**/src/qsys/subsys_msgdma_ch2/
+**/src/qsys/ip/qsys_top/mtod_m0_clk_bridge/
+**/src/ip/*/*/
+
+# Quartus synthesis artifacts
+**/synth/dni/
+**/synth/output_files/
+**/synth/qdb/
+**/synth/tmp-clearbox/
+**/synth/sm_hssi_port_rotation_param_map.json
