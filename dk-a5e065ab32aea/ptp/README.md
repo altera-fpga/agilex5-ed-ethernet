@@ -36,7 +36,7 @@ The 2-port 25G PTP System Example Design demonstrates IEEE 1588v2 with hardware 
 
 The top level Makefile is in the design root (`ptp/`). The Quartus project (`top.qpf` / `top.qsf`) lives in `synth/`.
 
-Run `make help` from `ptp/` for the full target list.
+Run `make help` from `ptp/` for the public build targets and common commands.
 
 Public stem: `dk-a5e065ab32aea-baseline-ptp25G`  
 Hardware revision (SOF / RBF basename): `agilex5-dk-a5e065ab32aea_gsrd_ghrd_PTP_2P25G` (`REVISION_NAMES` in `project_config.mk`).
@@ -47,7 +47,9 @@ Hardware revision (SOF / RBF basename): `agilex5-dk-a5e065ab32aea_gsrd_ghrd_PTP_
 make dk-a5e065ab32aea-baseline-ptp25G-all
 ```
 
-This runs the hardware build, generates the core RBF from the SOF, then runs the Yocto SD software build.
+This builds the hardware SOF, generates its core RBF, then builds the Yocto SD
+software image. The FSBL-inserted SD SOF and QSPI/JIC outputs are generated
+separately by `make sd-postprocess`.
 
 **Hardware build only:**
 
@@ -66,6 +68,8 @@ make dk-a5e065ab32aea-baseline-ptp25G-software-yocto_linux_sd-build-sw
 
 This runs `quartus_pfg` to create the core RBF, then
 `software/yocto_linux/build.sh <core.rbf> sd`.
+The KAS build includes this module's `meta-custom` layer, whose U-Boot environment
+append sets `bootfile=kernel_sed.itb` and the SD root device to `/dev/mmcblk0p2`.
 
 **Install core RBF only** (SOF + `quartus_pfg` → `install/binaries/`):
 
@@ -125,6 +129,32 @@ quartus_pfg -c -o hps=on \
 ```
 
 Or use the revision-named SOF produced by the top-level Makefile under `output_files/`.
+
+### Generate the SD-boot U-Boot JIC
+
+From the project root (`dk-a5e065ab32aea/ptp/`), run:
+
+```bash
+make sd-postprocess
+```
+
+Make gets `REVISION` from the first entry in `REVISION_NAMES` in
+`project_config.mk`; do not substitute the Quartus revision name `top`. The
+target uses `output_files/$(REVISION).sof`, inserts the Yocto SPL from
+`software/yocto_linux/build/tmp/deploy/images/agilex5e/u-boot-spl-dtb.hex`, and
+stages the resulting `$(REVISION)_yocto_linux_sd.sof` alongside the Yocto
+deploy files. If the expected GSRD WIC is absent, Make runs the SD Yocto build
+first.
+
+The postprocess step reads `u-boot.itb` and `u-boot-spl-dtb.hex` from that
+deploy directory and uses the scripts in `software/yocto_linux/scripts/`.
+It creates `qspi_helper.hps.jic` (U-Boot-only QSPI image), `ghrd.hps.jic`,
+`ghrd.core.rbf`, and `ghrd.hps.rbf` there, then copies these outputs and
+support files into `install/binaries/software/yocto_linux_sd/`. The same
+`sd-postprocess` target is listed by `make help`. Ensure the
+Yocto deploy directory contains both U-Boot inputs; the reference WIC alone
+does not provide the SPL HEX. For full QSPI boot images, see
+[`software/yocto_linux/scripts/README.md`](software/yocto_linux/scripts/README.md).
 
 ## Verification (UVM)
 

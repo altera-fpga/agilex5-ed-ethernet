@@ -36,7 +36,7 @@ The Ethernet System Example Design demonstrates 1-port 10GbE on the Agilex™ 5 
 
 The top level Makefile is in the design root (`ethernet/`). The Quartus project (`top.qpf` / `top.qsf`) lives in `synth/`.
 
-Run `make help` from `ethernet/` for the full target list.
+Run `make help` from `ethernet/` for the public build targets and common commands.
 
 **Design selection (`ETH_DESIGN`):** default / supported value is `ETH_1P10G` (see `software/yocto_linux/meta-custom/conf/eth-solution.inc`). The hardware revision name is `agilex5-mk-a5e065bb32aea_gsrd_ghrd_ETH_1P10G` (`REVISION_NAMES` in `project_config.mk`).
 
@@ -46,7 +46,9 @@ Run `make help` from `ethernet/` for the full target list.
 make mk-a5e065bb32aea-baseline-ethernet-all
 ```
 
-This runs the hardware build, generates the core RBF from the SOF, then runs the Yocto SD software build.
+This builds the hardware SOF, generates its core RBF, then builds the Yocto SD
+software image. The FSBL-inserted SD SOF and QSPI/JIC outputs are generated
+separately by `make sd-postprocess`.
 
 **Hardware build only:**
 
@@ -65,6 +67,8 @@ make mk-a5e065bb32aea-baseline-ethernet-software-yocto_linux_sd-build-sw
 
 This runs `quartus_pfg` to create the core RBF, then
 `software/yocto_linux/build.sh <core.rbf> sd` (Make supplies the RBF path).
+The KAS build includes this module's `meta-custom` layer, whose U-Boot environment
+append sets `bootfile=kernel_sed.itb` and the SD root device to `/dev/mmcblk0p2`.
 `kas_build.sh` copies it to `fpga-bitstream/files/<REVISION>.core.rbf`
 (`REVISION` from `project_config.mk` `REVISION_NAMES`). That name must match
 `FPGA_RBF_FILE` from `ETH_DESIGN` / `eth-solution.inc`.
@@ -76,6 +80,17 @@ make mk-a5e065bb32aea-baseline-ethernet-install-core-rbf
 ```
 
 RBF/DTB placement, `ETH_DESIGN`, and Yocto details: [software/yocto_linux/README.md](software/yocto_linux/README.md).
+
+**Generate SD-boot JIC and RBF files** (after the hardware build):
+
+```bash
+make sd-postprocess
+```
+
+This builds the SD image if needed, then generates `qspi_helper.hps.jic`,
+`ghrd.hps.jic`, `ghrd.core.rbf`, and `ghrd.hps.rbf` from the Yocto deploy files
+and copies them into `install/binaries/software/yocto_linux_sd/`. The target is
+also listed by `make help`.
 
 ## Directory structure
 

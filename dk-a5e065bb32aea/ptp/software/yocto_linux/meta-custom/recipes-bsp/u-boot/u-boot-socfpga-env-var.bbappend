@@ -6,5 +6,7 @@ do_compile:prepend() {
 		bbfatal "u-boot-env.txt not found at ${ENV_FILE}"
 	fi
 	sed -i 's/^bootfile=kernel\.itb$/bootfile=kernel_sed.itb/' "${ENV_FILE}"
+	sed -i '/^custom_bootargs=/d' "${ENV_FILE}"
+	printf '%s\n' 'custom_bootargs=earlycon panic=-1 root=/dev/mmcblk0p2 rw rootwait uio_pdrv_genirq.of_id="generic-uio"' >> "${ENV_FILE}"
 	bbnote "Updated bootfile in ${ENV_FILE} -> kernel_sed.itb"
 }

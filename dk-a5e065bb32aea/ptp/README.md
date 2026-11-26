@@ -33,7 +33,7 @@ The 2-port 10G PTP System Example Design demonstrates IEEE 1588v2 with hardware 
 
 The top level Makefile is in the design root (`ptp/`). The Quartus project (`top.qpf` / `top.qsf`) lives in `synth/`.
 
-Run `make help` from `ptp/` for the full target list.
+Run `make help` from `ptp/` for the public build targets and common commands.
 
 Public stem: `dk-a5e065bb32aea-baseline-ptp10G`  
 Hardware revision (SOF / RBF basename): `agilex5-dk-a5e065bb32aea_gsrd_ghrd_PTP_2P10G` (`REVISION_NAMES` in `project_config.mk`).
@@ -44,7 +44,9 @@ Hardware revision (SOF / RBF basename): `agilex5-dk-a5e065bb32aea_gsrd_ghrd_PTP_
 make dk-a5e065bb32aea-baseline-ptp10G-all
 ```
 
-This runs the hardware build, generates the core RBF from the SOF, then runs the Yocto SD software build.
+This builds the hardware SOF, generates its core RBF, then builds the Yocto SD
+software image. The FSBL-inserted SD SOF and QSPI/JIC outputs are generated
+separately by `make sd-postprocess`.
 
 **Hardware build only:**
 
@@ -63,6 +65,8 @@ make dk-a5e065bb32aea-baseline-ptp10G-software-yocto_linux_sd-build-sw
 
 This runs `quartus_pfg` to create the core RBF, then
 `software/yocto_linux/build.sh <core.rbf> sd`.
+The KAS build includes this module's `meta-custom` layer, whose U-Boot environment
+append sets `bootfile=kernel_sed.itb` and the SD root device to `/dev/mmcblk0p2`.
 
 **Install core RBF only** (SOF + `quartus_pfg` → `install/binaries/`):
 
@@ -122,6 +126,17 @@ quartus_pfg -c -o hps=on \
 ```
 
 Or use the revision-named SOF produced by the top-level Makefile under `output_files/`.
+To run the repository's full SD post-processing flow, including generation of the
+HPS and core RBFs from the Yocto SPL HEX, run from the project root:
+
+```bash
+make sd-postprocess
+```
+
+This writes `qspi_helper.hps.jic`, `ghrd.hps.jic`, `ghrd.hps.rbf`, and
+`ghrd.core.rbf` under `software/yocto_linux/build/tmp/deploy/images/agilex5e/`
+and copies them into `install/binaries/software/yocto_linux_sd/`. The target is
+also listed by `make help`.
 
 ## Verification (UVM)
 

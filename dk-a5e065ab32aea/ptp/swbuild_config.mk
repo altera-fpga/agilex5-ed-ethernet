@@ -90,6 +90,11 @@ YOCTO_SD_SPL_HEX   := $(YOCTO_SD_IMAGE_DIR)/u-boot-spl-dtb.hex
 $(SW_YOCTO_LINUX_SD_TARGET)-build-sw: output_files/$(REVISION).core.rbf
 	cd software/yocto_linux && ./build.sh $(PROJECT_DIR_ABS)/output_files/$(REVISION).core.rbf sd
 
+# The SD SOF and postprocess targets consume the WIC, so build it on demand.
+$(YOCTO_SD_WIC): output_files/$(REVISION).core.rbf
+	$(MAKE) --no-print-directory $(SW_YOCTO_LINUX_SD_TARGET)-build-sw
+	@test -f $@ || { echo "Error: Yocto build did not generate $@" >&2; exit 1; }
+
 #FSBL insertion into SOF
 output_files/%_yocto_linux_sd.sof : output_files/%.sof $(YOCTO_SD_WIC)
 	quartus_pfg -c -o hps_path=$(YOCTO_SD_SPL_HEX) $< $@

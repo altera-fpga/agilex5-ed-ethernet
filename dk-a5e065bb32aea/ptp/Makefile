@@ -129,7 +129,8 @@ $(foreach revision,$(REVISION_NAMES),$(eval $(call create_targets_on_revisions,$
 ifneq ($(MAKE_STEM),)
 .PHONY: $(MAKE_STEM)-all $(MAKE_STEM)-build $(MAKE_STEM)-software-yocto_linux_sd-build-sw \
 	$(MAKE_STEM)-install $(MAKE_STEM)-install-core-rbf
-$(MAKE_STEM)-all : $(BASE_REVISION)-build software-yocto_linux_sd-build-sw
+$(MAKE_STEM)-all : $(BASE_REVISION)-build
+	$(MAKE) --no-print-directory software-yocto_linux_sd-build-sw
 $(MAKE_STEM)-build : $(BASE_REVISION)-build
 $(MAKE_STEM)-software-yocto_linux_sd-build-sw : software-yocto_linux_sd-build-sw
 $(MAKE_STEM)-install : $(BASE_REVISION)-install
@@ -251,6 +252,8 @@ help:
 	@echo "      Install SOF, reports, and software artifacts under install/"
 	@echo "  $(MAKE_STEM)-install-core-rbf"
 	@echo "      Build SOF if needed, then quartus_pfg core RBF -> install/binaries/"
+	@echo "  sd-postprocess"
+	@echo "      Build SD image if needed, then generate JIC and RBF outputs"
 	@echo ""
 	@echo "Common targets:"
 	@echo "  build / $(BASE_REVISION)-build   Hardware compile (same as *-build)"

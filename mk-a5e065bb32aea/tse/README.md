@@ -75,7 +75,7 @@ tse/
 
 The top level Makefile is in the design root (`tse/`). The Quartus project (`top.qpf` / `top.qsf`) lives in `synth/`.
 
-Run `make help` from `tse/` for the full target list.
+Run `make help` from `tse/` for the public build targets and common commands.
 
 **Design selection (`TSE_DESIGN`):** default / supported value is `TSE_1P` (see `software/yocto_linux/meta-custom/conf/tse-solution.inc`). The hardware revision name is `agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P` (`REVISION_NAMES` in `project_config.mk`). The core RBF filename is `agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P.core.rbf`.
 
@@ -87,7 +87,11 @@ Public stem: `mk-a5e065bb32aea-baseline-tse`
 make mk-a5e065bb32aea-baseline-tse-all
 ```
 
-This runs the hardware build, generates the core RBF from the SOF, then runs the Yocto SD software build. If `TSE_DESIGN` is omitted, the default `TSE_1P` is used.
+This builds the hardware SOF, generates its core RBF, then builds the Yocto SD
+software image. If `TSE_DESIGN` is omitted, the default `TSE_1P` is used. The
+FSBL-inserted SD SOF and QSPI/JIC outputs are generated separately by
+`make sd-postprocess`.
+Use this target rather than plain `make`: the default `make` target builds hardware only and does not run the software build that generates the core RBF.
 
 **Hardware build only:**
 
@@ -106,6 +110,8 @@ make mk-a5e065bb32aea-baseline-tse-software-yocto_linux_sd-build-sw
 
 This runs `quartus_pfg` to create the core RBF, then
 `software/yocto_linux/build.sh <core.rbf> sd` (Make supplies the RBF path).
+The KAS build includes this module's `meta-custom` layer, whose U-Boot environment
+append sets `bootfile=kernel_sed.itb` and the SD root device to `/dev/mmcblk0p2`.
 `kas_build.sh` copies it to `fpga-bitstream/files/agilex5_mk-a5e065bb32aea_gsrd_ghrd_TSE_1P.core.rbf`
 (`REVISION` from `project_config.mk` `REVISION_NAMES`). That name must match
 `FPGA_RBF_FILE` from `TSE_DESIGN` / `tse-solution.inc`.
@@ -115,6 +121,21 @@ This runs `quartus_pfg` to create the core RBF, then
 ```bash
 make mk-a5e065bb32aea-baseline-tse-install-core-rbf
 ```
+
+**Generate QSPI JIC files** (after the hardware build; Make builds the Yocto SD
+image if needed):
+
+```bash
+make mk-a5e065bb32aea-baseline-tse-all
+make sd-postprocess
+```
+
+`sd-postprocess` uses Quartus `quartus_pfg` and the Yocto deploy outputs to generate
+`qspi_helper.hps.jic` (U-Boot-only), `ghrd.hps.jic`, `ghrd.core.rbf`, and
+`ghrd.hps.rbf`, then copies them to `install/binaries/software/yocto_linux_sd/`.
+Quartus must be on `PATH`. Running plain `make` or only the hardware target does
+not produce the Yocto inputs required for JIC generation. The target is also
+listed by `make help`.
 
 RBF/DTB placement, `TSE_DESIGN`, and Yocto details: [software/yocto_linux/README.md](software/yocto_linux/README.md).
 

@@ -78,5 +78,8 @@ Run the targets from the design directory. Software-only builds need `output_fil
 | `dk-a5e065ab32aea/ptp`      | `make dk-a5e065ab32aea-baseline-ptp25G-all`   | `make dk-a5e065ab32aea-baseline-ptp25G-software-yocto_linux_sd-build-sw`   |
 | `dk-a5e065bb32aea/ptp`      | `make dk-a5e065bb32aea-baseline-ptp10G-all`   | `make dk-a5e065bb32aea-baseline-ptp10G-software-yocto_linux_sd-build-sw`   |
 
+Each `*-all` target builds hardware first, then the Yocto SD software image using
+the generated core RBF. To also generate the FSBL-inserted SD SOF and QSPI/JIC
+post-processing outputs, run `make sd-postprocess` from the design directory.
 
-`make help` in a design directory lists all targets.
+`make help` in a design directory lists the public build targets and common commands.
