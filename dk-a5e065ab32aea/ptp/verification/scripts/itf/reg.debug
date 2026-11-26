@@ -1,0 +1,87 @@
+
+Running analyzer plugins manager /nfs/site/disks/psg_flowssw_1/regutils/23.4/5/linux64/bin/reg_analyze_lib/regtest_plugins.lst...
+
+
+Info: (RegCmp) Thu Aug 27 00:05:09 2026
+
+to_db_pass_status=3
+
+Info: (IResultDeletion) Thu Aug 27 00:05:09 2026
+
+to_db_pass_status=3
+
+Info: (IeAeDetector) Thu Aug 27 00:05:09 2026
+
+to_db_pass_status=3
+
+Info: (CoreDumpDetector) Thu Aug 27 00:05:09 2026
+
+to_db_pass_status=3
+
+Info: (ErrorInfoCollector) Thu Aug 27 00:05:09 2026
+
+to_db_pass_status=3
+
+Info: (BrokenTestDetector) Thu Aug 27 00:05:09 2026
+
+to_db_pass_status=3
+
+Info: (DeviceInfoCollector) Thu Aug 27 00:05:09 2026
+
+to_db_pass_status=3
+
+Info: (TagInfoCollector) Thu Aug 27 00:05:14 2026
+
+to_db_pass_status=3
+
+Info: (StatusErrorDetails) Thu Aug 27 00:05:18 2026
+
+to_db_pass_status=2
+
+Info: (StandardAutoFiler) Thu Aug 27 00:05:18 2026
+
+to_db_pass_status=2
+
+Info: (SprIeAeAutoFiler) Thu Aug 27 00:05:18 2026
+
+to_db_pass_status=2
+
+Info: (FogbugzAutoFiler) Thu Aug 27 00:05:18 2026
+
+to_db_pass_status=2
+
+Info: (modularizationAssignTag) Thu Aug 27 00:05:18 2026
+
+to_db_pass_status=2
+
+Info: (ResourceAutoTagging) Thu Aug 27 00:05:18 2026
+
+to_db_pass_status=2
+
+Info: (AutoMemory) Thu Aug 27 00:05:18 2026
+
+to_db_pass_status=2
+
+
+plugins manager ran for 9 seconds.
+
+
+Running analyzer plugins manager /nfs/site/disks/psg_flowssw_1/regutils/23.4/5/linux64/bin/reg_analyze_lib/reporter_plugins.lst...
+
+
+Info: (Reporter) Thu Aug 27 00:05:19 2026
+
+to_db_pass_status=2
+
+
+plugins manager ran for 2 seconds.
+
+[Debug] RegTest.pm(1) IResult file list:
+
+656K	/tmp/arc_1328557825/_0/verification/scripts/itf/_iresult
+
+Size: 656K
+
+
+END
+

@@ -1,0 +1,42 @@
+# ITF describes a high level specification of a regtest using a
+# tree data structure. 
+#
+# Each node in the tree represents a modular test defined by the ITF
+# framework or a specific team. Starting at the "itf" root node, we traverse
+# and execute the children test nodes until all children are executed.
+#
+#
+# Example:
+#                                              rtl_sim_msim_vlg
+#                                            /
+# itf ---- device ---- qsys_script ---- qsys_generate
+#                                            \ 
+#                                              qsyn ---- qfit
+#
+#
+# Tests can be highly configured via hooks and options in itf_regtest_local.pl
+# Limited configuration can be done in flow.txt
+#
+# The order of lines in this file is not important.
+
+#The device that is being tested (Stratix 10)
+
+device=AGIB027R31B1E2V
+
+#Project name
+project=top
+
+# These assignments describe the order the subtest will be executed
+#add_subtest=itf,device
+#add_subtest=device,rtl_sim_compile_only_vcs
+#add_subtest=itf,rtl_sim_compile_only_vcs
+#add_subtest=rtl_sim_compile_only_vcs,sequence
+add_subtest=itf,sequence
+add_subtest=sequence,rtl_sim_simulate_only_vcs
+
+subtest_timeout=2h,rtl_sim_compile_only_vcs
+subtest_timeout=12h,rtl_sim_simulate_only_vcs
+
+subtest_memory_requirement=qsys,32000
+subtest_memory_requirement=rtl_sim_compile_only_vcs,32000
+subtest_memory_requirement=rtl_sim_simulate_only_vcs,32000

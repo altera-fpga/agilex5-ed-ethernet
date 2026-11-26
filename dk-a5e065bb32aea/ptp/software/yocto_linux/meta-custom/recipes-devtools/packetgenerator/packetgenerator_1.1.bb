@@ -1,0 +1,29 @@
+SUMMARY = "Packet Generator configurator for Linux on ARM"
+DESCRIPTION = "Packet Generator configurator executable for Linux to control pktgen module"
+HOMEPAGE = "https://github.com/altera-fpga/agilex5-ed-ethernet"
+LICENSE = "BSD-3-Clause"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=7c6367005511b6ea56cf4966d5ba33fb"
+
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+ 
+SRC_URI = "file://packetgenerator_v1.1.tgz"
+SRC_URI[sha256sum] = "01db0f7fb40e393cb2f8ba2848466f3f1dbd32fe95c45b3c5a34503148935869"
+S = "${UNPACKDIR}/packetgenerator_v1.1"
+
+
+#do_compile () {
+#	#bbnote "Packetgenerator Executing compile... - ${S}. Workdir: ${UNPACKDIR}"
+#	#echo -n "Source Dir - ${S}. Workdir: ${UNPACKDIR}"
+#	#cd ${S}
+#	oe_runmake
+#}
+
+#do_install () {
+#	#bbnote "Packetgenerator Executing install... - ${S}. Workdir: ${UNPACKDIR}"
+#	#echo -n "Source Dir - ${S}. Workdir: ${UNPACKDIR}"
+#	install -d ${D}/${bindir}
+#	install -p ${S}/packetgenerator  ${D}/${bindir}
+#}
+
+inherit autotools pkgconfig
+FILES:${PN} += "${bindir}/packetgenerator"

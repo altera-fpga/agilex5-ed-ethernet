@@ -1,80 +1,85 @@
-# Altera Agilex™ 5 Ethernet System Example Design
-
+# Altera® Agilex™ 5 Ethernet-based System Example Designs
 
 ## Description
-The Ethernet System Example Design demonstrates Ethernet functionality of the Altera Agilex 5 FPGA 
-supporting GTS transceivers. It provides a 1-Port, 25GbE/10GbE design leveraging the GTS Ethernet Hard IP.
 
-The primary components in the design are
+The Ethernet-based System Example Design demonstrates Ethernet functionality of the Altera Agilex 5 FPGA supporting multiple MACs along with providing other ethernet-related features like 1588PTP. This repo contains designs that showcase 1-Port 10GbE and 25GbE Ethernet designs on Agilex 5 onboard transceivers and 2-Port 10GbE / 25GbE PTP (IEEE 1588) designs on Agilex 5 onboard transceivers leveraging the Ethernet Altera® FPGA IP. A soft-MAC-based Triple-Speed Ethernet (TSE) design is also available in the repo that closely resembles the generic Ethernet design but provides Ethernet functionality through the TSE soft MAC.
+
+The primary components in the design are:
+
 - Hard Processor Subsystem (HPS)
-- Channelized Modular scatter-Gather Direct Memory Access (MSGDMA) Subsystem
+- Channelized Modular Scatter-Gather Direct Memory Access (MSGDMA)
 - Packet Switch module
 - Packet Generator
-- GTS Ethernet Hard IP
+- Ethernet MAC IP
 
-![](e10g_sed_functional_bd.png)
+The diagram below shows a generic Ethernet-based System Example Design which is leveraged across all designs on Altera Agilex 5 FPGAs. Additional blocks are enabled (PTP) as required for the specific designs.
 
+![Altera® Agilex™ 5 Ethernet System Example Design block diagram](doc/SM_Ethernet_block_diagram.png)
 
-Important features of the design include
-- Ethernet Software stack running on the HPS that handles the generation of iperf traffic
-- Programmable packet routing functionality handled within the Packet Switch module
+Important features of the design include:
+
+- Ethernet Software stack running on the HPS that handles control/management along with data generation.
+- Programmable packet routing functionality handled within the Packet Switch module. Some designs do not support this functionality.
 - DMA engines to efficiently transfer data between the HPS and Ethernet MAC
 
-For more information, refer to the [altera github doc](https://altera-fpga.github.io/rel-26.1/embedded-designs/agilex-5/e-series/modular-065a/ethernet/agx5e-ethernet/ug-agx5e-ethernet/).
-
-The System Example Design supports the following design configurations on Altera Development Kits.
-
-|SL No| Design configuration | Data-rate | Development Kit Supported | Device Family | Device Part | Release | Quartus Release |
-|-----|-----------------------|-----------|:--------------------------:|:--------------:|:-------------:|:------:|:-------------:|
-|1.   |1-port 10GbE           | 10GbE     | [MK-A5E065BB32AEA](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit) | Agilex™ 5 E-Series (Group B) | A5ED065BB32AE4S | [rel/26.1](https://github.com/altera-fpga/agilex5-ed-ethernet/tree/rel/26.1) | Quartus 26.1 |
-|2.   |1-port 25GbE/10GbE           | 25GbE/10GbE     | [MK-A5E065AB32AEA](https://www.altera.com/products/devkit/po-3278/agilex-5-fpga-and-soc-e-series-065a-modular-development-kit) | Agilex™ 5 E-Series (Group A) | A5ED065AB32AE1V | [rel/26.1.1](https://github.com/altera-fpga/agilex5-ed-ethernet/tree/rel/26.1.1) | Quartus 26.1.1 |
-
-<!-- ponytail: a5e065a-mod-devkit-exp-prod is currently an identical copy of the 10GbE design (dts not yet swapped to 25GbE); update this table/links once the 25G dts change lands. -->
+For more information, refer to the [documentation](https://altera-fpga.github.io/rel-26.3/ed-demo-list/ed-list/) site.
 
 ## Repository Structure
 
-Directory Structure used in this example design:
+Directory structure used in this example design:
 
- ```bash
-agilex5-ed-ethernet
-    |--- a5e065a-mod-devkit-exp-prod/src
-    |   |--- hw
-    |   |--- sw
-    |--- a5e065b-mod-devkit-exp-prod/src
-    |   |--- hw
-    |   |--- sw
- ```
- 
- 
+```bash
+.
+├── doc
+├── dk-a5e065ab32aea
+│   └── ptp                   # 2x25G PTP (IEEE 1588) on Agilex™ 5 FPGA E-Series 065A Premium Development Kit (DK-A5E065AB32AEA) 
+├── dk-a5e065bb32aea
+│   └── ptp                   # 2x10G PTP (IEEE 1588) on Agilex™ 5 FPGA E-Series 065B Premium Development Kit (DK-A5E065BB32AEA)
+├── mk-a5e065bb32aea
+│   ├── ethernet              # 1x10G Ethernet on Altera® Agilex™ 5 FPGA SoC E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)
+│   └── tse                   # 1-port Triple Speed Ethernet on Altera® Agilex™ 5 FPGA SoC E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)
+```
 
-## Project Details
-Design Configuration: 1-port 25G/10G
-- **Family**: Agilex™ 5
-- **Quartus Version**: 26.1.1
-- **Development Kit**: [Agilex™ 5 FPGA E-Series 065A Modular Development Kit (MK-A5E065AB32AEA)](https://www.altera.com/products/devkit/po-3278/agilex-5-fpga-and-soc-e-series-065a-modular-development-kit)
-- **Device Part**: A5ED065AB32AE1V
 
-Design Configuration: 1-port 10G
-- **Family**: Agilex™ 5
-- **Quartus Version**: 26.1
-- **Development Kit**: [Agilex™ 5 FPGA E-Series 065B Modular Development Kit (MK-A5E065BB32AEA)](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit)
-- **Device Part**: A5ED065BB32AE4S
 
 ## Getting Started
 
 Building the design is easy with the scripts provided in the repo. Clone the repository to get the source files
-	
-	$ git clone https://github.com/altera-fpga/agilex5-ed-ethernet.git
-	$ cd agilex5-ed-ethernet
-	$ git checkout main
+
+```bash
+$ git clone https://github.com/altera-fpga/agilex5-ed-ethernet.git
+$ cd agilex5-ed-ethernet
+$ git checkout <Release tag>
+```
+
+Follow the below procedure to build the hardware and the software.
+
+
+| Design                | Development kit                                                                                                                                           | Hardware / Makefile                           | Software                                                          |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- | ----------------------------------------------------------------- |
+| 1x10G Ethernet        | [E-Series 065B Modular (`MK-A5E065BB32AEA`)](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit) | [README](mk-a5e065bb32aea/ethernet/README.md) | [Yocto](mk-a5e065bb32aea/ethernet/software/yocto_linux/README.md) |
+| Triple Speed Ethernet | [E-Series 065B Modular (`MK-A5E065BB32AEA`)](https://www.altera.com/products/devkit/po-3274/agilex-5-fpga-and-soc-e-series-065b-modular-development-kit) | [README](mk-a5e065bb32aea/tse/README.md)      | [Yocto](mk-a5e065bb32aea/tse/software/yocto_linux/README.md)      |
+| 2x25G PTP (IEEE 1588) | [E-Series 065A Premium (`DK-A5E065AB32AEA`)](https://www.altera.com/products/devkit/po-3285/agilex-5-fpga-e-series-065a-premium-development-kit)          | [README](dk-a5e065ab32aea/ptp/README.md)      | [Yocto](dk-a5e065ab32aea/ptp/software/yocto_linux/README.md)      |
+| 2x10G PTP (IEEE 1588) | [E-Series 065B Premium (`DK-A5E065BB32AEA`)](https://www.altera.com/products/devkit/po-3284/agilex-5-fpga-e-series-065b-premium-development-kit)          | [README](dk-a5e065bb32aea/ptp/README.md)      | [Yocto](dk-a5e065bb32aea/ptp/software/yocto_linux/README.md)      |
 
 
 
-Follow the below procedure to build the HW and the Software artifacts. 
-- Building 25GbE/10GbE design on MK-A5E065AB32AEA: [Hardware](a5e065a-mod-devkit-exp-prod/src/hw/README.md) / [Software](a5e065a-mod-devkit-exp-prod/src/sw/README.md)
-- Building 10GbE design on MK-A5E065BB32AEA: [Hardware](a5e065b-mod-devkit-exp-prod/src/hw/README.md) / [Software](a5e065b-mod-devkit-exp-prod/src/sw/README.md)
 
-**NOTE**: 
+### Building with make
 
-1. Kindly refer to this [Release Q25.3-Rel-1.1](https://github.com/altera-fpga/agilex5-ed-ethernet/releases/tag/SED-1x10GE-a5e065b-mdk-Q25.3-Rel-1.1) for Design targetted to [Agilex™ 5 FPGA and SoC E-Series Modular Development Kit (ES)](https://www.altera.com/products/devkit/po-3001/agilex-5-fpga-and-soc-e-series-modular-development-kit-es)
+Run the targets from the design directory. Software-only builds need `output_files/<REVISION>.core.rbf`
+(produced by the hardware build, or generated from `output_files/<REVISION>.sof`).
 
+
+| Design directory            | Hardware + software                           | Software only (Yocto SD)                                                   |
+| --------------------------- | --------------------------------------------- | -------------------------------------------------------------------------- |
+| `mk-a5e065bb32aea/ethernet` | `make mk-a5e065bb32aea-baseline-ethernet-all` | `make mk-a5e065bb32aea-baseline-ethernet-software-yocto_linux_sd-build-sw` |
+| `mk-a5e065bb32aea/tse`      | `make mk-a5e065bb32aea-baseline-tse-all`      | `make mk-a5e065bb32aea-baseline-tse-software-yocto_linux_sd-build-sw`      |
+| `dk-a5e065ab32aea/ptp`      | `make dk-a5e065ab32aea-baseline-ptp25G-all`   | `make dk-a5e065ab32aea-baseline-ptp25G-software-yocto_linux_sd-build-sw`   |
+| `dk-a5e065bb32aea/ptp`      | `make dk-a5e065bb32aea-baseline-ptp10G-all`   | `make dk-a5e065bb32aea-baseline-ptp10G-software-yocto_linux_sd-build-sw`   |
+
+Each `*-all` target builds hardware first, then the Yocto SD software image using
+the generated core RBF. To also generate the FSBL-inserted SD SOF and QSPI/JIC
+post-processing outputs, run `make sd-postprocess` from the design directory.
+
+`make help` in a design directory lists the public build targets and common commands.
