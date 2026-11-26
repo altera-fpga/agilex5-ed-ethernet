@@ -128,6 +128,7 @@ $ export ARCH=arm64
 $ export CROSS_COMPILE=`pwd`/arm-gnu-toolchain-11.3.rel1-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-
 $ git clone https://github.com/altera-fpga/linux-socfpga.git -b socfpga-6.18.37-lts-ethernet-sed
 $ cd linux-socfpga
+$ git checkout SED-Agilex5-ALL-Q26.3-Rel-1.1
 $ make defconfig
 $ make menuconfig
   Enable the configs listed under:
@@ -140,6 +141,7 @@ $ make -j32
 ```bash
 $ git clone https://github.com/altera-fpga/arm-trusted-firmware.git -b socfpga_v2.15.0
 $ cd arm-trusted-firmware
+$ git checkout QPDS26.3_REL_BASELINE_PR
 $ make bl31 CROSS_COMPILE=$CROSS_COMPILE PLAT=agilex5 DEPRECATED=1
 ```
 
@@ -148,6 +150,7 @@ $ make bl31 CROSS_COMPILE=$CROSS_COMPILE PLAT=agilex5 DEPRECATED=1
 ```bash
 $ git clone https://github.com/altera-fpga/u-boot-socfpga.git -b socfpga_v2026.07
 $ cd u-boot-socfpga
+$ git checkout QPDS26.3_REL_BASELINE_PR
 # copy bl31.bin into the U-Boot tree as required by your flow
 $ make socfpga_agilex5_defconfig
 $ make -j32
