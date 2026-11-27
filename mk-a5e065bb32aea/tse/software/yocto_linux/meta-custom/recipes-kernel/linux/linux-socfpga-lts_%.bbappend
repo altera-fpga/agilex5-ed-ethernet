@@ -1,7 +1,10 @@
 KERNEL_REPO = "git://github.com/altera-fpga/linux-socfpga.git"
-SRCREV = "${AUTOREV}"
+#SRCREV = "${AUTOREV}"
+SRCREV = "9b508ad012b1d0ea26c8822106f24f9a6f74f244"
 LINUX_VERSION = "6.18.37"
 KBRANCH = "socfpga-6.18.37-lts-ethernet-sed"
+# Kernel CONFIG_LOCALVERSION
+LINUX_VERSION_EXTENSION = "-SED-Agilex5-ALL-Q26.3-Rel-1.1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
 # Append GSRD specific kernel config fragments and Patches.

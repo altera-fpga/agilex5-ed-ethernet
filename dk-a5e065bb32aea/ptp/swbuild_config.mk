@@ -176,7 +176,7 @@ $(SW_YOCTO_LINUX_SD_TARGET)-install-sw : \
 	$(INSTALL_ROOT_BINARIES)/software/yocto_linux_sd/gsrd-console-image-$(KAS_MACHINE).rootfs.tar.gz \
 	$(INSTALL_ROOT_BINARIES)/software/yocto_linux_sd/gsrd-console-image-$(KAS_MACHINE).rootfs.manifest \
 	$(INSTALL_ROOT_BINARIES)/software/yocto_linux_sd/Image \
-	$(INSTALL_ROOT_BINARIES)/software/yocto_linux_sd/kernel.itb \
+	$(INSTALL_ROOT_BINARIES)/software/yocto_linux_sd/kernel_sed.itb \
 	$(YOCTO_SD_OPTIONAL_DTB) \
 	$(INSTALL_ROOT_BINARIES)/software/yocto_linux_sd/u-boot-spl-dtb.bin \
 	$(INSTALL_ROOT_BINARIES)/software/yocto_linux_sd/u-boot-spl-dtb.hex \
